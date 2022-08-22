@@ -8,5 +8,12 @@ namespace ObjectToTest
         {
             return new ObjectAsConstructor(@object).ToString();
         }
+
+        public static string ToTest(this object @object)
+        {
+            var objectNameCounter = 1;
+
+            return Extensions.ObjectToTest.GetResultStringForObject(@object, ref objectNameCounter, out _);
+        }
     }
 }
