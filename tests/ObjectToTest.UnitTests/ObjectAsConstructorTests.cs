@@ -17,7 +17,7 @@ namespace ObjectToTest.UnitTests
         public void ObjectWithDecimalConstructor()
         {
             Assert.Equal(
-                "var o1=new Price(10);",
+                "new Price(10)",
                 new Price(10).ToTest()
             );
         }
@@ -26,7 +26,7 @@ namespace ObjectToTest.UnitTests
         public void NoConstructor_WithDefault()
         {
             Assert.Equal(
-                "var o1=new NoConstructor();",
+                "new NoConstructor()",
                 new NoConstructor().ToTest()
             );
         }
