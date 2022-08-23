@@ -9,10 +9,7 @@ namespace ObjectToTest.Extensions
     {
         public static string GetResultStringForObject<T>(T obj, ref int objectNameCounter, out string variableName)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
+            _ = obj ?? throw new ArgumentNullException(nameof(obj));
 
             variableName = $"o{objectNameCounter++}";
 
@@ -67,15 +64,9 @@ namespace ObjectToTest.Extensions
             }
 
             var properties = type.GetProperties();
-            foreach (var property in properties)
+            foreach (var property in properties.Where(p => p.CanWrite))
             {
-                if (!property.CanWrite)
-                {
-                    continue;
-                }
-
                 var value = property.GetValue(obj, null);
-
                 resultStatements.Add(GetPublicPropertyInitialization(variableName, property.Name, value));
             }
 
@@ -95,8 +86,10 @@ namespace ObjectToTest.Extensions
         private static bool IsSimple(Type type)
         {
             return type.IsPrimitive
-              || type == typeof(string);
+              || type == typeof(string)
+              || type == typeof(decimal);
         }
+
         private static string GetValueForInitialization<T>(T value)
         {
             string valueStr;
@@ -155,23 +148,23 @@ namespace ObjectToTest.Extensions
 
         private static object GetValueForConstructorParam<T>(ParameterInfo info, Type type, T obj)
         {
-            var typeProperties = type.GetProperties();
-            var typeFields = type.GetRuntimeFields().ToList();
-
-            var propertyInfo = typeProperties.FirstOrDefault(p => IsVariableNameEqual(p.Name, info.Name));
-            var fieldInfo = typeFields.FirstOrDefault(f => IsVariableNameEqual(f.Name, info.Name));
+            var fieldInfo = type
+                .GetRuntimeFields()
+                .FirstOrDefault(f => IsVariableNameEqual(f.Name, info.Name));
 
             if (fieldInfo != null)
             {
-                var fieldValue = fieldInfo.GetValue(obj);
-
-                return fieldValue;
+                return fieldInfo.GetValue(obj);
             }
-            else if (propertyInfo != null)
+            else
             {
-                var propertyValue = propertyInfo.GetValue(obj);
-
-                return propertyValue;
+                var propertyInfo = type
+                    .GetProperties()
+                    .FirstOrDefault(p => IsVariableNameEqual(p.Name, info.Name));
+                if (propertyInfo != null)
+                {
+                    return propertyInfo.GetValue(obj);
+                }
             }
 
             throw new ArgumentException($"Can not get value for parameter with name {info.Name} in type {type.Name}");

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -12,6 +13,12 @@ namespace ObjectToTest
         {
             _object = @object ?? throw new ArgumentNullException(nameof(@object));
         }
+
+        public string Name => _object.GetType().DeclaringType.Name;
+
+        public IList<object> Arguments { get; }
+
+        public IList<object> Properties { get; }
 
         public ConstructorInfo Constructor()
         {

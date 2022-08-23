@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace ObjectToTest
@@ -14,12 +16,8 @@ namespace ObjectToTest
 
         public override string ToString()
         {
-            return $"new {Constructor().DeclaringType.Name}()";
-        }
-
-        private ConstructorInfo Constructor()
-        {
-            return new InternalStateConstructor(_object).Constructor();
+            var constructor = new InternalStateConstructor(_object);
+            return $"new {constructor.Name}({constructor.Arguments.Join()}){constructor.Properties.Join()}";
         }
     }
 }
