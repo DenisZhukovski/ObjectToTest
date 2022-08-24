@@ -2,7 +2,7 @@
 
 namespace ObjectToTest.ConstructorParameters
 {
-    internal class StringParameter : ObjectConstructorParameter
+    internal class StringParameter : ObjectConstructorParameter, IArgument
     {
         public StringParameter(object @object, ParameterInfo parameterInfo)
             : base(@object, parameterInfo)
@@ -12,13 +12,9 @@ namespace ObjectToTest.ConstructorParameters
         public override string ToString()
         {
             var value = GetValueFromObject();
-
-            if (value is null)
-            {
-                return "null";
-            }
-
-            return $"\"{value}\"";
+            return value is null
+                ? "null"
+                : $"\"{value}\""; 
         }
     }
 }

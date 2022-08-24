@@ -2,7 +2,7 @@
 {
     public class WithOneParamAndPrivateField
     {
-        private int _field;
+        private readonly int _field;
 
         public WithOneParamAndPrivateField(int field)
         {

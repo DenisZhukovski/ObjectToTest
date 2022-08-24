@@ -15,7 +15,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForNullObject_ShouldThrowArgumentNullException()
+        public void ThrowArgumentNullException()
         {
             object obj = null;
 
@@ -23,7 +23,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForEmptyObject_ShouldGenerateDefaultConstructor()
+        public void DefaultConstructor()
         {
             Assert.Equal(
                 "new EmptyObject()",
@@ -32,7 +32,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForObjectWithPublicProperty_ShouldReturnWithPropertyInitializer()
+        public void NullPropertyInitializer()
         {
             Assert.Equal(
                 "new WithOnePublicProperty(){PropertyName = null}",
@@ -41,7 +41,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForObjectWithPublicPropertyThatHasStringValue_ShouldReturnWithInitializedProperty()
+        public void StringPropertyInitializer()
         {
             Assert.Equal(
                 "new WithOnePublicProperty(){PropertyName = \"Test\"}",
@@ -53,7 +53,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForObjectWithPublicPropertyThatHasIntValue_ShouldReturnWithInitializedProperty()
+        public void IntPropertyInitializer()
         {
             Assert.Equal(
                 "new WithOnePublicIntProperty(){PropertyName = 42}",
@@ -65,7 +65,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForObjectWithTwoPublicPropertiesWithDifferentTypes_ShouldReturnedWithInitializedProperty()
+        public void MultipleTypesPropertyInitializer()
         {
             Assert.Equal(
                 "new WithTwoProperties(){IntProperty = 42, StringProperty = \"Test\"}",
@@ -78,7 +78,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForContructorWithOneParameterAndReadProperty_ShouldReturnWithContructorWithValue()
+        public void ContructorWithIntArgumentForProperty()
         {
             Assert.Equal(
                 "new WithOneParameterContructorAndPublicReadProperty(42)",
@@ -87,7 +87,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForConsturctorWithOneParamAndPrivateField_ShouldReturnWithContructorWithValue()
+        public void ContructorWithIntArgumentForPrivateField()
         {
             Assert.Equal(
                 "new WithOneParamAndPrivateField(42)",
@@ -96,7 +96,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForCtorWithTwoParamsOneFieldAndOneProperty_ShouldReturnWithConstructorWithValue()
+        public void ContructorWithMultipleValueTypeArguments()
         {
             Assert.Equal(
                 "new WithTwoParamOneFieldAndOneProperty(42,\"Test\")",
@@ -108,7 +108,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForCtorWithParameterOfClass_ShouldReturnWithCtorWithParameterOfClass()
+        public void CtorWithClassArgument()
         {
             Assert.Equal(
                 "new WithClassParam(new EmptyObject())",
@@ -117,7 +117,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForCtorWithTwoParamOfClassAndInt_ShouldReturnWithTwoParam()
+        public void ContructorWithMultipleComplexTypesArguments()
         {
             Assert.Equal(
                 "new WithClassAndIntParams(42,new EmptyObject())",
@@ -129,7 +129,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForTimeSpan_ShouldReturnValidTimeSpan()
+        public void TimeSpanConstructor()
         {
             Assert.Equal(
                 "new TimeSpan(18,17,34,24,5)",
@@ -138,7 +138,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForCtorWithClassParamThatDependsOnOtherClass_ShouldReturnValidResult()
+        public void CtorWithComplexDependcyArgument()
         {
             Assert.Equal(
                 "new WithClassParamThatDependsOnClass(new WithClassParam(new EmptyObject()))",
@@ -149,7 +149,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForCtorWithTwoClassParamAndIntParam_ShouldReturnValidResult()
+        public void CtorWithComplexDependcySeveralArguments()
         {
             Assert.Equal(
                 "new WithTwoClassParamAndIntParam(new WithClassParam(new EmptyObject()),new WithClassAndIntParams(42,new EmptyObject()),42)",
@@ -165,7 +165,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ForCtorWithClassParamWithPropAndIntField()
+        public void CtorWithComplexArgumentsAndProperties()
         {
             Assert.Equal(
                 "new WithClassParamWithProp(new WithOnePublicProperty(){PropertyName = \"Test\"},42)",

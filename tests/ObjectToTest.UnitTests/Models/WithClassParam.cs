@@ -2,7 +2,7 @@
 {
     public class WithClassParam
     {
-        private EmptyObject _emptyObject;
+        private readonly EmptyObject _emptyObject;
 
         public WithClassParam(EmptyObject emptyObject)
         {

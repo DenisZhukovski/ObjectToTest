@@ -2,7 +2,7 @@
 
 namespace ObjectToTest.ConstructorParameters
 {
-    internal class SimpleTypeParameter : ObjectConstructorParameter
+    internal class SimpleTypeParameter : ObjectConstructorParameter, IArgument
     {
         public SimpleTypeParameter(object @object, ParameterInfo parameter)
             : base(@object, parameter)

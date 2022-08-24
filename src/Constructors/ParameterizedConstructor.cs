@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ObjectToTest.Constructors
 {
-    internal class ParameterizedConstructor
+    internal class ParameterizedConstructor : IConstructor
     {
         private readonly object _object;
         private readonly ParameterInfo[] _parameters;
@@ -17,13 +17,11 @@ namespace ObjectToTest.Constructors
 
         public override string ToString()
         {
-            var mappedParams = _parameters.Select(MapParameter);
-            var paramsStr = string.Join(",", mappedParams);
-
+            var paramsStr = string.Join(",", _parameters.Select(MapParameter));
             return $"new {_object.GetType().Name}({paramsStr})";
         }
 
-        private ObjectConstructorParameter MapParameter(ParameterInfo parameter)
+        protected virtual IArgument MapParameter(ParameterInfo parameter)
         {
             if (parameter.ParameterType.IsPrimitive || parameter.ParameterType == typeof(decimal))
             {

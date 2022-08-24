@@ -1,6 +1,6 @@
 ﻿namespace ObjectToTest.Constructors
 {
-    internal class DefaultConstructor
+    internal class DefaultConstructor : IConstructor
     {
         private readonly object _object;
 
