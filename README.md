@@ -7,7 +7,7 @@
   [![Hits-of-Code](https://hitsofcode.com/github/deniszhukovski/ObjectToTest)](https://hitsofcode.com/view/github/deniszhukovski/ObjectToTest)
   [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DenisZhukovski_ObjectToTest&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DenisZhukovski_ObjectToTest)
   [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-  [![PDD status](https://www.0pdd.com/svg?name=deniszhukovski/ObjectToTest)](https://www.0pdd.com/p?name=deniszhukovski/ObjectToTest)
+  [![PDD status](https://www.0pdd.com/svg?name=DenisZhukovski/ObjectToTest)](https://www.0pdd.com/p?name=DenisZhukovski/ObjectToTest)
 </h3>
 
 The main idea is to implement an extension method for C# objects that generates initialization piece of code depending on an object internal state and public constructors methods and properties. It should let the developer easily recreate an object state and continue using it in unit test environment.
