@@ -153,7 +153,7 @@ namespace ObjectToTest.UnitTests
         public void CtorWithComplexDependcySeveralArguments()
         {
             /**
-             * @todo 60m/DEV Proper declaration format is expected. It would be nice to start each constructor argument on its own line with proper intend
+             * @todo #:60m/DEV Proper declaration format is expected. It would be nice to start each constructor argument on its own line with proper intend
              * new WithTwoClassParamAndIntParam(
              *  new WithClassParam(
              *      new EmptyObject()
@@ -194,7 +194,7 @@ namespace ObjectToTest.UnitTests
         public void WithGenericArgument()
         {
             /**
-             * @todo 60m/DEV Make WithGenericArgument test to be green. Generic type constructors are not supported at the moment. Need to add the support.
+             * @todo #:60m/DEV Make WithGenericArgument test to be green. Generic type constructors are not supported at the moment. Need to add the support.
              */
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
@@ -206,7 +206,7 @@ namespace ObjectToTest.UnitTests
         public void WithIEnumerableInt()
         {
             /**
-             * @todo 60m/DEV Make WithIEnumerableInt test to be green. Collection argument type constructors are not supported at the moment. Need to add the support.
+             * @todo #:60m/DEV Make WithIEnumerableInt test to be green. Collection argument type constructors are not supported at the moment. Need to add the support.
              */
             Assert.Equal(
                 "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
@@ -227,7 +227,7 @@ namespace ObjectToTest.UnitTests
         public void IncorrectArgumentsClass()
         {
             /**
-             * @todo 60m/DEV Make IncorrectArgumentsClass test to be green.
+             * @todo #:60m/DEV Make IncorrectArgumentsClass test to be green.
              */
             Assert.Equal(
                 "Can not find a constructor for IncorrectArgumentsClass object, not valid constructor available",
