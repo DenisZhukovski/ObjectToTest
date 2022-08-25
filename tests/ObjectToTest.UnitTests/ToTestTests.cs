@@ -203,8 +203,8 @@ namespace ObjectToTest.UnitTests
         public void With2GenericArguments()
         {
             Assert.Equal(
-                "new With2GenericArguments<IPrice,IUser>()",
-                  new With2GenericArguments<IPrice, IUser>().ToTest()
+                "new With2GenericArguments<IPrice,IUser>(new Price(10))",
+                  new With2GenericArguments<IPrice, IUser>(new Price(10)).ToTest()
             );
         }
 

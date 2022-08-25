@@ -18,7 +18,12 @@ namespace ObjectToTest.Constructors
         public override string ToString()
         {
             var paramsStr = string.Join(",", _parameters.Select(MapParameter));
-            return $"new {_object.GetType().Name}({paramsStr})";
+            var objectType = _object.GetType();
+            if (objectType.IsGenericType)
+            {
+                return $"new {objectType.GenericTypeName()}({paramsStr})";
+            }
+            return $"new {objectType.Name}({paramsStr})";
         }
 
         protected virtual IArgument MapParameter(ParameterInfo parameter)
