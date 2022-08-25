@@ -1,4 +1,5 @@
-﻿namespace ObjectToTest.UnitTests.Data
+﻿using System;
+namespace ObjectToTest.UnitTests.Models
 {
     public class Price : IPrice
     {

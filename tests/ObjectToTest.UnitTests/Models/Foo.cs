@@ -1,4 +1,6 @@
-﻿namespace ObjectToTest.UnitTests.Data
+﻿using ObjectToTest.UnitTests.Models;
+
+namespace ObjectToTest.UnitTests.Data
 {
     public class Foo
     {
