@@ -2,7 +2,7 @@
 
 <h3 align="center">
    
-  [![Stars](https://img.shields.io/github/stars/DenisZhukovski/WebRequest.Elegant?color=brightgreen)](https://github.com/DenisZhukovski/ObjectToTest/stargazers) 
+  [![Stars](https://img.shields.io/github/stars/DenisZhukovski/ObjectToTest?color=brightgreen)](https://github.com/DenisZhukovski/ObjectToTest/stargazers) 
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md) 
   [![Hits-of-Code](https://hitsofcode.com/github/deniszhukovski/ObjectToTest)](https://hitsofcode.com/view/github/deniszhukovski/ObjectToTest)
   [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DenisZhukovski_ObjectToTest&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DenisZhukovski_ObjectToTest)
