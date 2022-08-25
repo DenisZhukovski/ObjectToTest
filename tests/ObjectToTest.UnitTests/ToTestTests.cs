@@ -2,6 +2,7 @@
 using Xunit;
 using Xunit.Abstractions;
 using ObjectToTest.UnitTests.Models;
+using ObjectToTest.UnitTests.Data;
 
 namespace ObjectToTest.UnitTests
 {
@@ -151,6 +152,19 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void CtorWithComplexDependcySeveralArguments()
         {
+            /**
+             * @todo 60m/DEV Proper declaration format is expected. It would be nice to start each constructor argument on its own line with proper intend
+             * new WithTwoClassParamAndIntParam(
+             *  new WithClassParam(
+             *      new EmptyObject()
+             *  ),
+             *  new WithClassAndIntParams(
+             *      42,
+             *      new EmptyObject()
+             *  ),
+             *  42
+             * )
+             */
             Assert.Equal(
                 "new WithTwoClassParamAndIntParam(new WithClassParam(new EmptyObject()),new WithClassAndIntParams(42,new EmptyObject()),42)",
                 new WithTwoClassParamAndIntParam(
@@ -175,5 +189,51 @@ namespace ObjectToTest.UnitTests
                  ).ToTest()
             );
         }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void WithGenericArgument()
+        {
+            /**
+             * @todo 60m/DEV Make WithGenericArgument test to be green. Generic type constructors are not supported at the moment. Need to add the support.
+             */
+            Assert.Equal(
+                "new WithGenericArgument<IPrice>()",
+                new WithGenericArgument<IPrice>().ToTest()
+            );
+        }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void WithIEnumerableInt()
+        {
+            /**
+             * @todo 60m/DEV Make WithIEnumerableInt test to be green. Collection argument type constructors are not supported at the moment. Need to add the support.
+             */
+            Assert.Equal(
+                "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
+                new WithIEnumerableInt(new[] { 1, 2, 4, 5 }).ToTest()
+            );
+        }
+
+        [Fact]
+        public void WithInterfaceArgument()
+        {
+            Assert.Equal(
+                "new Foo(new Price(10),new User(\"User Name\"))",
+                new Foo(new Price(10), new User("User Name")).ToTest()
+            );
+        }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void IncorrectArgumentsClass()
+        {
+            /**
+             * @todo 60m/DEV Make IncorrectArgumentsClass test to be green.
+             */
+            Assert.Equal(
+                "Can not find a constructor for IncorrectArgumentsClass object, not valid constructor available",
+                new IncorrectArgumentsClass(1, 2).ToTest()
+            );
+        }
+        
     }
 }
