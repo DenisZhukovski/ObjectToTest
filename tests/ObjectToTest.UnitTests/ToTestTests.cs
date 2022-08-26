@@ -19,7 +19,6 @@ namespace ObjectToTest.UnitTests
         public void ThrowArgumentNullException()
         {
             object obj = null;
-
             Assert.Throws<ArgumentNullException>(() => obj.ToTest());
         }
 
@@ -66,7 +65,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void MultipleTypesPropertyInitializer()
+        public void MultipleValueTypesPropertyInitializer()
         {
             Assert.Equal(
                 "new WithTwoProperties(){IntProperty = 42, StringProperty = \"Test\"}",
@@ -79,7 +78,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ContructorWithIntArgumentForProperty()
+        public void CtorWithIntArgumentForProperty()
         {
             Assert.Equal(
                 "new WithOneParameterContructorAndPublicReadProperty(42)",
@@ -88,7 +87,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ContructorWithIntArgumentForPrivateField()
+        public void CtorWithIntArgumentForPrivateField()
         {
             Assert.Equal(
                 "new WithOneParamAndPrivateField(42)",
@@ -97,7 +96,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ContructorWithMultipleValueTypeArguments()
+        public void CtorWithMultipleValueTypeArguments()
         {
             Assert.Equal(
                 "new WithTwoParamOneFieldAndOneProperty(42,\"Test\")",
@@ -109,7 +108,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void CtorWithClassArgument()
+        public void CtorWithReferenceTypeArgument()
         {
             Assert.Equal(
                 "new WithClassParam(new EmptyObject())",
@@ -118,7 +117,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ContructorWithMultipleComplexTypesArguments()
+        public void CtorWithMultipleComplexTypesArguments()
         {
             Assert.Equal(
                 "new WithClassAndIntParams(42,new EmptyObject())",
@@ -191,7 +190,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void WithGenericArgument()
+        public void CtorWithGenericArgument()
         {
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
@@ -218,7 +217,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact(Skip = "Need to fix this test")]
-        public void WithIEnumerableInt()
+        public void CtorWithIEnumerableInt()
         {
             /**
              * @todo #:60m/DEV Make WithIEnumerableInt test to be green. Collection argument type constructors are not supported at the moment. Need to add the support.
@@ -230,7 +229,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void WithInterfaceArgument()
+        public void CtorWithInterfaceArguments()
         {
             Assert.Equal(
                 "new Foo(new Price(10),new User(\"User Name\"))",
@@ -249,6 +248,45 @@ namespace ObjectToTest.UnitTests
                 new IncorrectArgumentsClass(1, 2).ToTest()
             );
         }
-        
+
+        [Fact(Skip = "Need to fix this test")]
+        public void CircularReferenceDetection()
+        {
+            /**
+             * @todo #:60m/DEV Make CircularReferenceDetection test to be green.
+             * Now the circular references between the objects are not detected. It would
+             * be nice to fix the issue
+             */
+            var o1 = new CircularRefPublicProperty1();
+            var o2 = new CircularRefPublicProperty2();
+            o1.PropertyName = o2;
+            o2.PropertyName = o1;
+            Assert.Equal(
+                "var o1 = new CircularRefPublicProperty1();var o2 = new CircularRefPublicProperty2();o1.PropertyName = o2;o2.PropertyName = o1;",
+                o1.ToTest()
+            );
+        }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void TheSameObjectDetection()
+        {
+            /**
+             * @todo #:60m/DEV Make TheSameObjectDetection test to be green.
+             * Now the same object detection is not implemented. It would
+             * be nice to fix the issue.
+             */
+            var user = new User("user name");
+            var withUser = new WithUserArgument(
+                user,
+                new WithUserPublicProperty
+                {
+                    User = user
+                }
+            );
+            Assert.Equal(
+                "var user=new User(\"user name\");var o2=new WithUserArgument(user,new WithUserPublicProperty{User = user});",
+                withUser.ToTest()
+            );
+        }
     }
 }
