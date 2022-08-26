@@ -190,15 +190,30 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void WithGenericArgument()
         {
-            /**
-             * @todo #:60m/DEV Make WithGenericArgument test to be green. Generic type constructors are not supported at the moment. Need to add the support.
-             */
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
                 new WithGenericArgument<IPrice>().ToTest()
+            );
+        }
+
+        [Fact]
+        public void With2GenericArguments()
+        {
+            Assert.Equal(
+                "new With2GenericArguments<IPrice,IUser>(new Price(10))",
+                  new With2GenericArguments<IPrice, IUser>(new Price(10)).ToTest()
+            );
+        }
+
+        [Fact]
+        public void With3GenericArguments()
+        {
+            Assert.Equal(
+                "new With3GenericArguments<int,decimal,string>()",
+                  new With3GenericArguments<int, decimal, string>().ToTest()
             );
         }
 
