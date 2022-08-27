@@ -3,6 +3,7 @@ using Xunit;
 using Xunit.Abstractions;
 using ObjectToTest.UnitTests.Models;
 using ObjectToTest.UnitTests.Data;
+using System.Collections.Generic;
 
 namespace ObjectToTest.UnitTests
 {
@@ -216,15 +217,34 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void CtorWithIEnumerableInt()
         {
-            /**
-             * @todo #:60m/DEV Make WithIEnumerableInt test to be green. Collection argument type constructors are not supported at the moment. Need to add the support.
-             */
             Assert.Equal(
                 "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
                 new WithIEnumerableInt(new[] { 1, 2, 4, 5 }).ToTest()
+            );
+        }
+
+        [Fact]
+        public void CtorWithListInt()
+        {
+            Assert.Equal(
+                "new WithListArgument(new List<int> { 1, 2, 4, 5 })",
+                new WithListArgument(new List<int> { 1, 2, 4, 5 }).ToTest()
+            );
+        }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void CtorWithDictionaryIntString()
+        {
+            /**
+             * @todo #:30m/DEV Make CtorWithDictionaryIntString test to be green. Dictionary argument type constructors are not supported at the moment. Need to add the support.
+             */
+
+            Assert.Equal(
+                "new WithDictionaryArgument(new Dictionary<int, string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
+                new WithDictionaryArgument(new Dictionary<int, string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }).ToTest()
             );
         }
 
