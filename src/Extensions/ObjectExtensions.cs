@@ -61,9 +61,13 @@ namespace ObjectToTest
             {
                 valueStr = $"\"{@object}\"";
             }
-            else
+            else if(@object.GetType().IsPrimitive || @object is decimal)
             {
                 valueStr = @object.ToString();
+            }
+            else
+            {
+                valueStr = @object.ToTest();
             }
 
             return valueStr;
