@@ -257,12 +257,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void IncorrectArgumentsClass()
         {
-            /**
-             * @todo #:60m/DEV Make IncorrectArgumentsClass test to be green.
-             */
             Assert.Equal(
                 "Can not find a constructor for IncorrectArgumentsClass object, not valid constructor available",
                 new IncorrectArgumentsClass(1, 2).ToTest()

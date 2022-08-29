@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ObjectToTest.Constructors;
+using ObjectToTest.Exceptions;
 
 namespace ObjectToTest
 {
@@ -15,7 +16,14 @@ namespace ObjectToTest
 
         public override string ToString()
         {
-            return $"{Constructor()}{new ObjectProperties(_object)}";
+            try
+            {
+                return $"{Constructor()}{new ObjectProperties(_object)}";
+            }
+            catch(NoConstructorException ex)
+            {
+                return ex.Message;
+            }
         }
 
         private string Constructor()
@@ -35,7 +43,7 @@ namespace ObjectToTest
                 }
             }
 
-            throw new ArgumentException($"Can not generage constructor string for type: {_object.GetType()}");
+            throw new NoConstructorException(_object.GetType());
         }
     }
 }
