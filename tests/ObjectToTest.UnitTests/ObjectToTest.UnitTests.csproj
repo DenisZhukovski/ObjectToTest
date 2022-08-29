@@ -35,6 +35,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="SoapFormatter" Version="1.1.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ObjectToTest.csproj" />
@@ -42,5 +43,6 @@
   <ItemGroup>
     <None Remove="SecurityCodeScan" />
     <None Remove="Microsoft.CodeAnalysis.NetAnalyzers" />
+    <None Remove="SoapFormatter" />
   </ItemGroup>
 </Project>
