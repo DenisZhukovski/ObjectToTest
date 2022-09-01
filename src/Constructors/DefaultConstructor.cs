@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ObjectToTest.ConstructorParameters;
 
 namespace ObjectToTest.Constructors
 {
@@ -10,6 +12,13 @@ namespace ObjectToTest.Constructors
         {
             _object = @object;
         }
+
+        public bool IsValid => _object
+                .GetType()
+                .GetConstructors()
+                .Any(c => !c.GetParameters().Any() && c.IsPublic);
+
+        public IList<IArgument> Argumetns => new List<IArgument>();
 
         public override string ToString()
         {
