@@ -1,4 +1,5 @@
 ﻿using ObjectToTest.ConstructorParameters;
+using System.Collections;
 using System.Linq;
 using System.Reflection;
 
@@ -18,7 +19,12 @@ namespace ObjectToTest.Constructors
         public override string ToString()
         {
             var paramsStr = string.Join(",", _parameters.Select(MapParameter));
-            return $"new {_object.GetType().Name}({paramsStr})";
+            var objectType = _object.GetType();
+            if (objectType.IsGenericType)
+            {
+                return $"new {objectType.GenericTypeName()}({paramsStr})";
+            }
+            return $"new {objectType.Name}({paramsStr})";
         }
 
         protected virtual IArgument MapParameter(ParameterInfo parameter)
@@ -30,6 +36,10 @@ namespace ObjectToTest.Constructors
             else if (parameter.ParameterType == typeof(string))
             {
                 return new StringParameter(_object, parameter);
+            }
+            else if (parameter.ParameterType.GetInterfaces().Contains(typeof(IEnumerable)))
+            {
+                return new CollectionArgument(_object, parameter);
             }
             else
             {

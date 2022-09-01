@@ -3,6 +3,7 @@ using Xunit;
 using Xunit.Abstractions;
 using ObjectToTest.UnitTests.Models;
 using ObjectToTest.UnitTests.Data;
+using System.Collections.Generic;
 
 namespace ObjectToTest.UnitTests
 {
@@ -189,27 +190,61 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void CtorWithGenericArgument()
         {
-            /**
-             * @todo #:60m/DEV Make WithGenericArgument test to be green. Generic type constructors are not supported at the moment. Need to add the support.
-             */
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
                 new WithGenericArgument<IPrice>().ToTest()
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
+        public void With2GenericArguments()
+        {
+            Assert.Equal(
+                "new With2GenericArguments<IPrice,IUser>(new Price(10))",
+                  new With2GenericArguments<IPrice, IUser>(new Price(10)).ToTest()
+            );
+        }
+
+        [Fact]
+        public void With3GenericArguments()
+        {
+            Assert.Equal(
+                "new With3GenericArguments<int,decimal,string>()",
+                  new With3GenericArguments<int, decimal, string>().ToTest()
+            );
+        }
+
+        [Fact]
         public void CtorWithIEnumerableInt()
         {
-            /**
-             * @todo #:60m/DEV Make WithIEnumerableInt test to be green. Collection argument type constructors are not supported at the moment. Need to add the support.
-             */
             Assert.Equal(
                 "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
                 new WithIEnumerableInt(new[] { 1, 2, 4, 5 }).ToTest()
+            );
+        }
+
+        [Fact]
+        public void CtorWithListInt()
+        {
+            Assert.Equal(
+                "new WithListArgument(new List<int> { 1, 2, 4, 5 })",
+                new WithListArgument(new List<int> { 1, 2, 4, 5 }).ToTest()
+            );
+        }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void CtorWithDictionaryIntString()
+        {
+            /**
+             * @todo #:30m/DEV Make CtorWithDictionaryIntString test to be green. Dictionary argument type constructors are not supported at the moment. Need to add the support.
+             */
+
+            Assert.Equal(
+                "new WithDictionaryArgument(new Dictionary<int, string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
+                new WithDictionaryArgument(new Dictionary<int, string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }).ToTest()
             );
         }
 
@@ -222,12 +257,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void IncorrectArgumentsClass()
         {
-            /**
-             * @todo #:60m/DEV Make IncorrectArgumentsClass test to be green.
-             */
             Assert.Equal(
                 "Can not find a constructor for IncorrectArgumentsClass object, not valid constructor available",
                 new IncorrectArgumentsClass(1, 2).ToTest()

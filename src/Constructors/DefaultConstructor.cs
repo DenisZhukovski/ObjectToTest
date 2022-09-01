@@ -1,4 +1,6 @@
-﻿namespace ObjectToTest.Constructors
+﻿using System.Linq;
+
+namespace ObjectToTest.Constructors
 {
     internal class DefaultConstructor : IConstructor
     {
@@ -11,7 +13,12 @@
 
         public override string ToString()
         {
-            return $"new {_object.GetType().Name}()";
+            var objectType = _object.GetType();
+            if (objectType.IsGenericType)
+            {
+                return $"new {objectType.GenericTypeName()}()";
+            }
+            return $"new {objectType.Name}()";
         }
     }
 }
