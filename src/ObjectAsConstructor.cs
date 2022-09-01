@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ObjectToTest.ConstructorParameters;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
 
@@ -18,32 +19,15 @@ namespace ObjectToTest
         {
             try
             {
-                return $"{Constructor()}{new ObjectProperties(_object)}";
+                IArguments sharedArguments = new ObjectSharedArguments(_object);
+                return $"{sharedArguments}" +
+                    $"{_object.ValidConstructor(sharedArguments)}" +
+                    $"{new ObjectProperties(_object, sharedArguments)}";
             }
             catch(NoConstructorException ex)
             {
                 return ex.Message;
             }
-        }
-
-        private string Constructor()
-        {
-            foreach (var constructor in _object.Constructors())
-            {
-                try
-                {
-                    var parameters = constructor.GetParameters();
-                    return parameters.Any()
-                        ? new Constructors.ParameterizedConstructor(_object, parameters).ToString()
-                        : new Constructors.DefaultConstructor(_object).ToString();
-                }
-                catch (Exception)
-                {
-                    // ignore, can not create string for constructor
-                }
-            }
-
-            throw new NoConstructorException(_object.GetType());
         }
     }
 }
