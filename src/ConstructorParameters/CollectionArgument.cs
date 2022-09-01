@@ -7,16 +7,16 @@ using System.Text;
 
 namespace ObjectToTest.ConstructorParameters
 {
-    internal class CollectionArgument : ObjectConstructorParameter, IArgument
+    internal class CollectionArgument : ObjectConstructorParameter
     {
-        public CollectionArgument(object @object, ParameterInfo parameter)
-            : base(@object, parameter)
+        public CollectionArgument(object @object, ParameterInfo parameter, IArguments sharedArguments)
+            : base(@object, parameter, sharedArguments)
         {
         }
 
         public override string ToString()
         {
-            var value = GetValueFromObject();
+            var value = _object.Value(_parameter);
             var stringBuilder = new StringBuilder();
 
             if(value is IEnumerable collection)
