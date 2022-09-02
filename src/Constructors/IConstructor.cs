@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ObjectToTest.ConstructorParameters;
+using ObjectToTest.Arguments;
 
 namespace ObjectToTest.Constructors
 {

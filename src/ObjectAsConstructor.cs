@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ObjectToTest.ConstructorParameters;
+using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
 
@@ -25,8 +25,7 @@ namespace ObjectToTest
             {
                 IArguments sharedArguments = new ObjectSharedArguments(_object);
                 return $"{sharedArguments}" +
-                    $"{_object.ValidConstructor(sharedArguments)}" +
-                    $"{new ObjectProperties(_object, sharedArguments)}";
+                    $"{_object.ValidConstructor(sharedArguments)}";
             }
             catch(NoConstructorException ex)
             {

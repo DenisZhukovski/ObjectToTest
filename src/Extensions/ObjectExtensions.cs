@@ -5,7 +5,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using ObjectToTest.ConstructorParameters;
+using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
 using ObjectToTest.Extensions;
@@ -121,7 +121,7 @@ namespace ObjectToTest
             {
                 var ctor = constructor.GetParameters().Any()
                     ? new Constructors.ParameterizedConstructor(@object, constructor, sharedArguments)
-                    : (IConstructor)new Constructors.DefaultConstructor(@object);
+                    : (IConstructor)new Constructors.DefaultConstructor(@object, sharedArguments);
                 if (ctor.IsValid)
                 {
                     return ctor;
@@ -129,6 +129,11 @@ namespace ObjectToTest
             }
 
             throw new NoConstructorException(@object.GetType());
+        }
+
+        public static bool Contains(this object @object, ParameterInfo parameter)
+        {
+            return @object.Contains(parameter.Name);
         }
 
         public static bool Contains(this object @object, string name)

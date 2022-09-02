@@ -1,12 +1,12 @@
 ﻿using System;
 using ObjectToTest.Constructors;
 
-namespace ObjectToTest.ConstructorParameters
+namespace ObjectToTest.Arguments
 {
     public interface IArgument
     {
         string Name { get;  }
 
-        IConstructor Constructor();
+        IConstructor Constructor { get; }
     }
 }

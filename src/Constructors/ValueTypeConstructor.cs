@@ -1,5 +1,5 @@
 ﻿using System;
-using ObjectToTest.ConstructorParameters;
+using ObjectToTest.Arguments;
 using System.Collections.Generic;
 
 namespace ObjectToTest.Constructors

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ObjectToTest.ConstructorParameters
+namespace ObjectToTest.Arguments
 {
     public interface IArguments
     {
