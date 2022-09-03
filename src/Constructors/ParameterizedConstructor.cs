@@ -27,6 +27,16 @@ namespace ObjectToTest.Constructors
             .Select(MapParameter)
             .ToList();
 
+        public override bool Equals(object? obj)
+        {
+            return EqualityComparer<object?>.Default.Equals(_object, obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _object.GetHashCode();
+        }
+
         public override string ToString()
         {
             var paramsStr = string.Join(",", Argumetns);

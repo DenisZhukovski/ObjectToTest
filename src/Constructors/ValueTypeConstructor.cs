@@ -17,6 +17,16 @@ namespace ObjectToTest.Constructors
 
         public IList<IArgument> Argumetns => new List<IArgument>();
 
+        public override bool Equals(object? obj)
+        {
+            return EqualityComparer<object?>.Default.Equals(_object, obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _object.GetHashCode();
+        }
+
         public override string ToString()
         {
             return _object.ToStringForInialization();
