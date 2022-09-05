@@ -42,15 +42,6 @@ namespace ObjectToTest
             ).ToString();
         }
 
-        public static IEnumerable<ConstructorInfo> Constructors(this object @object)
-        {
-            _ = @object ?? throw new ArgumentNullException(nameof(@object));
-            return @object.GetType()
-                .GetConstructors()
-                .Where(x => x.IsPublic)
-                .OrderByDescending(x => x.GetParameters().Length);
-        }
-
         internal static string Join(this IList<object> arguments)
         {
             return string.Join(",\r\n", arguments.Select(arg => arg.ToTest()));
@@ -77,19 +68,6 @@ namespace ObjectToTest
             }
 
             return valueStr;
-        }
-
-        internal static bool IsPrimitive(this object @object)
-        {
-            return @object is string || @object is decimal || (@object != null && @object.GetType().IsPrimitive);
-        }
-
-        internal static bool IsCollection(this object @object)
-        {
-            return @object
-                .GetType()
-                .GetInterfaces()
-                .Contains(typeof(IEnumerable));
         }
 
         internal static string GenericTypeName(this Type type)
@@ -129,66 +107,6 @@ namespace ObjectToTest
             }
 
             throw new NoConstructorException(@object.GetType());
-        }
-
-        public static bool Contains(this object @object, ParameterInfo parameter)
-        {
-            return @object.Contains(parameter.Name);
-        }
-
-        public static bool Contains(this object @object, string name)
-        {
-            return @object.Field(name) != null || @object.Property(name) != null;
-        }
-
-        public static FieldInfo? Field(this object @object, string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return null;
-            }
-
-            return @object
-                .GetType()
-                .GetRuntimeFields()
-                .FirstOrDefault(f => f.Name.SameVariable(name));
-        }
-
-        public static PropertyInfo? Property(this object @object, string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return null;
-            }
-
-            return @object
-                .GetType()
-                .GetProperties()
-                .FirstOrDefault(p => p.Name.SameVariable(name));
-        }
-
-        public static object? Value(this object @object, ParameterInfo parameter)
-        {
-            return @object.Value(parameter.Name);
-        }
-
-        public static object? Value(this object @object, string name)
-        {
-            var field = @object.Field(name);
-            if (field != null)
-            {
-                return field.GetValue(@object);
-            }
-            else
-            {
-                var property = @object.Property(name);
-                if (property != null)
-                {
-                    return property.GetValue(@object);
-                }
-            }
-
-            throw new ArgumentException($"Can not get value for parameter with name {name} in type {@object.GetType().Name}");
         }
     }
 }

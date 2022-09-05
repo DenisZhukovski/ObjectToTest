@@ -22,6 +22,16 @@ namespace ObjectToTest.Constructors
 
         public IList<IArgument> Argumetns => new List<IArgument>();
 
+        public override bool Equals(object? obj)
+        {
+            return (obj is IConstructor constructor && constructor.Equals(_object)) || _object.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _object.GetHashCode();
+        }
+
         public override string ToString()
         {
             var objectType = _object.GetType();

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
+
+[assembly: InternalsVisibleTo("ObjectToTest.UnitTests")]
 
 namespace ObjectToTest
 {

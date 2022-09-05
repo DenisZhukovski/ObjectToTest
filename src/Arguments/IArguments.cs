@@ -7,5 +7,13 @@ namespace ObjectToTest.Arguments
     {
         IArgument? Argument(object argument);
     }
+
+    public class MockArguments : IArguments
+    {
+        public IArgument? Argument(object argument)
+        {
+            return null;
+        }
+    }
 }
 
