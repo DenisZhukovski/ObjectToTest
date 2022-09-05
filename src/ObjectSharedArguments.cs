@@ -57,6 +57,35 @@ namespace ObjectToTest
         private void SharedObjectsRecursive(object @object, List<object> internalObjects)
         {
             var currentObjectStates = new List<object>();
+            foreach (PropertyInfo property in @object.GetType().GetProperties())
+            {
+                var propertyObject = @object.Value(property);
+                if (Skip(propertyObject) || currentObjectStates.Contains(propertyObject))
+                {
+                    continue;
+                }
+                if (internalObjects.Contains(propertyObject))
+                {
+                    if (!_sharedObjects.Any(so => so.Equals(propertyObject)))
+                    {
+                        _sharedObjects.Add(
+                            new SharedArgument(
+                                new Argument(
+                                    VariableName(propertyObject),
+                                    propertyObject.ValidConstructor(this)
+                                )
+                            )
+                        );
+                    }
+                }
+                else
+                {
+                    internalObjects.Add(propertyObject);
+                }
+                currentObjectStates.Add(propertyObject);
+                SharedObjectsRecursive(propertyObject, internalObjects);
+            }
+
             foreach (FieldInfo field in @object.GetType().GetRuntimeFields())
             {
                 var fieldObject = @object.Value(field);
@@ -85,35 +114,6 @@ namespace ObjectToTest
                 }
                 currentObjectStates.Add(fieldObject);
                 SharedObjectsRecursive(fieldObject, internalObjects);
-            }
-
-            foreach (PropertyInfo property in @object.GetType().GetProperties())
-            {
-                var propertyObject = @object.Value(property);
-                if (Skip(propertyObject) || currentObjectStates.Contains(propertyObject))
-                {
-                    continue;
-                }
-                if (internalObjects.Contains(propertyObject))
-                {
-                    if (!_sharedObjects.Any(so => so.Equals(propertyObject)))
-                    {
-                        _sharedObjects.Add(
-                            new SharedArgument(
-                                new Argument(
-                                    VariableName(propertyObject),
-                                    propertyObject.ValidConstructor(this)
-                                )
-                            )
-                        );
-                    }
-                }
-                else
-                {
-                    internalObjects.Add(propertyObject);
-                }
-                currentObjectStates.Add(propertyObject);
-                SharedObjectsRecursive(propertyObject, internalObjects);
             }
         }
 
