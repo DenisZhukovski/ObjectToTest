@@ -51,8 +51,8 @@ namespace ObjectToTest
         }
 
         /**
-        * @todo #12:60m/DEV Make a code refactoring for this property.
-        * The property is too big and it looks like Loops for Fields and Properties are pretty the same.
+        * @todo #12:60m/DEV Make a code refactoring for this method.
+        * The method is too big and complex. It looks like the Loops for Fields and Properties are pretty the same.
         */
         private void SharedObjectsRecursive(object @object, List<object> internalObjects)
         {
