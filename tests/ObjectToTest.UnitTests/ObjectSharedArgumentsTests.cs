@@ -1,4 +1,5 @@
 ﻿using System;
+using ObjectToTest.Arguments;
 using ObjectToTest.Exceptions;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
@@ -63,28 +64,10 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Failing need to fix")]
+        [Fact]
         public void SharedArgumentsInit()
         {
-            /**
-            * @todo #12:60m/DEV ObjectSharedArguments class should return as a string the piepce
-            * of code that initializes the shared object arguments. For example:
-            * var user = new User("user name");
-            * var withUser = new WithUserArgument(
-            *   user,
-            *   new WithUserPublicProperty
-            *   {
-            *       User = user
-            *    }
-            * );
-            * 
-            * ToString method should return:
-            * var user = new User("user name");
-            * 
-            * If object has no shared objects in its internal state the method should return empty string.
-            */
-
-            User user = null;
+            User user = new User("user name");
             var withUser = new WithUserArgument(
                 user,
                 new WithUserPublicProperty
@@ -93,8 +76,26 @@ namespace ObjectToTest.UnitTests
                 }
             );
             Assert.Equal(
-                "var user = new User(\"user name\");",
+                $"var user = new User(\"user name\");{Environment.NewLine}",
                 new ObjectSharedArguments(withUser).ToString()
+            );
+        }
+
+        [Fact]
+        public void SharedArgumentsInitProperties()
+        {
+            User user = new User("user name");
+            var with2PublicProperties = new With2PublicProperties
+            {
+                User = user,
+                UserPublicProperty = new WithUserPublicProperty
+                {
+                    User = user
+                }
+            };
+            Assert.Equal(
+                $"var user = new User(\"user name\");{Environment.NewLine}",
+                new ObjectSharedArguments(with2PublicProperties).ToString()
             );
         }
     }

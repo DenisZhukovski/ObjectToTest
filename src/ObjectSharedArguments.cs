@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using ObjectToTest.Arguments;
 
 namespace ObjectToTest
@@ -25,61 +26,10 @@ namespace ObjectToTest
         {
             get
             {
-                /**
-                * @todo #12:60m/DEV Make a code refactoring for this property.
-                * The property is too big and it looks like Loops for Fields and Properties are pretty the same.
-                */
                 if (_sharedObjects == null)
                 {
                     _sharedObjects = new List<IArgument>();
-                    List<object> internalObjects = new List<object>();
-                    foreach (FieldInfo field in _object.GetType().GetRuntimeFields())
-                    {
-                        var fieldObject = _object.Value(field);
-                        if (fieldObject == null || fieldObject.IsPrimitive())
-                        {
-                            continue;
-                        }
-                        if (!internalObjects.Contains(fieldObject))
-                        {
-                            _sharedObjects.Add(
-                                new SharedArgument(
-                                    new Argument(
-                                        field.Name,
-                                        fieldObject.ValidConstructor(this)
-                                    )
-                                )
-                            );
-                        }
-                        else
-                        {
-                            internalObjects.Add(fieldObject);
-                        }
-                    }
-
-                    foreach (PropertyInfo property in _object.GetType().GetProperties())
-                    {
-                        var propertyObject = _object.Value(property);
-                        if (propertyObject == null || propertyObject.IsPrimitive())
-                        {
-                            continue;
-                        }
-                        if (!internalObjects.Contains(propertyObject))
-                        {
-                            _sharedObjects.Add(
-                                new SharedArgument(
-                                    new Argument(
-                                        property.Name,
-                                        propertyObject.ValidConstructor(this)
-                                    )
-                                )
-                            );
-                        }
-                        else
-                        {
-                            internalObjects.Add(propertyObject);
-                        }
-                    }
+                    SharedObjectsRecursive(_object, new List<object>());
                 }
                 return _sharedObjects;
             }
@@ -92,7 +42,89 @@ namespace ObjectToTest
 
         public override string ToString()
         {
-            return string.Empty;
+            var arguments = new StringBuilder();
+            foreach (var argument in SharedObjects)
+            {
+                arguments.AppendLine(argument.ToString() + ";");
+            }
+            return arguments.ToString();
+        }
+
+        /**
+        * @todo #12:60m/DEV Make a code refactoring for this method.
+        * The method is too big and complex. It looks like the Loops for Fields and Properties are pretty the same.
+        */
+        private void SharedObjectsRecursive(object @object, List<object> internalObjects)
+        {
+            var currentObjectStates = new List<object>();
+            foreach (PropertyInfo property in @object.GetType().GetProperties())
+            {
+                var propertyObject = @object.Value(property);
+                if (Skip(propertyObject) || currentObjectStates.Contains(propertyObject))
+                {
+                    continue;
+                }
+                if (internalObjects.Contains(propertyObject))
+                {
+                    if (!_sharedObjects.Any(so => so.Equals(propertyObject)))
+                    {
+                        _sharedObjects.Add(
+                            new SharedArgument(
+                                new Argument(
+                                    VariableName(propertyObject),
+                                    propertyObject.ValidConstructor(this)
+                                )
+                            )
+                        );
+                    }
+                }
+                else
+                {
+                    internalObjects.Add(propertyObject);
+                }
+                currentObjectStates.Add(propertyObject);
+                SharedObjectsRecursive(propertyObject, internalObjects);
+            }
+
+            foreach (FieldInfo field in @object.GetType().GetRuntimeFields())
+            {
+                var fieldObject = @object.Value(field);
+                if (Skip(fieldObject) || currentObjectStates.Contains(fieldObject))
+                {
+                    continue;
+                }
+               
+                if (internalObjects.Contains(fieldObject))
+                {
+                    if (!_sharedObjects.Any(so => so.Equals(fieldObject)))
+                    {
+                        _sharedObjects.Add(
+                            new SharedArgument(
+                                new Argument(
+                                    VariableName(fieldObject),
+                                    fieldObject.ValidConstructor(this)
+                                )
+                            )
+                        );
+                    }
+                }
+                else
+                {
+                    internalObjects.Add(fieldObject);
+                }
+                currentObjectStates.Add(fieldObject);
+                SharedObjectsRecursive(fieldObject, internalObjects);
+            }
+        }
+
+        private string VariableName(object @object)
+        {
+            return Char.ToLower(@object.GetType().Name[0]) + @object.GetType().Name.Substring(1);
+        }
+
+        private bool Skip(object? @object)
+        {
+            return @object == null || @object.IsPrimitive() || @object.IsCollection() || @object is TimeSpan || @object is DateTime;
         }
     }
 }
