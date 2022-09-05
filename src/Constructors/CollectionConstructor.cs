@@ -23,7 +23,7 @@ namespace ObjectToTest.Constructors
 
         public override bool Equals(object? obj)
         {
-            return EqualityComparer<object?>.Default.Equals(_object, obj);
+            return _object.Equals(obj);
         }
 
         public override int GetHashCode()
