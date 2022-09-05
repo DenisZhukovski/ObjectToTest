@@ -1,5 +1,6 @@
-﻿using ObjectToTest.ConstructorParameters;
+﻿using ObjectToTest.Arguments;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -8,43 +9,55 @@ namespace ObjectToTest.Constructors
     internal class ParameterizedConstructor : IConstructor
     {
         private readonly object _object;
-        private readonly ParameterInfo[] _parameters;
+        private readonly ConstructorInfo _constructor;
+        private readonly IArguments _sharedArguments;
+        private List<IArgument>? _arguments;
 
-        public ParameterizedConstructor(object @object, ParameterInfo[] parameters)
+        public ParameterizedConstructor(object @object, ConstructorInfo constructor, IArguments sharedArguments)
         {
             _object = @object;
-            _parameters = parameters;
+            _constructor = constructor;
+            _sharedArguments = sharedArguments;
         }
+
+        public bool IsValid => Argumetns.All(a => _object.Contains(a.Name) && a.Constructor.IsValid);
+
+        public IList<IArgument> Argumetns => _arguments ??= _constructor
+            .GetParameters()
+            .Select(MapParameter)
+            .ToList();
 
         public override string ToString()
         {
-            var paramsStr = string.Join(",", _parameters.Select(MapParameter));
+            var paramsStr = string.Join(",", Argumetns);
             var objectType = _object.GetType();
             if (objectType.IsGenericType)
             {
-                return $"new {objectType.GenericTypeName()}({paramsStr})";
+                return $"new {objectType.GenericTypeName()}({paramsStr}){new ObjectProperties(_object, _sharedArguments)}";
             }
-            return $"new {objectType.Name}({paramsStr})";
+            return $"new {objectType.Name}({paramsStr}){new ObjectProperties(_object, _sharedArguments)}";
         }
 
         protected virtual IArgument MapParameter(ParameterInfo parameter)
         {
-            if (parameter.ParameterType.IsPrimitive || parameter.ParameterType == typeof(decimal))
+            var sharedArgument = _sharedArguments.Argument(parameter.Member);
+            if (sharedArgument != null)
             {
-                return new SimpleTypeParameter(_object, parameter);
+                return sharedArgument;
             }
-            else if (parameter.ParameterType == typeof(string))
+
+            return new Argument(parameter.Name, Constructor(parameter));
+        }
+
+        private IConstructor Constructor(ParameterInfo parameter)
+        {
+            if (_object.Contains(parameter))
             {
-                return new StringParameter(_object, parameter);
+                return _object
+                    .Value(parameter)
+                    .ValidConstructor(_sharedArguments);
             }
-            else if (parameter.ParameterType.GetInterfaces().Contains(typeof(IEnumerable)))
-            {
-                return new CollectionArgument(_object, parameter);
-            }
-            else
-            {
-                return new ObjectParameter(_object, parameter);
-            }
+            return new InvalidConstructor(_object, parameter);
         }
     }
 }

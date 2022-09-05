@@ -292,6 +292,7 @@ namespace ObjectToTest.UnitTests
              * Now the same object detection is not implemented. It would
              * be nice to fix the issue.
              */
+
             var user = new User("user name");
             var withUser = new WithUserArgument(
                 user,

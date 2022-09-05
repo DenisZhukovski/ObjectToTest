@@ -1,27 +1,33 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using System.Data.Common;
 using System.Text;
+using System.Xml.Linq;
+using ObjectToTest.Arguments;
 
-namespace ObjectToTest.ConstructorParameters
+namespace ObjectToTest.Constructors
 {
-    internal class CollectionArgument : ObjectConstructorParameter, IArgument
+    public class CollectionConstructor : IConstructor
     {
-        public CollectionArgument(object @object, ParameterInfo parameter)
-            : base(@object, parameter)
+        private readonly object _object;
+
+        public CollectionConstructor(object @object)
         {
+            _object = @object;
         }
+
+        public bool IsValid => true;
+
+        public IList<IArgument> Argumetns => new List<IArgument>();
 
         public override string ToString()
         {
-            var value = GetValueFromObject();
             var stringBuilder = new StringBuilder();
 
-            if(value is IEnumerable collection)
+            if (_object is IEnumerable collection)
             {
-                foreach(var item in collection)
+                foreach (var item in collection)
                 {
                     stringBuilder.Append(item.ToStringForInialization()).Append(", ");
                 }
@@ -30,9 +36,9 @@ namespace ObjectToTest.ConstructorParameters
                     .Remove(stringBuilder.Length - 2, 2)
                     .ToString();
 
-                var type = value.GetType();
+                var type = _object.GetType();
 
-                if(type.BaseType == typeof(Array))
+                if (type.BaseType == typeof(Array))
                 {
                     return $"new[] {{ {paramsStr} }}";
                 }
@@ -42,7 +48,8 @@ namespace ObjectToTest.ConstructorParameters
                         : $"new {type.Name} {{ {paramsStr} }}";
             }
 
-            return $"{value}";
+            return $"{_object}";
         }
     }
 }
+

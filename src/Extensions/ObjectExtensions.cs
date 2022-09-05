@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using ObjectToTest.ConstructorParameters;
+using ObjectToTest.Arguments;
+using ObjectToTest.Constructors;
+using ObjectToTest.Exceptions;
+using ObjectToTest.Extensions;
 
 namespace ObjectToTest
 {
@@ -32,8 +37,9 @@ namespace ObjectToTest
 
         public static string ToTest(this object @object)
         {
-            _ = @object ?? throw new ArgumentNullException(nameof(@object));
-            return new ObjectAsConstructor(@object).ToString();
+            return new ObjectAsConstructor(
+                @object ?? throw new ArgumentNullException(nameof(@object))
+            ).ToString();
         }
 
         public static IEnumerable<ConstructorInfo> Constructors(this object @object)
@@ -57,12 +63,12 @@ namespace ObjectToTest
             {
                 valueStr = "null";
             }
-            else if (@object is string)
+            else if (@object.IsPrimitive())
             {
-                valueStr = $"\"{@object}\"";
-            }
-            else if(@object.GetType().IsPrimitive || @object is decimal)
-            {
+                if (@object is string)
+                {
+                    return $"\"{@object}\"";
+                }
                 valueStr = @object.ToString();
             }
             else
@@ -71,6 +77,19 @@ namespace ObjectToTest
             }
 
             return valueStr;
+        }
+
+        internal static bool IsPrimitive(this object @object)
+        {
+            return @object is string || @object is decimal || (@object != null && @object.GetType().IsPrimitive);
+        }
+
+        internal static bool IsCollection(this object @object)
+        {
+            return @object
+                .GetType()
+                .GetInterfaces()
+                .Contains(typeof(IEnumerable));
         }
 
         internal static string GenericTypeName(this Type type)
@@ -85,6 +104,91 @@ namespace ObjectToTest
                 return type.Name;
             }));
             return $"{type.Name.Replace($"`{genericArguments.Count()}", string.Empty)}<{arguments}>";
+        }
+
+        internal static IConstructor ValidConstructor(this object @object, IArguments sharedArguments)
+        {
+            if (@object.IsPrimitive())
+            {
+                return new ValueTypeConstructor(@object);
+            }
+            else if (@object.IsCollection())
+            {
+                return new CollectionConstructor(@object);
+            }
+
+            foreach (var constructor in @object.Constructors())
+            {
+                var ctor = constructor.GetParameters().Any()
+                    ? new Constructors.ParameterizedConstructor(@object, constructor, sharedArguments)
+                    : (IConstructor)new Constructors.DefaultConstructor(@object, sharedArguments);
+                if (ctor.IsValid)
+                {
+                    return ctor;
+                }
+            }
+
+            throw new NoConstructorException(@object.GetType());
+        }
+
+        public static bool Contains(this object @object, ParameterInfo parameter)
+        {
+            return @object.Contains(parameter.Name);
+        }
+
+        public static bool Contains(this object @object, string name)
+        {
+            return @object.Field(name) != null || @object.Property(name) != null;
+        }
+
+        public static FieldInfo? Field(this object @object, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            return @object
+                .GetType()
+                .GetRuntimeFields()
+                .FirstOrDefault(f => f.Name.SameVariable(name));
+        }
+
+        public static PropertyInfo? Property(this object @object, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            return @object
+                .GetType()
+                .GetProperties()
+                .FirstOrDefault(p => p.Name.SameVariable(name));
+        }
+
+        public static object? Value(this object @object, ParameterInfo parameter)
+        {
+            return @object.Value(parameter.Name);
+        }
+
+        public static object? Value(this object @object, string name)
+        {
+            var field = @object.Field(name);
+            if (field != null)
+            {
+                return field.GetValue(@object);
+            }
+            else
+            {
+                var property = @object.Property(name);
+                if (property != null)
+                {
+                    return property.GetValue(@object);
+                }
+            }
+
+            throw new ArgumentException($"Can not get value for parameter with name {name} in type {@object.GetType().Name}");
         }
     }
 }
