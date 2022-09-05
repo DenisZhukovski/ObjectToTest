@@ -76,7 +76,7 @@ namespace ObjectToTest.UnitTests
                 }
             );
             Assert.Equal(
-                "var user = new User(\"user name\");\n",
+                $"var user = new User(\"user name\");{Environment.NewLine}",
                 new ObjectSharedArguments(withUser).ToString()
             );
         }
