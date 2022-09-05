@@ -8,7 +8,7 @@ namespace ObjectToTest.Constructors
     public class SharedArgumentConstructor : IConstructor
     {
         private readonly IArgument _argument;
-        private string _initVariable = string.Empty;
+        private bool _initVariable;
 
         public SharedArgumentConstructor(IArgument argument)
         {
@@ -31,9 +31,10 @@ namespace ObjectToTest.Constructors
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(_initVariable))
+            if (!_initVariable)
             {
-                _initVariable = $"var {_argument.Name} = {_argument.Constructor}";
+                _initVariable = true;
+                return $"var {_argument.Name} = {_argument.Constructor}";
             }
             return _argument.Name;
         }

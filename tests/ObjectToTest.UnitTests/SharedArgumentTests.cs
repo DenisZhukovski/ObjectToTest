@@ -22,24 +22,75 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        //public string Name => _argument.Name;
+        [Fact]
+        public void Name()
+        {
+            var user = new User("user");
+            var argument = new Argument("user", user.ValidConstructor(new MockArguments()));
+            Assert.Equal(
+                argument.Name,
+                new SharedArgument(
+                        argument
+                 ).Name
+            );
+        }
 
-        //public IConstructor Constructor => _constructor ??= new SharedArgumentConstructor(_argument);
+        [Fact]
+        public void Constructor()
+        {
+            var user = new User("user");
+            var argument = new Argument("user", user.ValidConstructor(new MockArguments()));
+            Assert.Equal(
+                argument.Constructor,
+                new SharedArgument(
+                        argument
+                 ).Constructor
+            );
+        }
 
-        //public override bool Equals(object? obj)
-        //{
-        //    return _argument.Equals(obj);
-        //}
+        [Fact]
+        public void HashCode()
+        {
+            var user = new User("user");
+            var argument = new Argument("user", user.ValidConstructor(new MockArguments()));
+            Assert.Equal(
+                argument.GetHashCode(),
+                new SharedArgument(
+                        argument
+                 ).GetHashCode()
+            );
+        }
 
-        //public override int GetHashCode()
-        //{
-        //    return _argument.GetHashCode();
-        //}
+        [Fact]
+        public void AsInitString()
+        {
+            Assert.Equal(
+                "var user = new User(\"user\")",
+                new SharedArgument(
+                        new Argument(
+                            "user",
+                            new User("user").ValidConstructor(new MockArguments())
+                        )
+                 ).ToString()
+            );
+        }
 
-        //public override string ToString()
-        //{
-        //    return Constructor.ToString();
-        //}
+        [Fact]
+        public void AsFieldNameString()
+        {
+            var argument = new SharedArgument(
+                   new Argument(
+                       "user",
+                       new User("user").ValidConstructor(new MockArguments())
+                   )
+            );
+
+            argument.ToString(); // simulate init
+            Assert.Equal(
+                "user",
+                argument.ToString()
+            );
+        }
     }
 }
 
