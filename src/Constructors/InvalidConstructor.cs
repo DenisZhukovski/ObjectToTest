@@ -24,7 +24,7 @@ namespace ObjectToTest.Constructors
 
         public override bool Equals(object? obj)
         {
-            return _object.Equals(obj);
+            return (obj is IConstructor constructor && constructor.Equals(_object)) || _object.Equals(obj);
         }
 
         public override int GetHashCode()

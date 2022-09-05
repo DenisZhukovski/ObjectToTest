@@ -14,12 +14,11 @@ namespace ObjectToTest.UnitTests
         {
             var user = new User("user");
             var argument = new Argument("user", user.ValidConstructor(new MockArguments()));
-            Assert.True(
-                argument.Equals(
-                    new SharedArgument(
+            Assert.Equal<object>(
+                argument,
+                new SharedArgument(
                         argument
-                    )
-                )
+                 )
             );
         }
 
