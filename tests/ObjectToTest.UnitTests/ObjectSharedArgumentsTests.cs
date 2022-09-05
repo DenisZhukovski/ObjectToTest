@@ -80,6 +80,24 @@ namespace ObjectToTest.UnitTests
                 new ObjectSharedArguments(withUser).ToString()
             );
         }
+
+        [Fact]
+        public void SharedArgumentsInitProperties()
+        {
+            User user = new User("user name");
+            var with2PublicProperties = new With2PublicProperties
+            {
+                User = user,
+                UserPublicProperty = new WithUserPublicProperty
+                {
+                    User = user
+                }
+            };
+            Assert.Equal(
+                $"var user = new User(\"user name\");{Environment.NewLine}",
+                new ObjectSharedArguments(with2PublicProperties).ToString()
+            );
+        }
     }
 }
 
