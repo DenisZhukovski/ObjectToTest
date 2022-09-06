@@ -287,12 +287,6 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void TheSameObjectDetection()
         {
-            /**
-             * @todo #:60m/DEV Make TheSameObjectDetection test to be green.
-             * Now the same object detection is not implemented. It would
-             * be nice to fix the issue.
-             */
-
             var user = new User("user name");
             var withUser = new WithUserArgument(
                 user,
