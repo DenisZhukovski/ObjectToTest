@@ -51,10 +51,13 @@ namespace ObjectToTest.Constructors
 
         protected virtual IArgument MapParameter(ParameterInfo parameter)
         {
-            var sharedArgument = _sharedArguments.Argument(parameter.Member);
-            if (sharedArgument != null)
+            if (_object.Contains(parameter))
             {
-                return sharedArgument;
+                var sharedArgument = _sharedArguments.Argument(_object.Value(parameter));
+                if (sharedArgument != null)
+                {
+                    return sharedArgument;
+                }
             }
 
             return new Argument(parameter.Name, Constructor(parameter));

@@ -284,7 +284,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void TheSameObjectDetection()
         {
             /**
@@ -302,7 +302,8 @@ namespace ObjectToTest.UnitTests
                 }
             );
             Assert.Equal(
-                "var user=new User(\"user name\");var o2=new WithUserArgument(user,new WithUserPublicProperty{User = user});",
+                "var user = new User(\"user name\");" + Environment.NewLine +
+                "new WithUserArgument(user,new WithUserPublicProperty(){User = user})",
                 withUser.ToTest()
             );
         }
