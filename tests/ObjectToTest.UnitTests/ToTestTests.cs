@@ -284,15 +284,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void TheSameObjectDetection()
         {
-            /**
-             * @todo #:60m/DEV Make TheSameObjectDetection test to be green.
-             * Now the same object detection is not implemented. It would
-             * be nice to fix the issue.
-             */
-
             var user = new User("user name");
             var withUser = new WithUserArgument(
                 user,
@@ -302,7 +296,8 @@ namespace ObjectToTest.UnitTests
                 }
             );
             Assert.Equal(
-                "var user=new User(\"user name\");var o2=new WithUserArgument(user,new WithUserPublicProperty{User = user});",
+                "var user = new User(\"user name\");" + Environment.NewLine +
+                "new WithUserArgument(user,new WithUserPublicProperty(){User = user})",
                 withUser.ToTest()
             );
         }
