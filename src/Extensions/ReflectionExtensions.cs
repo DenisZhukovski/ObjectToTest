@@ -59,12 +59,7 @@ namespace ObjectToTest
                 .FirstOrDefault(p => p.Name.SameVariable(name));
         }
 
-        public static object? Value(this object @object, FieldInfo parameter)
-        {
-            return @object.Value(parameter.Name);
-        }
-
-        public static object? Value(this object @object, PropertyInfo parameter)
+        public static object? Value(this object @object, MemberInfo parameter)
         {
             return @object.Value(parameter.Name);
         }
@@ -104,6 +99,32 @@ namespace ObjectToTest
                 .GetType()
                 .GetInterfaces()
                 .Contains(typeof(IEnumerable));
+        }
+
+        internal static List<MemberInfo> FieldsAndProperties(this object? @object)
+        {
+            var result = new List<MemberInfo>();
+            if (@object != null)
+            {
+                var objectType = @object.GetType();
+                result.AddRange(objectType.GetProperties());
+                result.AddRange(objectType.GetRuntimeFields());
+            }
+
+            return result;
+        }
+
+        internal static List<object?> Values(this object? @object)
+        {
+            if (@object == null)
+            {
+                return new List<object?>();
+            }
+
+            return @object
+                .FieldsAndProperties()
+                .Select(field => @object.Value(field))
+                .ToList();
         }
     }
 }

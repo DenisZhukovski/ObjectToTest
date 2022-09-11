@@ -98,8 +98,8 @@ namespace ObjectToTest
             foreach (var constructor in @object.Constructors())
             {
                 var ctor = constructor.GetParameters().Any()
-                    ? new Constructors.ParameterizedConstructor(@object, constructor, sharedArguments)
-                    : (IConstructor)new Constructors.DefaultConstructor(@object, sharedArguments);
+                    ? new ParameterizedConstructor(@object, constructor, sharedArguments)
+                    : (IConstructor)new DefaultConstructor(@object, sharedArguments);
                 if (ctor.IsValid)
                 {
                     return ctor;
@@ -107,6 +107,26 @@ namespace ObjectToTest
             }
 
             throw new NoConstructorException(@object.GetType());
+        }
+
+        internal static IArgument AsSharedArgument(this object @object, IArguments sharedArguments)
+        {
+            return new SharedArgument(
+                new Argument(
+                    VariableName(@object),
+                    @object.ValidConstructor(sharedArguments)
+                )
+            );
+        }
+
+        internal static List<object> SharedObjects(this object @object)
+        {
+            return new SharedObjects(@object).ToList();
+        }
+
+        private static string VariableName(object @object)
+        {
+            return Char.ToLower(@object.GetType().Name[0]) + @object.GetType().Name.Substring(1);
         }
     }
 }
