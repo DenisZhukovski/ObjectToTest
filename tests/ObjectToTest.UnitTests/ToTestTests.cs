@@ -235,7 +235,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void CtorWithDictionaryIntString()
         {
             /**
@@ -243,8 +243,8 @@ namespace ObjectToTest.UnitTests
              */
 
             Assert.Equal(
-                "new WithDictionaryArgument(new Dictionary<int, string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
-                new WithDictionaryArgument(new Dictionary<int, string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }).ToTest()
+                "new WithDictionaryArgument(new Dictionary<int,string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
+                new WithDictionaryArgument(new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }).ToTest()
             );
         }
 
