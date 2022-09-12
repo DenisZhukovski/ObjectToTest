@@ -238,10 +238,6 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void CtorWithDictionaryIntString()
         {
-            /**
-             * @todo #:30m/DEV Make CtorWithDictionaryIntString test to be green. Dictionary argument type constructors are not supported at the moment. Need to add the support.
-             */
-
             Assert.Equal(
                 "new WithDictionaryArgument(new Dictionary<int,string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
                 new WithDictionaryArgument(new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }).ToTest()
