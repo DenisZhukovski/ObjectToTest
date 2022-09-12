@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Text;
-using System.Xml.Linq;
 using ObjectToTest.Arguments;
 
 namespace ObjectToTest.Constructors
@@ -37,16 +35,28 @@ namespace ObjectToTest.Constructors
 
             if (_object is IEnumerable collection)
             {
-                foreach (var item in collection)
+                var type = _object.GetType();
+
+                if (typeof(IDictionary).IsAssignableFrom(type))
                 {
-                    stringBuilder.Append(item.ToStringForInialization()).Append(", ");
+                    var dictionary = (IDictionary)_object;
+
+                    foreach(var key in dictionary.Keys)
+                    {
+                        stringBuilder.Append($"{{ {key.ToStringForInialization()}, {dictionary[key].ToStringForInialization()} }}").Append(", ");
+                    }
+                }
+                else
+                {
+                    foreach (var item in collection)
+                    {
+                        stringBuilder.Append(item.ToStringForInialization()).Append(", ");
+                    }
                 }
 
                 var paramsStr = stringBuilder
                     .Remove(stringBuilder.Length - 2, 2)
                     .ToString();
-
-                var type = _object.GetType();
 
                 if (type.BaseType == typeof(Array))
                 {
