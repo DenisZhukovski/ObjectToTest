@@ -42,7 +42,7 @@ namespace ObjectToTest
 
         public IArgument? Argument(object argument)
         {
-            return SharedArguments.FirstOrDefault(a => a.Equals(argument));
+            return SharedArguments.FirstOrDefault(a => a.Equals(argument)) ?? new Argument(null, null);
         }
 
         public override string ToString()
