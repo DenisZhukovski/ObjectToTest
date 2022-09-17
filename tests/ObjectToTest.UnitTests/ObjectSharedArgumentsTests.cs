@@ -26,10 +26,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Failing need to fix")]
-        /**
-           * @todo #12:60m/DEV ObjectSharedArguments should be able to support nulls for shared objects.
-           */
+        [Fact]
         public void SharedNullArgument()
         {
             User user = null;
@@ -40,8 +37,9 @@ namespace ObjectToTest.UnitTests
                     User = user
                 }
             );
-            Assert.NotNull(
-                new ObjectSharedArguments(withUser).Argument(user)
+            Assert.Equal(
+                "new WithUserArgument(null,new WithUserPublicProperty(){User = null})",
+                withUser.ToTest()
             );
         }
 

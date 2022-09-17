@@ -84,13 +84,19 @@ namespace ObjectToTest
             return $"{type.Name.Replace($"`{genericArguments.Count()}", string.Empty)}<{arguments}>";
         }
 
-        internal static IConstructor ValidConstructor(this object @object, IArguments sharedArguments)
+        internal static IConstructor ValidConstructor(this object? @object, IArguments sharedArguments)
         {
+            if (@object == null)
+            {
+                return new NullConstructor();
+            }
+
             if (@object.IsPrimitive())
             {
                 return new ValueTypeConstructor(@object);
             }
-            else if (@object.IsCollection())
+
+            if (@object.IsCollection())
             {
                 return new CollectionConstructor(@object);
             }
