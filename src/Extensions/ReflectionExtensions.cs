@@ -90,15 +90,15 @@ namespace ObjectToTest
 
         internal static bool IsPrimitive(this object @object)
         {
-            return @object is string || @object is decimal || (@object != null && @object.GetType().IsPrimitive);
+            return @object is string || @object is decimal || @object.GetType().IsPrimitive;
         }
 
         internal static bool IsCollection(this object @object)
         {
             return @object
-                .GetType()
-                .GetInterfaces()
-                .Contains(typeof(IEnumerable));
+                    .GetType()
+                    .GetInterfaces()
+                    .Contains(typeof(IEnumerable));
         }
 
         internal static List<MemberInfo> FieldsAndProperties(this object? @object)
