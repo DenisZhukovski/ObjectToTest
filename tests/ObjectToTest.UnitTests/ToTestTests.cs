@@ -292,9 +292,34 @@ namespace ObjectToTest.UnitTests
             var o1 = new CircularRefPublicProperty1();
             var o2 = new CircularRefPublicProperty2();
             o1.PropertyName = o2;
-            o2.PropertyName = o1;
+            o2.PropertyName1 = o1;
             Assert.Equal(
                 "var o1 = new CircularRefPublicProperty1();var o2 = new CircularRefPublicProperty2();o1.PropertyName = o2;o2.PropertyName = o1;",
+                o1.ToTest().Log(_output)
+            );
+        }
+        
+        [Fact(Skip = "Need to fix this test")]
+        public void ComplexCircularReferenceDetection()
+        {
+            /*
+             * @todo #11:60m/DEV Make ComplexCircularReferenceDetection test to be green.
+             * Now the circular references between the objects are not detected. It would
+             * be nice to fix the issue
+             */
+            var o1 = new CircularRefPublicProperty1();
+            var o2 = new CircularRefPublicProperty2();
+            var o3 = new CircularRefPublicProperty3();
+            o1.PropertyName = o2;
+            o2.PropertyName3 = o3;
+            o3.PropertyName = o1;
+            Assert.Equal(
+                "var o1 = new CircularRefPublicProperty1();" +
+                "var o2 = new CircularRefPublicProperty2();" +
+                "var o3 = new CircularRefPublicProperty3();" +
+                "o1.PropertyName = o2;" +
+                "o2.PropertyName3 = o3;" +
+                "o3.PropertyName3 = o1;",
                 o1.ToTest().Log(_output)
             );
         }
