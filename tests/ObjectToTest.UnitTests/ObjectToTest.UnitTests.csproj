@@ -5,6 +5,8 @@
 
     <IsPackable>false</IsPackable>
     <Configurations>Mock;Debug;Release</Configurations>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
  
   <ItemGroup>

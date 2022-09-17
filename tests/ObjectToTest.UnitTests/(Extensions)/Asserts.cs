@@ -6,7 +6,7 @@ namespace ObjectToTest.UnitTests
 {
     public static class Asserts
     {
-        public static void EqualJson(string expectedJson, string actualJson, ITestOutputHelper output = null)
+        public static void EqualJson(string expectedJson, string actualJson, ITestOutputHelper? output = null)
         {
             expectedJson = expectedJson.NoNewLines();
             actualJson = actualJson.NoNewLines();

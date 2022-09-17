@@ -5,7 +5,7 @@ namespace ObjectToTest.UnitTests.Models
 {
     public class IncorrectArgumentsClass
     {
-        private IList<int> _list;
+        private readonly IList<int> _list;
 
         public IncorrectArgumentsClass(int first, int second)
         {

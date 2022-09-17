@@ -15,20 +15,22 @@ namespace ObjectToTest.UnitTests
         {
             _output = output;
         }
-
+        
+#pragma warning disable CS8604
         [Fact]
         public void ThrowArgumentNullException()
         {
-            object obj = null;
+            object? obj = null;
             Assert.Throws<ArgumentNullException>(() => obj.ToTest());
         }
-
+#pragma warning restore CS8604
+        
         [Fact]
         public void DefaultConstructor()
         {
             Assert.Equal(
                 "new EmptyObject()",
-                new EmptyObject().ToTest()
+                new EmptyObject().ToTest().Log(_output)
             );
         }
 
@@ -37,7 +39,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOnePublicProperty(){PropertyName = null}",
-                new WithOnePublicProperty().ToTest()
+                new WithOnePublicProperty().ToTest().Log(_output)
             );
         }
 
@@ -49,7 +51,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicProperty
                 {
                     PropertyName = "Test"
-                }.ToTest()
+                }.ToTest().Log(_output)
             );
         }
 
@@ -61,7 +63,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicIntProperty
                 {
                     PropertyName = 42
-                }.ToTest()
+                }.ToTest().Log(_output)
             );
         }
 
@@ -74,7 +76,7 @@ namespace ObjectToTest.UnitTests
                  {
                      IntProperty = 42,
                      StringProperty = "Test"
-                 }.ToTest()
+                 }.ToTest().Log(_output)
             );
         }
 
@@ -83,7 +85,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOneParameterContructorAndPublicReadProperty(42)",
-                new WithOneParameterContructorAndPublicReadProperty(42).ToTest()
+                new WithOneParameterContructorAndPublicReadProperty(42)
+                        .ToTest()
+                        .Log(_output)
             );
         }
 
@@ -92,7 +96,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOneParamAndPrivateField(42)",
-                new WithOneParamAndPrivateField(42).ToTest()
+                new WithOneParamAndPrivateField(42).ToTest().Log(_output)
             );
         }
 
@@ -104,7 +108,7 @@ namespace ObjectToTest.UnitTests
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test"
-                ).ToTest()
+                ).ToTest().Log(_output)
             );
         }
 
@@ -113,7 +117,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithClassParam(new EmptyObject())",
-                new WithClassParam(new EmptyObject()).ToTest()
+                new WithClassParam(new EmptyObject()).ToTest().Log(_output)
             );
         }
 
@@ -125,7 +129,7 @@ namespace ObjectToTest.UnitTests
                 new WithClassAndIntParams(
                     42,
                     new EmptyObject()
-                ).ToTest()
+                ).ToTest().Log(_output)
             );
         }
 
@@ -134,7 +138,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new TimeSpan(18,17,34,24,5)",
-                new TimeSpan(18, 17, 34, 24, 5).ToTest()
+                new TimeSpan(18, 17, 34, 24, 5)
+                        .ToTest()
+                        .Log(_output)
             );
         }
 
@@ -145,14 +151,14 @@ namespace ObjectToTest.UnitTests
                 "new WithClassParamThatDependsOnClass(new WithClassParam(new EmptyObject()))",
                 new WithClassParamThatDependsOnClass(
                     new WithClassParam(new EmptyObject())
-                ).ToTest()
+                ).ToTest().Log(_output)
             );
         }
 
         [Fact]
-        public void CtorWithComplexDependcySeveralArguments()
+        public void CtorWithComplexDependencySeveralArguments()
         {
-            /**
+            /*
              * @todo #:60m/DEV Proper declaration format is expected. It would be nice to start each constructor argument on its own line with proper intend
              * new WithTwoClassParamAndIntParam(
              *  new WithClassParam(
@@ -174,7 +180,7 @@ namespace ObjectToTest.UnitTests
                         new EmptyObject()
                     ),
                     42
-                ).ToTest()
+                ).ToTest().Log(_output)
             );
         }
 
@@ -186,7 +192,7 @@ namespace ObjectToTest.UnitTests
                  new WithClassParamWithProp(
                      new WithOnePublicProperty { PropertyName = "Test" },
                      42
-                 ).ToTest()
+                 ).ToTest().Log(_output)
             );
         }
 
@@ -195,7 +201,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
-                new WithGenericArgument<IPrice>().ToTest()
+                new WithGenericArgument<IPrice>().ToTest().Log(_output)
             );
         }
 
@@ -204,7 +210,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new With2GenericArguments<IPrice,IUser>(new Price(10))",
-                  new With2GenericArguments<IPrice, IUser>(new Price(10)).ToTest()
+                new With2GenericArguments<IPrice, IUser>(new Price(10))
+                        .ToTest()
+                        .Log(_output)
             );
         }
 
@@ -213,7 +221,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new With3GenericArguments<int,decimal,string>()",
-                  new With3GenericArguments<int, decimal, string>().ToTest()
+                  new With3GenericArguments<int, decimal, string>()
+                      .ToTest()
+                      .Log(_output)
             );
         }
 
@@ -222,7 +232,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
-                new WithIEnumerableInt(new[] { 1, 2, 4, 5 }).ToTest()
+                new WithIEnumerableInt(new[] { 1, 2, 4, 5 })
+                        .ToTest()
+                        .Log(_output)
             );
         }
 
@@ -231,7 +243,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithListArgument(new List<int> { 1, 2, 4, 5 })",
-                new WithListArgument(new List<int> { 1, 2, 4, 5 }).ToTest()
+                new WithListArgument(new List<int> { 1, 2, 4, 5 })
+                        .ToTest()
+                        .Log(_output)
             );
         }
 
@@ -240,7 +254,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithDictionaryArgument(new Dictionary<int,string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
-                new WithDictionaryArgument(new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }).ToTest()
+                new WithDictionaryArgument(
+                    new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
+                ).ToTest().Log(_output)
             );
         }
 
@@ -249,7 +265,10 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new Foo(new Price(10),new User(\"User Name\"))",
-                new Foo(new Price(10), new User("User Name")).ToTest()
+                new Foo(
+                    new Price(10),
+                    new User("User Name")
+                ).ToTest().Log(_output)
             );
         }
 
@@ -258,14 +277,14 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "Can not find a constructor for IncorrectArgumentsClass object, not valid constructor available",
-                new IncorrectArgumentsClass(1, 2).ToTest()
+                new IncorrectArgumentsClass(1, 2).ToTest().Log(_output)
             );
         }
 
         [Fact(Skip = "Need to fix this test")]
         public void CircularReferenceDetection()
         {
-            /**
+            /*
              * @todo #:60m/DEV Make CircularReferenceDetection test to be green.
              * Now the circular references between the objects are not detected. It would
              * be nice to fix the issue
@@ -276,7 +295,7 @@ namespace ObjectToTest.UnitTests
             o2.PropertyName = o1;
             Assert.Equal(
                 "var o1 = new CircularRefPublicProperty1();var o2 = new CircularRefPublicProperty2();o1.PropertyName = o2;o2.PropertyName = o1;",
-                o1.ToTest()
+                o1.ToTest().Log(_output)
             );
         }
 
@@ -294,21 +313,51 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "var user = new User(\"user name\");" + Environment.NewLine +
                 "new WithUserArgument(user,new WithUserPublicProperty(){User = user})",
-                withUser.ToTest()
+                withUser.ToTest().Log(_output)
             );
         }
 
         [Fact(Skip = "Need to fix this test")]
         public void SingletonAsArgument()
         {
-            /**
+            /*
             * @todo #:60m/DEV Make SingletonAsArgument test to be green.
             * Now the singletons are not detected.  It would be nice to fix the issue 
             */
 
             Assert.Equal(
                 "new WithSingletonArgument(SingletonClass.Instance)",
-                new WithSingletonArgument(SingletonClass.Instance).ToTest()
+                new WithSingletonArgument(SingletonClass.Instance)
+                        .ToTest()
+                        .Log(_output)
+            );
+        }
+
+        [Fact(Skip = "Need to fix this test")]
+        public void NotFullyRecreatedWarningComment()
+        {
+            /*
+             * @todo #:60m/LEAD Warning comment when object has an internal state that can not be initialized through the constructor.
+             * It means that the state of an object has been changed after its been created and it's happened through the method or event
+             */
+
+            Assert.Equal(
+                @"
+    /*
+     * Warning!!!
+     * Current object was not fully recreated because of some internal object field was changed
+     * after the object was created.
+     */
+    new ChangedStateObject(new Price(10),new WithUserPublicProperty(){User = new User(""Test Name"")})",
+                new ChangedStateObject(
+                    new Price(10),
+                    new WithUserPublicProperty
+                    {
+                        User = new User("Test Name")
+                    }
+                ).ChangeState()
+                 .ToTest()
+                 .Log(_output)
             );
         }
     }

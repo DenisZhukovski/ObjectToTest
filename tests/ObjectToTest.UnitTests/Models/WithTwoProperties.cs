@@ -2,11 +2,7 @@
 {
     public class WithTwoProperties
     {
-        public WithTwoProperties()
-        {
-        }
-
         public int IntProperty { get; set; }
-        public string StringProperty { get; set; }
+        public string? StringProperty { get; set; }
     }
 }

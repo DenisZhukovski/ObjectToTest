@@ -2,6 +2,6 @@
 {
     public class CircularRefPublicProperty1
     {
-        public CircularRefPublicProperty2 PropertyName { get; set; }
+        public CircularRefPublicProperty2? PropertyName { get; set; }
     }
 }
