@@ -2,7 +2,7 @@
 {
     public class WithGenericArgument<T>
     {
-        public T Create()
+        public T? Create()
         {
             return default(T);
         }

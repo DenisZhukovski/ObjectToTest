@@ -29,7 +29,7 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void SharedNullArgument()
         {
-            User user = null;
+            User? user = null;
             var withUser = new WithUserArgument(
                 user,
                 new WithUserPublicProperty

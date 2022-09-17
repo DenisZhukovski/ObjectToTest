@@ -4,13 +4,13 @@ namespace ObjectToTest.UnitTests.Models
 {
     public class WithUserArgument
     {
-        private readonly IUser user;
-        private readonly WithUserPublicProperty withUserPublicProperty;
+        private readonly IUser _user;
+        private readonly WithUserPublicProperty _withUserPublicProperty;
 
         public WithUserArgument(IUser user, WithUserPublicProperty withUserPublicProperty)
         {
-            this.user = user;
-            this.withUserPublicProperty = withUserPublicProperty;
+            _user = user;
+            _withUserPublicProperty = withUserPublicProperty;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace ObjectToTest.UnitTests.Models
 {
     public class WithUserPublicProperty
     {
-        public IUser User { get; set; }
+        public IUser? User { get; set; }
     }
 }
