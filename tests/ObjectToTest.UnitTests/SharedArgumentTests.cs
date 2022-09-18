@@ -1,8 +1,5 @@
-﻿using System;
-using ObjectToTest.Arguments;
-using ObjectToTest.Constructors;
+﻿using ObjectToTest.Arguments;
 using ObjectToTest.UnitTests.Data;
-using ObjectToTest.UnitTests.Models;
 using Xunit;
 
 namespace ObjectToTest.UnitTests

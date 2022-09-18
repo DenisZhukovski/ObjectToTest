@@ -1,14 +1,21 @@
 ﻿using System;
 using ObjectToTest.Arguments;
-using ObjectToTest.Exceptions;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
     public class ObjectSharedArgumentsTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public ObjectSharedArgumentsTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+        
         [Fact]
         public void SharedNotNullArgument()
         {
@@ -69,6 +76,28 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 $"var user = new User(\"user name\");{Environment.NewLine}",
                 new ObjectSharedArguments(withUser).ToString()
+            );
+        }
+        
+        [Fact(Skip = "Need to fix this test")]
+        public void CircularReferenceInitProperties()
+        {
+            /*
+             * @todo #11:60m/DEV Make CircularReferenceInitProperties test to be green.
+             * Now the circular references not initialized properly and does not detect that shared object
+             * has circular reference in its fields or properties.
+             * It would nice to fix the test.
+             */
+            var o1 = new CircularRefPublicProperty1();
+            var o2 = new CircularRefPublicProperty2();
+            o1.PropertyName = o2;
+            o2.PropertyName1 = o1;
+            Assert.Equal(
+                $"var circularRefPublicProperty2 = new CircularRefPublicProperty2();{Environment.NewLine}" +
+                $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();{Environment.NewLine}" +
+                $"circularRefPublicProperty2.PropertyName1 = circularRefPublicProperty1;{Environment.NewLine}" +
+                $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;",
+                new ObjectSharedArguments(o1).ToString().Log(_output)
             );
         }
 

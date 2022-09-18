@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace ObjectToTest
 {
@@ -12,7 +11,7 @@ namespace ObjectToTest
     public class SharedObjects
     {
         private readonly object? _object;
-        private readonly List<object> _sharedObjects = new List<object>();
+        private readonly List<object> _sharedObjects = new();
 
         public SharedObjects(object? @object)
         {
@@ -54,7 +53,7 @@ namespace ObjectToTest
             // was already used in other object
             if (allReferencedObjects.Contains(@object)) 
             {
-                if (!_sharedObjects.Any(so => so.Equals(@object)))
+                if (!AlreadyShared(@object))
                 {
                     _sharedObjects.Add(@object);
                 }
@@ -65,13 +64,19 @@ namespace ObjectToTest
             }
         }
 
+        private bool AlreadyShared(object @object)
+        {
+            return _sharedObjects.Any(so => so.Equals(@object));
+        }
+        
         private bool Skip(object? @object)
         {
             return @object == null
                 || @object.IsPrimitive()
                 || @object.IsCollection()
                 || @object is TimeSpan
-                || @object is DateTime;
+                || @object is DateTime
+                || AlreadyShared(@object);
         }
     }
 }

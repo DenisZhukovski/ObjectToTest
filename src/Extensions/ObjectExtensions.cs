@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using System.Reflection;
-using System.Xml.Linq;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
-using ObjectToTest.Extensions;
 
 namespace ObjectToTest
 {
@@ -47,7 +42,7 @@ namespace ObjectToTest
             return string.Join(",\r\n", arguments.Select(arg => arg.ToTest()));
         }
 
-        internal static string ToStringForInialization(this object @object)
+        internal static string ToStringForInialization(this object? @object)
         {
             string valueStr;
             if (@object is null)
@@ -73,15 +68,15 @@ namespace ObjectToTest
         internal static string GenericTypeName(this Type type)
         {
             var genericArguments = type.GetGenericArguments();
-            var arguments = string.Join(",", genericArguments.Select(type =>
+            var arguments = string.Join(",", genericArguments.Select(argumentType =>
             {
-                if (Aliases.ContainsKey(type))
+                if (Aliases.ContainsKey(argumentType))
                 {
-                    return Aliases[type];
+                    return Aliases[argumentType];
                 }
-                return type.Name;
+                return argumentType.Name;
             }));
-            return $"{type.Name.Replace($"`{genericArguments.Count()}", string.Empty)}<{arguments}>";
+            return $"{type.Name.Replace($"`{genericArguments.Length}", string.Empty)}<{arguments}>";
         }
 
         internal static IConstructor ValidConstructor(this object? @object, IArguments sharedArguments)
