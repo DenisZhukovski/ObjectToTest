@@ -71,18 +71,28 @@ namespace ObjectToTest
 
         public static object? Value(this object @object, string name)
         {
-            var field = @object.Field(name);
-            if (field != null)
+            try
             {
-                return field.GetValue(@object);
-            }
-            else
-            {
-                var property = @object.Property(name);
-                if (property != null)
+                var field = @object.Field(name);
+                if (field != null)
                 {
-                    return property.GetValue(@object);
+                    return field.GetValue(@object);
                 }
+                else
+                {
+                    var property = @object.Property(name);
+                    if (property != null)
+                    {
+                        return property.GetValue(@object);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    $"Can not get value '{name}' from object '{@object}' ('{@object.GetType().Name}')",
+                    ex
+                );
             }
 
             throw new ArgumentException($"Can not get value for parameter with name {name} in type {@object.GetType().Name}");
@@ -91,6 +101,11 @@ namespace ObjectToTest
         internal static bool IsPrimitive(this object @object)
         {
             return @object is string || @object is decimal || @object.GetType().IsPrimitive;
+        }
+
+        internal static bool IsValueType(this object @object)
+        {
+            return @object != null && @object.GetType().IsValueType;
         }
 
         internal static bool IsCollection(this object @object)
@@ -107,7 +122,11 @@ namespace ObjectToTest
             if (@object != null)
             {
                 var objectType = @object.GetType();
-                result.AddRange(objectType.GetProperties());
+                result.AddRange(
+                    objectType
+                        .GetProperties()
+                        .Where(info => !info.GetIndexParameters().Any())
+                );
                 result.AddRange(objectType.GetRuntimeFields());
             }
 

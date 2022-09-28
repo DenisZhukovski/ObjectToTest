@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ObjectToTest.UnitTests.Models;
+using UnityEngine;
 using Xunit;
 
 namespace ObjectToTest.UnitTests
@@ -16,6 +17,15 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 new List<object>{ o2, o1 },
                 new SharedObjects(o1).ToList()
+            );
+        }
+
+        [Fact]
+        public void VectorSharedObjects()
+        {
+            Assert.Equal(
+                new List<object>(),
+                new SharedObjects(Vector3.forward).ToList()
             );
         }
     }
