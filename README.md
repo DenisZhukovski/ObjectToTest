@@ -1,7 +1,8 @@
 # ObjectToTest
 
 <h3 align="center">
-   
+
+  [![NuGet](https://img.shields.io/nuget/v/ObjectToTest.svg)](https://www.nuget.org/packages/ObjectToTest/)
   [![Stars](https://img.shields.io/github/stars/DenisZhukovski/ObjectToTest?color=brightgreen)](https://github.com/DenisZhukovski/ObjectToTest/stargazers) 
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md) 
   [![Hits-of-Code](https://hitsofcode.com/github/deniszhukovski/ObjectToTest)](https://hitsofcode.com/view/github/deniszhukovski/ObjectToTest)
