@@ -4,13 +4,13 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Authors>Denis Zhukovski, Maksym Shustov</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.0.0</Version>
+    <Version>0.0.2.0</Version>
     <Title>Object To Test</Title>
     <Description>The package is an extension to C# objects that generates set of unit tests depending on an object internal state and public constructors and methods.</Description>
     <PackageProjectUrl>https://github.com/DenisZhukovski/ObjectToTest</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DenisZhukovski/ObjectToTest</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>0.0.2.0</PackageVersion>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
