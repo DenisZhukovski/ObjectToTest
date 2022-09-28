@@ -228,6 +228,17 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
+        public void CtorWithStructArgument()
+        {
+            Assert.Equal(
+               "new WithStructArgument(new Vector3(0,0,1))",
+                new WithStructArgument(UnityEngine.Vector3.forward)
+                     .ToTest()
+                     .Log(_output)
+           );
+        }
+
+        [Fact]
         public void CtorWithIEnumerableInt()
         {
             Assert.Equal(

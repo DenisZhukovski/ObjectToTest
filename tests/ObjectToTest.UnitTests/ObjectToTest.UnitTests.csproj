@@ -38,6 +38,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SoapFormatter" Version="1.1.9" />
+    <PackageReference Include="Unity3D.SDK" Version="2021.1.14.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ObjectToTest.csproj" />
@@ -46,5 +47,6 @@
     <None Remove="SecurityCodeScan" />
     <None Remove="Microsoft.CodeAnalysis.NetAnalyzers" />
     <None Remove="SoapFormatter" />
+    <None Remove="Unity3D.SDK" />
   </ItemGroup>
 </Project>
