@@ -235,6 +235,36 @@ namespace ObjectToTest.UnitTests
                 new WithStructArgument(UnityEngine.Vector3.forward)
                      .ToTest()
                      .Log(_output)
+            );
+        }
+
+        [Fact]
+        public void CtorWithFuncArgument()
+        {
+            /*
+            * @todo #:60m/DEV Make CtorWithFuncArgument test to be green.
+            * Now constructor with Func arguments are not supported. Need to be fixed
+            */
+            Assert.Equal(
+               "new WithFuncArgument(() => 0)",
+                new WithFuncArgument(() => 0)
+                     .ToTest()
+                     .Log(_output)
+           ); 
+        }
+
+        [Fact]
+        public void CtorWithActionArgument()
+        {
+            /*
+            * @todo #:60m/DEV Make WithActionArgument test to be green.
+            * Now constructor with Action arguments are not supported. Need to be fixed
+            */
+            Assert.Equal(
+               "new WithActionArgument((pos) => { })",
+                new WithActionArgument((pos) => { })
+                     .ToTest()
+                     .Log(_output)
            );
         }
 
