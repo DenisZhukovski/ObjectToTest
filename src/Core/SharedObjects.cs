@@ -74,8 +74,7 @@ namespace ObjectToTest
             return @object == null
                 || @object.IsPrimitive()
                 || @object.IsCollection()
-                || @object is TimeSpan
-                || @object is DateTime
+                || @object.IsValueType()
                 || AlreadyShared(@object);
         }
     }

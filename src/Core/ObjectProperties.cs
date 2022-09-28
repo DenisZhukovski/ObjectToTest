@@ -18,6 +18,7 @@ namespace ObjectToTest
         public override string ToString()
         {
             var properties = _object.GetType().GetProperties()
+                .Where(info => !info.GetIndexParameters().Any())
                 .Where(x => x.CanWrite)
                 .Select(p => $"{p.Name} = {PropertyValue(p)}");
             var propertiesStr = string.Join(", ", properties);
