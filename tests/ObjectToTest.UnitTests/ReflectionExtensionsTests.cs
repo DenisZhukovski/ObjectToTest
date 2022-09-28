@@ -9,7 +9,7 @@ namespace ObjectToTest.UnitTests
     public class ReflectionExtensionsTests
     {
         [Fact]
-        public void StructValues()
+        public void WithIndexatorValues()
         {
             Assert.Equal(
                 new List<object> { 99 },
