@@ -27,6 +27,19 @@ namespace ObjectToTest
         {
             return @object.Field(name) != null || @object.Property(name) != null;
         }
+        
+        public static bool ContainsDeep(this object @object, object objectToCheck)
+        {
+            foreach (var value in @object.Values())
+            {
+                if (value == objectToCheck || (value != null && !value.IsCollection() && !value.IsPrimitive() && value.ContainsDeep(objectToCheck)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public static FieldInfo? Field(this object @object, FieldInfo field)
         {

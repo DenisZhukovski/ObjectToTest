@@ -6,14 +6,9 @@ namespace ObjectToTest.UnitTests
 {
     public class ObjectExtensionsTests
     {
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void HasCircularReference()
         {
-            /*
-              * @todo #38:60m/DEV Make HasCircularReference test to be green.
-              * HasCircularReference always returns false but the method should be able
-             * to detect the situation when object has a circular reference in its field or property.
-              */
             var o1 = new CircularRefPublicProperty1();
             var o2 = new CircularRefPublicProperty2();
             o1.PropertyName = o2;
@@ -27,14 +22,9 @@ namespace ObjectToTest.UnitTests
             Assert.False(new User("user name").HasCircularReference());
         }
         
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void HasComplexCircularReference()
         {
-            /*
-              * @todo #38:60m/DEV Make HasComplexCircularReference test to be green.
-              * HasCircularReference method should be able to detect the situation when object has a circular reference
-              * but not direct. Instead it uses the object that uses the other one which uses the original in its field or property.
-              */
             var o1 = new CircularRefPublicProperty1();
             var o2 = new CircularRefPublicProperty2();
             var o3 = new CircularRefPublicProperty3();
