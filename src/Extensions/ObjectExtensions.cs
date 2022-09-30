@@ -128,6 +128,14 @@ namespace ObjectToTest
 
         internal static bool HasCircularReference(this object @object)
         {
+            foreach (var value in @object.Values())
+            {
+                if (value == @object || (value != null && value.ContainsDeep(@object)))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
