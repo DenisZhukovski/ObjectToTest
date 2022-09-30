@@ -6,15 +6,18 @@ namespace ObjectToTest.Arguments
 {
     public class Argument : IArgument
     {
-        public Argument(string name, IConstructor constructor)
+        public Argument(string name, object? @object, IConstructor constructor)
         {
             Name = name;
+            Object = @object;
             Constructor = constructor;
         }
 
         public string Name { get; }
 
         public IConstructor Constructor { get; }
+        
+        public object? Object { get; }
 
         public override bool Equals(object? obj)
         {

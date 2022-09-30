@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ObjectToTest.Arguments;
 
@@ -18,8 +19,7 @@ namespace ObjectToTest
         public override string ToString()
         {
             var properties = _object.GetType().GetProperties()
-                .Where(info => !info.GetIndexParameters().Any())
-                .Where(x => x.CanWrite)
+                .Where(p => p.CanWrite && !p.GetIndexParameters().Any() && !p.GetValue(_object).HasCircularReference())
                 .Select(p => $"{p.Name} = {PropertyValue(p)}");
             var propertiesStr = string.Join(", ", properties);
             if (string.IsNullOrWhiteSpace(propertiesStr))
