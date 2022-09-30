@@ -60,7 +60,13 @@ namespace ObjectToTest.Constructors
                 }
             }
 
-            return new Argument(parameter.Name, Constructor(parameter));
+            return new Argument(
+                parameter.Name, 
+                _object.Contains(parameter) 
+                    ? _object.Value(parameter)
+                    : null,
+                Constructor(parameter)
+            );
         }
 
         private IConstructor Constructor(ParameterInfo parameter)

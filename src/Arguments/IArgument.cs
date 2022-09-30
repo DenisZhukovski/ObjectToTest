@@ -8,5 +8,7 @@ namespace ObjectToTest.Arguments
         string Name { get;  }
 
         IConstructor Constructor { get; }
+        
+        object? Object { get; }
     }
 }

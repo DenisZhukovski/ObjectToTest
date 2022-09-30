@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ObjectToTest.Constructors;
+﻿using ObjectToTest.Constructors;
 
 namespace ObjectToTest.Arguments
 {
@@ -17,6 +15,8 @@ namespace ObjectToTest.Arguments
         public string Name => _argument.Name;
 
         public IConstructor Constructor => _constructor ??= new SharedArgumentConstructor(_argument);
+       
+        public object Object => _argument.Object;
 
         public override bool Equals(object? obj)
         {
