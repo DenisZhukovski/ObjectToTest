@@ -115,6 +115,7 @@ namespace ObjectToTest
             return new SharedArgument(
                 new Argument(
                     VariableName(@object),
+                    @object,
                     @object.ValidConstructor(sharedArguments)
                 )
             );
@@ -123,6 +124,11 @@ namespace ObjectToTest
         internal static List<object> SharedObjects(this object @object)
         {
             return new SharedObjects(@object).ToList();
+        }
+
+        internal static bool HasCircularReference(this object @object)
+        {
+            return false;
         }
 
         private static string VariableName(object @object)
