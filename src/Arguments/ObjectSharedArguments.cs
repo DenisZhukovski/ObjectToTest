@@ -50,9 +50,43 @@ namespace ObjectToTest
             var arguments = new StringBuilder();
             foreach (var argument in SharedArguments)
             {
-                arguments.AppendLine(argument.ToString() + ";");
+                arguments.AppendLine($"{argument};");
+            }
+            return WithCircularProperties(arguments);
+        }
+
+        private string WithCircularProperties(StringBuilder arguments)
+        {
+            foreach (var argument in SharedArguments.Where(a => a.Object?.HasCircularReference() ?? false))
+            {
+                var properties = argument.Object
+                    ?.GetType()
+                    .GetProperties()
+                    .Where(propertyInfo => IsCircularProperty(argument.Object, propertyInfo)) ?? new List<PropertyInfo>();
+                foreach (var propertyInfo in properties)
+                {
+                    arguments.AppendLine($"{argument.Name}.{propertyInfo.Name} = {PropertyValue(propertyInfo.GetValue(argument.Object))};");
+                }
             }
             return arguments.ToString();
+        }
+
+        private bool IsCircularProperty(object @object, PropertyInfo property)
+        {
+            return property.CanWrite
+                   && !property.GetIndexParameters().Any()
+                   && !property.IsDefaultValue(property.GetValue(@object))
+                   && property.GetValue(@object).HasCircularReference();
+        }
+        
+        private string PropertyValue(object propertyObject)
+        {
+            var sharedArgument = this.Argument(propertyObject);
+            if (sharedArgument != null)
+            {
+                return sharedArgument.ToString();
+            }
+            return propertyObject.ToStringForInialization();
         }
     }
 }
