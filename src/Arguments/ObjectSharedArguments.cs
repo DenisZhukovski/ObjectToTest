@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using ObjectToTest.Arguments;
 
@@ -22,36 +19,34 @@ namespace ObjectToTest
             _object = @object;
         }
 
-        private List<IArgument> SharedArguments
-        {
-            get
-            {
-                if (_sharedArguments == null)
-                {
-                    // should be created first to avoid infinite recursion cycle
-                    _sharedArguments = new List<IArgument>();
-                    _sharedArguments.AddRange(
-                        _object
-                            .SharedObjects()
-                            .Select(o => o.AsSharedArgument(this))
-                    );
-                }
-                return _sharedArguments;
-            }
-        }
-
         public IArgument? Argument(object argument)
         {
-            return SharedArguments.FirstOrDefault(a => a.Equals(argument));
+            return ToList().FirstOrDefault(a => a.Equals(argument));
+        }
+
+        public List<IArgument> ToList()
+        {
+            if (_sharedArguments == null)
+            {
+                // should be created first to avoid infinite recursion cycle
+                _sharedArguments = new List<IArgument>();
+                _sharedArguments.AddRange(
+                    _object
+                        .SharedObjects()
+                        .Select(o => o.AsSharedArgument(this))
+                );
+            }
+            return _sharedArguments;
         }
 
         public override string ToString()
         {
             var arguments = new StringBuilder();
-            foreach (var argument in SharedArguments)
+            foreach (var argument in ToList())
             {
-                arguments.AppendLine(argument.ToString() + ";");
+                arguments.AppendLine($"{argument};");
             }
+
             return arguments.ToString();
         }
     }
