@@ -26,7 +26,9 @@ namespace ObjectToTest
         {
             try
             {
-                IArguments sharedArguments = new ObjectSharedArguments(_object);
+                var sharedArguments = new SharedCircularProperties(
+                    new ObjectSharedArguments(_object)
+                );
                 return $"{sharedArguments}" +
                     $"{_object.ValidConstructor(sharedArguments)}";
             }

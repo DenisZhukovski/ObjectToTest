@@ -91,7 +91,10 @@ namespace ObjectToTest.UnitTests
                 $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();{Environment.NewLine}" +
                 $"circularRefPublicProperty2.PropertyName1 = circularRefPublicProperty1;{Environment.NewLine}" +
                 $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}",
-                new ObjectSharedArguments(o1).ToString().Log(_output)
+                
+                new SharedCircularProperties(
+                    new ObjectSharedArguments(o1)
+                ).ToString().Log(_output)
             );
         }
 

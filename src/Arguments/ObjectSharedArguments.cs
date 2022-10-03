@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using ObjectToTest.Arguments;
 
@@ -22,71 +19,35 @@ namespace ObjectToTest
             _object = @object;
         }
 
-        private List<IArgument> SharedArguments
-        {
-            get
-            {
-                if (_sharedArguments == null)
-                {
-                    // should be created first to avoid infinite recursion cycle
-                    _sharedArguments = new List<IArgument>();
-                    _sharedArguments.AddRange(
-                        _object
-                            .SharedObjects()
-                            .Select(o => o.AsSharedArgument(this))
-                    );
-                }
-                return _sharedArguments;
-            }
-        }
-
         public IArgument? Argument(object argument)
         {
-            return SharedArguments.FirstOrDefault(a => a.Equals(argument));
+            return ToList().FirstOrDefault(a => a.Equals(argument));
+        }
+
+        public List<IArgument> ToList()
+        {
+            if (_sharedArguments == null)
+            {
+                // should be created first to avoid infinite recursion cycle
+                _sharedArguments = new List<IArgument>();
+                _sharedArguments.AddRange(
+                    _object
+                        .SharedObjects()
+                        .Select(o => o.AsSharedArgument(this))
+                );
+            }
+            return _sharedArguments;
         }
 
         public override string ToString()
         {
             var arguments = new StringBuilder();
-            foreach (var argument in SharedArguments)
+            foreach (var argument in ToList())
             {
                 arguments.AppendLine($"{argument};");
             }
-            return WithCircularProperties(arguments);
-        }
 
-        private string WithCircularProperties(StringBuilder arguments)
-        {
-            foreach (var argument in SharedArguments.Where(a => a.Object?.HasCircularReference() ?? false))
-            {
-                var properties = argument.Object
-                    ?.GetType()
-                    .GetProperties()
-                    .Where(propertyInfo => IsCircularProperty(argument.Object, propertyInfo)) ?? new List<PropertyInfo>();
-                foreach (var propertyInfo in properties)
-                {
-                    arguments.AppendLine($"{argument.Name}.{propertyInfo.Name} = {PropertyValue(propertyInfo.GetValue(argument.Object))};");
-                }
-            }
             return arguments.ToString();
-        }
-
-        private bool IsCircularProperty(object @object, PropertyInfo property)
-        {
-            return property.CanWrite
-                   && !property.GetIndexParameters().Any()
-                   && !property.IsDefaultValue(property.GetValue(@object))
-                   && property.GetValue(@object).HasCircularReference();
-        }
-        
-        private string PropertyValue(object propertyObject)
-        {
-            var sharedArgument = this.Argument(propertyObject);
-            if (sharedArgument != null)
-            {
-                return sharedArgument.ToString();
-            }
-            return propertyObject.ToStringForInialization();
         }
     }
 }
