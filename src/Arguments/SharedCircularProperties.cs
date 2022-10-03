@@ -5,6 +5,11 @@ using System.Text;
 
 namespace ObjectToTest.Arguments
 {
+    /// <summary>
+    /// The idea is to add circular object property init support. Original <see cref="ObjectSharedArguments"/>
+    /// can not fully initialize the object that contains circular references. Current entity covers this gap
+    /// in functionality.
+    /// </summary>
     public class SharedCircularProperties : IArguments
     {
         private readonly IArguments _origin;
