@@ -158,6 +158,23 @@ namespace ObjectToTest
                 .Select(field => @object.Value(field))
                 .ToList();
         }
+        
+        internal static List<object?> Values(this object? @object, Func<object?, bool> predicate)
+        {
+            return @object
+                .Values()
+                .Where(predicate)
+                .ToList();
+        }
+
+        internal static bool IsDefaultValue(this MemberInfo member, object @object)
+        {
+            object? defaultValue = member.GetType().IsValueType
+                ? Activator.CreateInstance(member.GetType()) 
+                : null;
+
+            return defaultValue == @object;
+        }
     }
 }
 
