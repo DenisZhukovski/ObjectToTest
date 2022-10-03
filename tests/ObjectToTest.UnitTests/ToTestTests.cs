@@ -35,10 +35,15 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
+        /*
+         * Its been decided not to initialize the properties that have default value.
+         * In this particular case PropertyName is declared as nullable and null by default
+         * but it should not be reflected during initialization.
+         */
         public void NullPropertyInitializer()
         {
             Assert.Equal(
-                "new WithOnePublicProperty(){PropertyName = null}",
+                "new WithOnePublicProperty()",
                 new WithOnePublicProperty().ToTest().Log(_output)
             );
         }
@@ -335,7 +340,10 @@ namespace ObjectToTest.UnitTests
             o1.PropertyName = o2;
             o2.PropertyName1 = o1;
             Assert.Equal(
-                "var o1 = new CircularRefPublicProperty1();var o2 = new CircularRefPublicProperty2();o1.PropertyName = o2;o2.PropertyName = o1;",
+                $"var circularRefPublicProperty2 = new CircularRefPublicProperty2();{Environment.NewLine}" +
+                $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();{Environment.NewLine}" +
+                $"circularRefPublicProperty2.PropertyName1 = circularRefPublicProperty1;{Environment.NewLine}" +
+                $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}",
                 o1.ToTest().Log(_output)
             );
         }
