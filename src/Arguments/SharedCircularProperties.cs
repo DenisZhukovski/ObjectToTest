@@ -12,41 +12,41 @@ namespace ObjectToTest.Arguments
     /// </summary>
     public class SharedCircularProperties : IArguments
     {
-        private readonly IArguments _origin;
+        private readonly IArguments _arguments;
 
-        public SharedCircularProperties(IArguments origin)
+        public SharedCircularProperties(IArguments arguments)
         {
-            _origin = origin;
+            _arguments = arguments;
         }
 
         public IArgument? Argument(object argument)
         {
-            return _origin.Argument(argument);
+            return _arguments.Argument(argument);
         }
 
         public List<IArgument> ToList()
         {
-            return _origin.ToList();
+            return _arguments.ToList();
         }
 
         public override string ToString()
         {
-            var baseInit = _origin.ToString();
+            var baseInit = _arguments.ToString();
             return $"{baseInit}{WithCircularProperties()}";
         }
 
         /// <summary>
-        /// Its some kind of delayed initialization just to avoid infinite
+        /// Its initialization to avoid infinite
         /// circular initialization process the shared objects just created without
         /// circular reference properties and after that the objects
         /// </summary>
         private string WithCircularProperties()
         {
             var arguments = new StringBuilder();
-            foreach (var argument in _origin.ToList().Where(a => a.Object?.HasCircularReference() ?? false))
+            foreach (var argument in _arguments.ToList().Where(a => a.Object?.HasCircularReference() ?? false))
             {
-                var circularProperties = argument.Object
-                    ?.GetType()
+                var circularProperties = argument.Object?
+                    .GetType()
                     .GetProperties()
                     .Where(propertyInfo => IsCircularProperty(argument.Object, propertyInfo)) ?? new List<PropertyInfo>();
                 foreach (var circularProperty in circularProperties)
