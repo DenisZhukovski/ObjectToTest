@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Soap;
-using ObjectToTest.Exceptions;
-using ObjectToTest.UnitTests.Data;
+﻿using ObjectToTest.Exceptions;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
