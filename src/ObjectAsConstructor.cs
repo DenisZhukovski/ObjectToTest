@@ -29,13 +29,22 @@ namespace ObjectToTest
                 var sharedArguments = new SharedCircularProperties(
                     new ObjectSharedArguments(_object)
                 );
-                return $"{sharedArguments}" +
-                    $"{_object.ValidConstructor(sharedArguments)}";
+                return $"{sharedArguments}{Constructor(sharedArguments)}";
             }
             catch(NoConstructorException ex)
             {
                 return ex.Message;
             }
+        }
+
+        private IConstructor Constructor(IArguments sharedArguments)
+        {
+            var argument = sharedArguments.Argument(_object);
+            if (argument != null)
+            {
+                return new CommentLine($"Target object stored in: '{argument.Name}'");
+            }
+            return _object.ValidConstructor(sharedArguments);
         }
     }
 }
