@@ -1,3 +1,4 @@
+using ObjectToTest.Constructors;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -27,7 +28,7 @@ namespace ObjectToTest.UnitTests
         public void AsValidConstructor()
         {
             Assert.True(
-                new CommentLine("Its a comment").IsValid
+                (new CommentLine("Its a comment") as IConstructor).IsValid
             );
         }
         
@@ -35,7 +36,7 @@ namespace ObjectToTest.UnitTests
         public void NoConstructorArguments()
         {
             Assert.Empty(
-                new CommentLine("Its a comment").Argumetns
+                (new CommentLine("Its a comment") as IConstructor).Argumetns
             );
         }
     }
