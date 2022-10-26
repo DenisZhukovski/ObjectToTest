@@ -86,6 +86,11 @@ namespace ObjectToTest
                 return new NullConstructor();
             }
 
+            if (@object.IsDelegate())
+            {
+                return new DelegateConstructor(@object);
+            }
+            
             if (@object.IsPrimitive())
             {
                 return new ValueTypeConstructor(@object);
@@ -137,6 +142,11 @@ namespace ObjectToTest
             }
 
             return false;
+        }
+        
+        internal static bool IsDelegate(this object @object)
+        {
+            return @object is Delegate;
         }
 
         private static string VariableName(object @object)
