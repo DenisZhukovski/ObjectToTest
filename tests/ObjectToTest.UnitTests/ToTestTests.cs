@@ -258,15 +258,11 @@ namespace ObjectToTest.UnitTests
            ); 
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void CtorWithActionArgument()
         {
-            /*
-            * @todo #:60m/DEV Make WithActionArgument test to be green.
-            * Now constructor with Action arguments are not supported. Need to be fixed
-            */
             Assert.Equal(
-               "new WithActionArgument((pos) => { })",
+               "new WithActionArgument(pos => { })",
                 new WithActionArgument((pos) => { })
                      .ToTest()
                      .Log(_output)

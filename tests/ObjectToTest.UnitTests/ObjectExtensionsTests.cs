@@ -1,3 +1,4 @@
+using System;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
@@ -14,6 +15,20 @@ namespace ObjectToTest.UnitTests
             o1.PropertyName = o2;
             o2.PropertyName1 = o1;
             Assert.True(o1.HasCircularReference());
+        }
+        
+        [Fact]
+        public void IsDelegateFunction()
+        {
+            var func = new Func<int>(() => 1);
+            Assert.True(func.IsDelegate());
+        }
+        
+        [Fact]
+        public void IsDelegateAction()
+        {
+            var action = new Action<int>(_ => { });
+            Assert.True(action.IsDelegate());
         }
         
         [Fact]
