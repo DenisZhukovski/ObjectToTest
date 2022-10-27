@@ -53,7 +53,7 @@ namespace ObjectToTest.ILReader
         /// </summary>
         public override string ToString()
         {
-            return string.Join("\n", Instructions());
+            return string.Join(Environment.NewLine, Instructions());
         }
         
         /// <summary>
