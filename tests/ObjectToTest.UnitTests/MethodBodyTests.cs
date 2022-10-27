@@ -18,7 +18,7 @@ namespace ObjectToTest.UnitTests
         {
             var method = new Func<int>(() => 0);
             Assert.Equal(
-                "0000 : ldc.i4.0\n" +
+                $"0000 : ldc.i4.0{Environment.NewLine}" +
                 "0001 : ret", 
                 new ObjectToTest.ILReader.MethodBody(method.Method).ToString().Log(_output)
             );
