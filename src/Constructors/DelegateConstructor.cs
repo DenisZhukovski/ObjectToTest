@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ObjectToTest.Arguments;
+using ObjectToTest.ILReader;
 
 namespace ObjectToTest.Constructors
 {
@@ -30,9 +31,24 @@ namespace ObjectToTest.Constructors
             var names = string.Join(", ", parameters.Select(p => p.Name));
             if (parameters.Length == 1)
             {
-                return $"{names} => {{ }}";
+                return $"{names} => {DelegateBody()}";
             }
-            return $"({names}) => {{ }}";
+            return $"({names}) => {DelegateBody()}";
+        }
+
+        private string DelegateBody()
+        {
+            /*
+            * @todo #54:60m/LEAD
+             * Using MethodBody new MethodBody(_object.Method) as a helper
+             * DelegateBody method should be able to generate the body for the delegate to
+             * fix the tests that reference DelegateConstructor class.
+             * See ObjectToTest.ILReader.MethodBody which is able to generate
+             * IL code instructions based on byte array received from _object.Method.
+             * NEED TO FIND a way to convert IL instructions into C# code.
+            */
+            
+            return "{ }";
         }
     }
 }
