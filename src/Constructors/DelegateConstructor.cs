@@ -40,12 +40,13 @@ namespace ObjectToTest.Constructors
         {
             /*
             * @todo #54:60m/LEAD
-             * Using MethodBody new MethodBody(_object.Method) as a helper
-             * DelegateBody method should be able to generate the body for the delegate to
-             * fix the tests that reference DelegateConstructor class.
-             * See ObjectToTest.ILReader.MethodBody which is able to generate
+             * Using new MethodBody(_object.Method) as a helper
+             * DelegateBody method should be able to generate the code base for the delegate to
+             * be able to pass the tests that reference DelegateConstructor class.
+             * See ObjectToTest.ILReader.MethodBody class which is able to generate
              * IL code instructions based on byte array received from _object.Method.
-             * NEED TO FIND a way to convert IL instructions into C# code.
+             * 
+             * TARGET: NEED TO FIND a way to convert IL instructions into C# code.
             */
             
             return "{ }";

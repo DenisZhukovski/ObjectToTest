@@ -35,14 +35,13 @@ namespace ObjectToTest.UnitTests
                 data = str;
             });
             Assert.Equal(
-                $"0000 : nop{Environment.NewLine}"+
-                $"0001 : ldarg.0{Environment.NewLine}"+
-                $"0002 : ldarg.1{Environment.NewLine}"+
-                $"0003 : stfld int ObjectToTest.UnitTests.MethodBodyTests+<>c__DisplayClass3_0::count{Environment.NewLine}"+
-                $"0008 : ldarg.0{Environment.NewLine}"+
-                $"0009 : ldarg.2{Environment.NewLine}"+
-                $"0010 : stfld string ObjectToTest.UnitTests.MethodBodyTests+<>c__DisplayClass3_0::data{Environment.NewLine}"+
-                $"0015 : ret",
+                $"0000 : ldarg.0{Environment.NewLine}"+
+                $"0001 : ldarg.1{Environment.NewLine}"+
+                $"0002 : stfld int ObjectToTest.UnitTests.MethodBodyTests+<>c__DisplayClass3_0::count{Environment.NewLine}"+
+                $"0007 : ldarg.0{Environment.NewLine}"+
+                $"0008 : ldarg.2{Environment.NewLine}"+
+                $"0009 : stfld string ObjectToTest.UnitTests.MethodBodyTests+<>c__DisplayClass3_0::data{Environment.NewLine}"+
+                $"0014 : ret",
                 new ILReader.MethodBody(method.Method).ToString().Log(_output)
             );
         }
