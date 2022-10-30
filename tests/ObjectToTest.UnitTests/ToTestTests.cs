@@ -384,7 +384,7 @@ namespace ObjectToTest.UnitTests
         {
             /*
             * @todo #:60m/DEV Make SingletonAsArgument test to be green.
-            * Now the singletons are not detected.  It would be nice to fix the issue 
+            * Now the singletons are not detected. It would be nice to fix the issue 
             */
 
             Assert.Equal(
@@ -399,7 +399,8 @@ namespace ObjectToTest.UnitTests
         public void NotFullyRecreatedWarningComment()
         {
             /*
-             * @todo #:60m/LEAD Warning comment when object has an internal state that can not be initialized through the constructor.
+             * @todo #:60m/LEAD
+             * Warning comment when object has an internal state that can not be initialized through the constructor.
              * It means that the state of an object has been changed after its been created and it's happened through the method or event
              */
 
