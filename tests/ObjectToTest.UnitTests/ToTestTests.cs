@@ -253,6 +253,24 @@ namespace ObjectToTest.UnitTests
                      .Log(_output)
            ); 
         }
+        
+        [Fact(Skip = "Need to be fixed")]
+        public void OtherObjectMethodReferenceAsArgument()
+        {
+            /*
+            * @todo #:60m/DEV Make OtherObjectMethodReferenceAsArgument test to be green.
+            * Now DelegateConstructor does not support object method as reference.
+             * DelegateConstructor class should be able to generate the body for such cases
+            */
+            var user = new User("user Name");
+            Assert.Equal(
+                $"var user = new User(\"user Name\"){Environment.NewLine}" +
+                "new WithFuncArgument(user.Age)",
+                new WithFuncArgument(user.Age)
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
 
         [Fact]
         public void CtorWithActionArgument()

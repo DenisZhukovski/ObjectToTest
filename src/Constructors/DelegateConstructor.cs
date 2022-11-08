@@ -9,6 +9,11 @@ namespace ObjectToTest.Constructors
     {
         private readonly Delegate _object;
 
+        public DelegateConstructor(Action @object)
+            : this((Delegate)@object)
+        {
+        }
+        
         public DelegateConstructor(object @object)
             : this((Delegate)@object)
         {

@@ -1,5 +1,6 @@
 using System;
 using ObjectToTest.Constructors;
+using ObjectToTest.UnitTests.Data;
 using Xunit;
 using Xunit.Abstractions;
 
