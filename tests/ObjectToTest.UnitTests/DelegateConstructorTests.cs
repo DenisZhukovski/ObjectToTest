@@ -14,7 +14,7 @@ namespace ObjectToTest.UnitTests
             _output = output;
         }
         
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void FuncCtor()
         {
             /*
@@ -79,7 +79,7 @@ namespace ObjectToTest.UnitTests
             );
         }
         
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void ActionCtorWith2ParamsAndBody()
         {
             /*
@@ -91,11 +91,10 @@ namespace ObjectToTest.UnitTests
             var count = 0;
             var data = string.Empty;
             Assert.Equal(
-                $"(i, str) =>{Environment.NewLine}" +
-                $"{{{Environment.NewLine}" +
+                $"(i, str) => {{{Environment.NewLine}" +
                 $"   count = i;{Environment.NewLine}" +
                 $"   data = str;{Environment.NewLine}" +
-                "}",
+                $"}}{Environment.NewLine}",
                 new DelegateConstructor(
                         new Action<int, string>((i, str) => 
                         { 
