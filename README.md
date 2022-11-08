@@ -44,6 +44,10 @@ public void SomeMethod(Foo foo)
 ```
 This generated code can be easily insterted into Unit Test.
 
+## IL Decompilator
+
+[IL Spy](https://github.com/icsharpcode/ILSpy/) nuget package is used to support c# code decompilation
+
 ## Build status
 
 <div align="center">
