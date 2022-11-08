@@ -243,13 +243,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void CtorWithFuncArgument()
         {
-            /*
-            * @todo #:60m/DEV Make CtorWithFuncArgument test to be green.
-            * Now constructor with Func arguments are not supported. Need to be fixed
-            */
             Assert.Equal(
                "new WithFuncArgument(() => 0)",
                 new WithFuncArgument(() => 0)
@@ -262,7 +258,7 @@ namespace ObjectToTest.UnitTests
         public void CtorWithActionArgument()
         {
             Assert.Equal(
-               "new WithActionArgument(pos => { })",
+               "new WithActionArgument(pos => {})",
                 new WithActionArgument((pos) => { })
                      .ToTest()
                      .Log(_output)

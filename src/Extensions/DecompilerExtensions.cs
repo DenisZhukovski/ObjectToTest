@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.CSharp.Syntax;
@@ -65,8 +66,52 @@ namespace ObjectToTest.Extensions
                         .Method(@delegate)
                         .MetadataToken
             );
-            var method = (MethodDeclaration?)decompiledCode.LastChild;
+            var method = (MethodDeclaration?)decompiledCode.LastChild ?? throw new InvalidOperationException("Method not found");
+            if (method.InAnonymous())
+            {
+                if (method.Parameters.Count == 1)
+                {
+                    return $"{method.ParametersAsString()} => {method.BodyAsString()}";
+                }
+                return $"({method.ParametersAsString()}) => {method.BodyAsString()}";
+            }
             return method.ToString();
+        }
+
+        private static string BodyAsString(this MethodDeclaration method)
+        {
+            var body = method.Body.ToString();
+            if (method.Body.Statements.Count <= 1)
+            {
+                body = body
+                    .Replace(Environment.NewLine, string.Empty)
+                    .Replace("\t", string.Empty);
+
+                if (method.Body.Statements.Count == 1)
+                {
+                    body = body
+                        .Replace("{return ", string.Empty)
+                        .Replace(";}", string.Empty);
+                }
+            }
+
+            return body;
+        }
+        
+        private static string ParametersAsString(this MethodDeclaration method)
+        {
+            return
+                string.Join(", ", method.Parameters.Select(p => p.Name));
+        }
+        
+        private static bool InAnonymous(this MethodDeclaration method)
+        {
+            if (method.Name.Contains("<"))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
