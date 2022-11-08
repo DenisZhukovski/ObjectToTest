@@ -15,5 +15,15 @@ namespace ObjectToTest.UnitTests.Data
         {
             return Task.CompletedTask;
         }
+
+        public void Foo()
+        {
+          // Nothing to do   
+        }
+
+        public int Age()
+        {
+            return 5;
+        }
     }
 }

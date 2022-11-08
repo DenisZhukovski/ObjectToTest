@@ -19,7 +19,7 @@ namespace ObjectToTest
             _object = @object;
         }
 
-        public IArgument? Argument(object argument)
+        public IArgument? Argument(object? argument)
         {
             return ToList().FirstOrDefault(a => a.Equals(argument));
         }

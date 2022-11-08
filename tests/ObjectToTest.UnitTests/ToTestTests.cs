@@ -243,13 +243,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void CtorWithFuncArgument()
         {
-            /*
-            * @todo #:60m/DEV Make CtorWithFuncArgument test to be green.
-            * Now constructor with Func arguments are not supported. Need to be fixed
-            */
             Assert.Equal(
                "new WithFuncArgument(() => 0)",
                 new WithFuncArgument(() => 0)
@@ -257,12 +253,30 @@ namespace ObjectToTest.UnitTests
                      .Log(_output)
            ); 
         }
+        
+        [Fact(Skip = "Need to be fixed")]
+        public void OtherObjectMethodReferenceAsArgument()
+        {
+            /*
+            * @todo #:60m/DEV Make OtherObjectMethodReferenceAsArgument test to be green.
+            * Now DelegateConstructor does not support object method as reference.
+             * DelegateConstructor class should be able to generate the body for such cases
+            */
+            var user = new User("user Name");
+            Assert.Equal(
+                $"var user = new User(\"user Name\"){Environment.NewLine}" +
+                "new WithFuncArgument(user.Age)",
+                new WithFuncArgument(user.Age)
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
 
         [Fact]
         public void CtorWithActionArgument()
         {
             Assert.Equal(
-               "new WithActionArgument(pos => { })",
+               "new WithActionArgument(pos => {})",
                 new WithActionArgument((pos) => { })
                      .ToTest()
                      .Log(_output)
