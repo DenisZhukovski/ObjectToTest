@@ -104,7 +104,7 @@ namespace ObjectToTest
             foreach (var constructor in @object.Constructors())
             {
                 var ctor = constructor.GetParameters().Any()
-                    ? new ParameterizedConstructor(@object, constructor, sharedArguments)
+                    ? new ParametrizedConstructor(@object, constructor, sharedArguments)
                     : (IConstructor)new DefaultConstructor(@object, sharedArguments);
                 if (ctor.IsValid)
                 {

@@ -19,7 +19,7 @@ namespace ObjectToTest.Arguments
             _arguments = arguments;
         }
 
-        public IArgument? Argument(object argument)
+        public IArgument? Argument(object? argument)
         {
             return _arguments.Argument(argument);
         }

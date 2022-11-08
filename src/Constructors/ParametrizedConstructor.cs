@@ -6,14 +6,14 @@ using System.Reflection;
 
 namespace ObjectToTest.Constructors
 {
-    internal class ParameterizedConstructor : IConstructor
+    internal class ParametrizedConstructor : IConstructor
     {
         private readonly object _object;
         private readonly ConstructorInfo _constructor;
         private readonly IArguments _sharedArguments;
         private List<IArgument>? _arguments;
 
-        public ParameterizedConstructor(object @object, ConstructorInfo constructor, IArguments sharedArguments)
+        public ParametrizedConstructor(object @object, ConstructorInfo constructor, IArguments sharedArguments)
         {
             _object = @object;
             _constructor = constructor;
