@@ -396,11 +396,6 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void SingletonAsArgument()
         {
-            /*
-            * @todo #:60m/DEV Make SingletonAsArgument test to be green.
-            * Now the singletons are not detected. It would be nice to fix the issue 
-            */
-
             Assert.Equal(
                 "new WithSingletonArgument(SingletonClass.Instance)",
                 new WithSingletonArgument(SingletonClass.Instance)
