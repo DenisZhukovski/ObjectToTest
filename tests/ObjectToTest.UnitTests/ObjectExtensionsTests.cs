@@ -1,6 +1,7 @@
 using System;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
+using UnityEngine;
 using Xunit;
 
 namespace ObjectToTest.UnitTests
@@ -15,6 +16,12 @@ namespace ObjectToTest.UnitTests
             o1.PropertyName = o2;
             o2.PropertyName1 = o1;
             Assert.True(o1.HasCircularReference());
+        }
+        
+        [Fact]
+        public void SingletonIsNotCircularReference()
+        {
+            Assert.False(SingletonClass.Instance.HasCircularReference());
         }
         
         [Fact]
@@ -47,6 +54,32 @@ namespace ObjectToTest.UnitTests
             o2.PropertyName3 = o3;
             o3.PropertyName = o1;
             Assert.True(o1.HasCircularReference());
+        }
+
+        [Fact]
+        public void IsSingleton()
+        {
+            Assert.True(SingletonClass.Instance.IsSingleton());
+        }
+        
+        [Fact]
+        public void NotSingleton()
+        {
+            Assert.False(new User("Gell").IsSingleton());
+        }
+        
+        [Fact]
+        public void StructIsNotSingleton()
+        {
+            Assert.False(new Vector3(0,0,1).IsSingleton());
+        }
+        
+        [Fact]
+        public void SingletonNotSharedArgument()
+        {
+            Assert.Empty(
+                new WithSingletonArgument(SingletonClass.Instance).SharedObjects()
+            );
         }
     }
 }

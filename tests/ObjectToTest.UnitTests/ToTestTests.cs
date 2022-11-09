@@ -393,7 +393,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void SingletonAsArgument()
         {
             /*

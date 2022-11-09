@@ -115,6 +115,14 @@ namespace ObjectToTest.UnitTests
                 new ObjectSharedArguments(with2PublicProperties).ToString()
             );
         }
+
+        [Fact]
+        public void SingletonNotSharedArgument()
+        {
+            Assert.Empty(
+                new ObjectSharedArguments(new WithSingletonArgument(SingletonClass.Instance)).ToList()
+            );
+        }
     }
 }
 
