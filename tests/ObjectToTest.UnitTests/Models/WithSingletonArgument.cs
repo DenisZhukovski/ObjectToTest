@@ -1,6 +1,4 @@
-﻿using ObjectToTest.UnitTests.Data;
-
-namespace ObjectToTest.UnitTests.Models
+﻿namespace ObjectToTest.UnitTests.Models
 {
     public class WithSingletonArgument
     {

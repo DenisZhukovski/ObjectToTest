@@ -23,9 +23,16 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void VectorSharedObjects()
         {
-            Assert.Equal(
-                new List<object>(),
+            Assert.Empty(
                 new SharedObjects(Vector3.forward).ToList()
+            );
+        }
+        
+        [Fact]
+        public void SingletonNotSharedArgument()
+        {
+            Assert.Empty(
+                new SharedObjects(new WithSingletonArgument(SingletonClass.Instance)).ToList()
             );
         }
     }

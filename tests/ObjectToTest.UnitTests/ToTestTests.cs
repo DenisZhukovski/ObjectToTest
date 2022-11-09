@@ -393,14 +393,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
         public void SingletonAsArgument()
         {
-            /*
-            * @todo #:60m/DEV Make SingletonAsArgument test to be green.
-            * Now the singletons are not detected. It would be nice to fix the issue 
-            */
-
             Assert.Equal(
                 "new WithSingletonArgument(SingletonClass.Instance)",
                 new WithSingletonArgument(SingletonClass.Instance)
@@ -408,7 +403,31 @@ namespace ObjectToTest.UnitTests
                         .Log(_output)
             );
         }
-
+        
+        [Fact]
+        public void SingletonAsSharedArgument()
+        {
+            Assert.Equal(
+                "new SharedSingletons(new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10)),new WithSingletonArgument(SingletonClass.Instance))",
+                new SharedSingletons(
+                    new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
+                    new WithSingletonArgument(SingletonClass.Instance)
+                ).ToTest()
+                 .Log(_output)
+            );
+        }
+        
+        [Fact]
+        public void SingletonWithOtherArgument()
+        {
+            Assert.Equal(
+                "new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10))",
+                new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
+        
         [Fact(Skip = "Need to fix this test")]
         public void NotFullyRecreatedWarningComment()
         {

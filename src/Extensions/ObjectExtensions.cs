@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
@@ -100,6 +101,11 @@ namespace ObjectToTest
             {
                 return new CollectionConstructor(@object);
             }
+            
+            if (@object.IsSingleton())
+            {
+                return new SingletonConstructor(@object);
+            }
 
             foreach (var constructor in @object.Constructors())
             {
@@ -133,11 +139,14 @@ namespace ObjectToTest
 
         internal static bool HasCircularReference(this object @object)
         {
-            foreach (var value in @object.Values())
+            if (!@object.IsSingleton())
             {
-                if (value == @object || (value != null && value.ContainsDeep(@object)))
+                foreach (var value in @object.Values())
                 {
-                    return true;
+                    if (value != null && value.ContainsDeep(@object))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -147,6 +156,22 @@ namespace ObjectToTest
         internal static bool IsDelegate(this object @object)
         {
             return @object is Delegate;
+        }
+        
+        internal static bool IsSingleton(this object @object)
+        {
+            if (@object != null)
+            {
+                var objectType = @object.GetType();
+                if (!objectType.IsValueType && !objectType.Constructors().Any(c => c.IsPublic))
+                {
+                    return objectType
+                        .GetProperties(BindingFlags.Static | BindingFlags.Public)
+                        .Any(p => p.PropertyType == objectType && p.CanRead);
+                }
+            }
+
+            return false;
         }
 
         private static string VariableName(object @object)
