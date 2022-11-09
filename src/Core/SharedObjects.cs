@@ -74,6 +74,7 @@ namespace ObjectToTest
             return @object == null
                 || @object.IsPrimitive()
                 || @object.IsDelegate()
+                || @object.IsSingleton()
                 || @object.IsCollection()
                 || @object.IsValueType()
                 || AlreadyShared(@object);
