@@ -403,7 +403,18 @@ namespace ObjectToTest.UnitTests
                         .Log(_output)
             );
         }
-
+        
+        [Fact]
+        public void SingletonWithOtherArgument()
+        {
+            Assert.Equal(
+                "new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10))",
+                new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
+        
         [Fact(Skip = "Need to fix this test")]
         public void NotFullyRecreatedWarningComment()
         {
