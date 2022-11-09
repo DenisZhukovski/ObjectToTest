@@ -405,6 +405,19 @@ namespace ObjectToTest.UnitTests
         }
         
         [Fact]
+        public void SingletonAsSharedArgument()
+        {
+            Assert.Equal(
+                "new SharedSingletons(new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10)),new WithSingletonArgument(SingletonClass.Instance))",
+                new SharedSingletons(
+                    new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
+                    new WithSingletonArgument(SingletonClass.Instance)
+                ).ToTest()
+                 .Log(_output)
+            );
+        }
+        
+        [Fact]
         public void SingletonWithOtherArgument()
         {
             Assert.Equal(
