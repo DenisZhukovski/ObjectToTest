@@ -22,6 +22,17 @@ namespace ObjectToTest.Constructors
         {
             return $"{_object.GetType().Name}.{SingletonInstance().Name}";
         }
+        
+        public override bool Equals(object? obj)
+        {
+            return (obj is IConstructor constructor && constructor.Equals(_object))
+                   || _object.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _object.GetHashCode();
+        }
 
         private PropertyInfo SingletonInstance()
         {
