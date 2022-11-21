@@ -36,7 +36,7 @@ namespace ObjectToTest.UnitTests
         public void NoConstructorArguments()
         {
             Assert.Empty(
-                (new CommentLine("Its a comment") as IConstructor).Argumetns
+                (new CommentLine("Its a comment") as IConstructor).Arguments
             );
         }
     }

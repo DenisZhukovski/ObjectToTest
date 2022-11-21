@@ -20,7 +20,7 @@ namespace ObjectToTest.Constructors
                 .GetConstructors()
                 .Any(c => !c.GetParameters().Any() && c.IsPublic);
 
-        public IList<IArgument> Argumetns => new List<IArgument>();
+        public IList<IArgument> Arguments => new List<IArgument>();
 
         public override bool Equals(object? obj)
         {

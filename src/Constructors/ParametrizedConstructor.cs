@@ -1,5 +1,4 @@
 ﻿using ObjectToTest.Arguments;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,9 +19,9 @@ namespace ObjectToTest.Constructors
             _sharedArguments = sharedArguments;
         }
 
-        public bool IsValid => Argumetns.All(a => _object.Contains(a.Name) && a.Constructor.IsValid);
+        public bool IsValid => Arguments.All(a => _object.Contains(a.Name) && a.Constructor.IsValid);
 
-        public IList<IArgument> Argumetns => _arguments ??= _constructor
+        public IList<IArgument> Arguments => _arguments ??= _constructor
             .GetParameters()
             .Select(MapParameter)
             .ToList();
@@ -40,7 +39,7 @@ namespace ObjectToTest.Constructors
 
         public override string ToString()
         {
-            var paramsStr = string.Join(",", Argumetns);
+            var paramsStr = string.Join(",", Arguments);
             var objectType = _object.GetType();
             if (objectType.IsGenericType)
             {

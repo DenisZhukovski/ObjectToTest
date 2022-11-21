@@ -15,7 +15,7 @@ namespace ObjectToTest.Constructors
 
         public bool IsValid => true;
 
-        public IList<IArgument> Argumetns => new List<IArgument>();
+        public IList<IArgument> Arguments => new List<IArgument>();
 
         public override bool Equals(object? obj)
         {
@@ -29,7 +29,7 @@ namespace ObjectToTest.Constructors
 
         public override string ToString()
         {
-            return _object.ToStringForInialization();
+            return _object.ToStringForInitialization();
         }
     }
 }

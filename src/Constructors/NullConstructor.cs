@@ -7,7 +7,7 @@ namespace ObjectToTest.Constructors
     {
         private List<IArgument>? _arguments;
         public bool IsValid => true;
-        public IList<IArgument> Argumetns => _arguments ??= new List<IArgument>();
+        public IList<IArgument> Arguments => _arguments ??= new List<IArgument>();
 
         public override string ToString()
         {

@@ -66,7 +66,7 @@ namespace ObjectToTest
             {
                 return sharedArgument.ToString();
             }
-            return propertyObject.ToStringForInialization();
+            return propertyObject.ToStringForInitialization();
         }
     }
 }

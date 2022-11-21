@@ -17,7 +17,7 @@ namespace ObjectToTest.Constructors
 
         public bool IsValid => true;
 
-        public IList<IArgument> Argumetns => new List<IArgument>();
+        public IList<IArgument> Arguments => new List<IArgument>();
 
         public override bool Equals(object? obj)
         {
@@ -43,14 +43,14 @@ namespace ObjectToTest.Constructors
 
                     foreach(var key in dictionary.Keys)
                     {
-                        stringBuilder.Append($"{{ {key.ToStringForInialization()}, {dictionary[key].ToStringForInialization()} }}").Append(", ");
+                        stringBuilder.Append($"{{ {key.ToStringForInitialization()}, {dictionary[key].ToStringForInitialization()} }}").Append(", ");
                     }
                 }
                 else
                 {
                     foreach (var item in collection)
                     {
-                        stringBuilder.Append(item.ToStringForInialization()).Append(", ");
+                        stringBuilder.Append(item.ToStringForInitialization()).Append(", ");
                     }
                 }
 

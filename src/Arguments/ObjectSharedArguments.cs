@@ -6,8 +6,8 @@ using ObjectToTest.Arguments;
 namespace ObjectToTest
 {
     /// <summary>
-    /// The idea is to detect the set of objects that used more that one time in different target object arguments.
-    /// It should allow to reuse the argument injecting it into other object's constructors or property setters.
+    /// The idea is to detect the objects that used more than once in different target object's arguments.
+    /// It should allow to reuse the argument by injecting it into other object's constructors or property setters.
     /// </summary>
     public class ObjectSharedArguments : IArguments
     {
@@ -21,7 +21,9 @@ namespace ObjectToTest
 
         public IArgument? Argument(object? argument)
         {
-            return ToList().FirstOrDefault(a => a.Equals(argument));
+            return ToList().FirstOrDefault(
+                a => a.Equals(argument)
+            );
         }
 
         public List<IArgument> ToList()

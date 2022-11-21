@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ObjectToTest.Arguments;
 
 namespace ObjectToTest.Constructors
 {
     public interface IConstructor
     {
-        bool IsValid { get;  }
+        bool IsValid { get; }
 
-        IList<IArgument> Argumetns { get;  }
+        IList<IArgument> Arguments { get; }
     }
 }
 

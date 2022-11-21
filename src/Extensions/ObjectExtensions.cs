@@ -10,27 +10,6 @@ namespace ObjectToTest
 {
     public static class ObjectExtensions
     {
-        private static readonly Dictionary<Type, string> Aliases =
-            new Dictionary<Type, string>()
-        {
-            { typeof(byte), "byte" },
-            { typeof(sbyte), "sbyte" },
-            { typeof(short), "short" },
-            { typeof(ushort), "ushort" },
-            { typeof(int), "int" },
-            { typeof(uint), "uint" },
-            { typeof(long), "long" },
-            { typeof(ulong), "ulong" },
-            { typeof(float), "float" },
-            { typeof(double), "double" },
-            { typeof(decimal), "decimal" },
-            { typeof(object), "object" },
-            { typeof(bool), "bool" },
-            { typeof(char), "char" },
-            { typeof(string), "string" },
-            { typeof(void), "void" }
-        };
-
         public static string ToTest(this object @object)
         {
             return new ObjectAsConstructor(
@@ -38,12 +17,7 @@ namespace ObjectToTest
             ).ToString();
         }
 
-        internal static string Join(this IList<object> arguments)
-        {
-            return string.Join(",\r\n", arguments.Select(arg => arg.ToTest()));
-        }
-
-        internal static string ToStringForInialization(this object? @object)
+        internal static string ToStringForInitialization(this object? @object)
         {
             string valueStr;
             if (@object is null)
@@ -64,20 +38,6 @@ namespace ObjectToTest
             }
 
             return valueStr;
-        }
-
-        internal static string GenericTypeName(this Type type)
-        {
-            var genericArguments = type.GetGenericArguments();
-            var arguments = string.Join(",", genericArguments.Select(argumentType =>
-            {
-                if (Aliases.ContainsKey(argumentType))
-                {
-                    return Aliases[argumentType];
-                }
-                return argumentType.Name;
-            }));
-            return $"{type.Name.Replace($"`{genericArguments.Length}", string.Empty)}<{arguments}>";
         }
 
         internal static IConstructor ValidConstructor(this object? @object, IArguments sharedArguments)
@@ -158,7 +118,7 @@ namespace ObjectToTest
             return @object is Delegate;
         }
         
-        internal static bool IsSingleton(this object @object)
+        internal static bool IsSingleton(this object? @object)
         {
             if (@object != null)
             {
