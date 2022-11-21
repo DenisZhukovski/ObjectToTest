@@ -14,7 +14,7 @@ namespace ObjectToTest.UnitTests
         public void WithIndexatorValues()
         {
             Assert.Equal(
-                new List<object> { 99 },
+                new List<object?> { 99 },
                 new WithIndexator(99).Values()
             );
         }

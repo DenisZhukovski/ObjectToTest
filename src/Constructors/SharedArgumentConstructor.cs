@@ -15,7 +15,7 @@ namespace ObjectToTest.Constructors
 
         bool IConstructor.IsValid => _argument.Constructor.IsValid;
 
-        IList<IArgument> IConstructor.Argumetns => _argument.Constructor.Argumetns;
+        IList<IArgument> IConstructor.Arguments => _argument.Constructor.Arguments;
 
         public override bool Equals(object? obj)
         {

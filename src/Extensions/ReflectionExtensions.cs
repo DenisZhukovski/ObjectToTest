@@ -9,6 +9,27 @@ namespace ObjectToTest
 {
     public static class ReflectionExtensions
     {
+        private static readonly Dictionary<Type, string> Aliases =
+            new Dictionary<Type, string>()
+            {
+                { typeof(byte), "byte" },
+                { typeof(sbyte), "sbyte" },
+                { typeof(short), "short" },
+                { typeof(ushort), "ushort" },
+                { typeof(int), "int" },
+                { typeof(uint), "uint" },
+                { typeof(long), "long" },
+                { typeof(ulong), "ulong" },
+                { typeof(float), "float" },
+                { typeof(double), "double" },
+                { typeof(decimal), "decimal" },
+                { typeof(object), "object" },
+                { typeof(bool), "bool" },
+                { typeof(char), "char" },
+                { typeof(string), "string" },
+                { typeof(void), "void" }
+            };
+        
         public static IEnumerable<ConstructorInfo> Constructors(this object @object)
         {
             _ = @object ?? throw new ArgumentNullException(nameof(@object));
@@ -16,6 +37,20 @@ namespace ObjectToTest
                 .GetConstructors()
                 .Where(x => x.IsPublic)
                 .OrderByDescending(x => x.GetParameters().Length);
+        }
+        
+        internal static string GenericTypeName(this Type type)
+        {
+            var genericArguments = type.GetGenericArguments();
+            var arguments = string.Join(",", genericArguments.Select(argumentType =>
+            {
+                if (Aliases.ContainsKey(argumentType))
+                {
+                    return Aliases[argumentType];
+                }
+                return argumentType.Name;
+            }));
+            return $"{type.Name.Replace($"`{genericArguments.Length}", string.Empty)}<{arguments}>";
         }
 
         public static bool Contains(this object @object, ParameterInfo parameter)
@@ -39,11 +74,6 @@ namespace ObjectToTest
             }
 
             return false;
-        }
-
-        public static FieldInfo? Field(this object @object, FieldInfo field)
-        {
-            return @object.Field(field.Name);
         }
 
         public static FieldInfo? Field(this object @object, string name)
@@ -116,7 +146,7 @@ namespace ObjectToTest
             return @object is string || @object is decimal || @object.GetType().IsPrimitive;
         }
 
-        internal static bool IsValueType(this object @object)
+        internal static bool IsValueType(this object? @object)
         {
             return @object != null && @object.GetType().IsValueType;
         }

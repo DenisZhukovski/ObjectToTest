@@ -16,11 +16,22 @@ namespace ObjectToTest.Constructors
         }
         
         public bool IsValid => true;
-        public IList<IArgument> Argumetns => _arguments ??= new List<IArgument>();
+        public IList<IArgument> Arguments => _arguments ??= new List<IArgument>();
 
         public override string ToString()
         {
             return $"{_object.GetType().Name}.{SingletonInstance().Name}";
+        }
+        
+        public override bool Equals(object? obj)
+        {
+            return (obj is IConstructor constructor && constructor.Equals(_object))
+                   || _object.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _object.GetHashCode();
         }
 
         private PropertyInfo SingletonInstance()
