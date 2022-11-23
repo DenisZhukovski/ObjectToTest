@@ -4,19 +4,19 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Authors>Denis Zhukovski, Maksym Shustov</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.0.3.0</Version>
+    <Version>0.0.4</Version>
     <Title>Object To Test</Title>
     <Description>The package is an extension to C# objects that generates set of unit tests depending on an object internal state and public constructors and methods.</Description>
     <PackageProjectUrl>https://github.com/DenisZhukovski/ObjectToTest</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DenisZhukovski/ObjectToTest</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageVersion>0.0.3.0</PackageVersion>
+    <PackageVersion>0.0.4</PackageVersion>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ICSharpCode.Decompiler" Version="7.2.1.6856" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.3.1">
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.4.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -24,7 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.48.0.56517">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.49.0.57237">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
