@@ -73,7 +73,25 @@ namespace ObjectToTest.UnitTests
         {
             Assert.False(new Vector3(0,0,1).IsSingleton());
         }
-        
+
+        [Fact]
+        public void EnumIsPrimitive()
+        {
+            Assert.True(FlaggedEnum.Advanced.IsPrimitive());
+        }
+
+        [Fact]
+        public void StringIsPrimitive()
+        {
+            Assert.True("Hello world".IsPrimitive());
+        }
+
+        [Fact]
+        public void DecimalIsPrimitive()
+        {
+            Assert.True(20m.IsPrimitive());
+        }
+
         [Fact]
         public void SingletonNotSharedArgument()
         {
