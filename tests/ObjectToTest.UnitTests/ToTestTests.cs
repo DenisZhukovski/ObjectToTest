@@ -244,6 +244,17 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
+        public void CtorWithEnumArgument()
+        {
+            Assert.Equal(
+               "new WithEnumArgument(FlaggedEnum.Advanced)",
+                new WithEnumArgument(FlaggedEnum.Advanced)
+                     .ToTest()
+                     .Log(_output)
+            );
+        }
+
+        [Fact]
         public void CtorWithFuncArgument()
         {
             Assert.Equal(

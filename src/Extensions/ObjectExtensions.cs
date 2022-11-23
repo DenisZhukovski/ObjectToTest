@@ -30,6 +30,11 @@ namespace ObjectToTest
                 {
                     return $"\"{@object}\"";
                 }
+
+                if (@object is Enum)
+                {
+                    return $"{@object.GetType().Name}.{@object}";
+                }
                 valueStr = @object.ToString();
             }
             else

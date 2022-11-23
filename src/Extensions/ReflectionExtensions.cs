@@ -143,7 +143,10 @@ namespace ObjectToTest
 
         internal static bool IsPrimitive(this object @object)
         {
-            return @object is string || @object is decimal || @object.GetType().IsPrimitive;
+            return @object is string
+                || @object is decimal
+                || @object is Enum
+                || @object.GetType().IsPrimitive;
         }
 
         internal static bool IsValueType(this object? @object)
