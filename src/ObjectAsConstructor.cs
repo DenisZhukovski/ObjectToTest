@@ -14,24 +14,29 @@ namespace ObjectToTest
     public class ObjectAsConstructor
     {
         private readonly object _object;
+        private IArguments? _sharedArguments;
 
         public ObjectAsConstructor(object @object)
         {
             _object = @object;
         }
 
+        private IArguments SharedArguments => _sharedArguments ??= new SharedCircularProperties(
+            new ObjectSharedArguments(_object)
+        );
+
         public override string ToString()
         {
             try
             {
-                var sharedArguments = new SharedCircularProperties(
-                    new ObjectSharedArguments(_object)
-                );
-                return $"{sharedArguments}{Constructor(sharedArguments)}";
+                return $"{SharedArguments}{Constructor(SharedArguments)}";
             }
             catch(NoConstructorException ex)
             {
-                return ex.Message;
+                return ex.Message + new ObjectDependenciesTrace(
+                    _object,
+                    SharedArguments
+                );
             }
         }
 

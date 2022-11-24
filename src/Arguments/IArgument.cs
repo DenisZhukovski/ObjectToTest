@@ -1,5 +1,4 @@
-﻿using System;
-using ObjectToTest.Constructors;
+﻿using ObjectToTest.Constructors;
 
 namespace ObjectToTest.Arguments
 {
