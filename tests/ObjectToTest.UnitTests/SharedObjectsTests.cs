@@ -35,5 +35,19 @@ namespace ObjectToTest.UnitTests
                 new SharedObjects(new WithSingletonArgument(SingletonClass.Instance)).ToList()
             );
         }
+        
+        [Fact]
+        public void SameEqualSameHashCode()
+        {
+            var customHashCode = new WithCustomHashCode("11", 1);
+            Assert.NotEmpty(
+                new SharedObjects(
+                    new WithCustomDataExtended(
+                        new WithCustomData(customHashCode),
+                        customHashCode
+                    )
+                ).ToList()
+            );
+        }
     }
 }

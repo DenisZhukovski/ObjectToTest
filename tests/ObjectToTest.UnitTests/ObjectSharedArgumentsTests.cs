@@ -128,27 +128,29 @@ namespace ObjectToTest.UnitTests
         public void SameEqualSameHashCode()
         {
             var customHashCode = new WithCustomHashCode("11", 1);
-            Assert.Equal(
-                "var customHashCode = new WithCustomHashCode(\"11\", 1)",
+            Assert.NotNull(
                 new ObjectSharedArguments(
                     new WithCustomDataExtended(
                         new WithCustomData(customHashCode),
                         customHashCode
                     )
-                ).ToString().Log(_output)
+                ).Argument(customHashCode)
             );
         }
 
-        //public void SameEqualButDifferentHashCode()
-        //{
-        //    var customHashCode = new WithCustomHashCode("11", 1);
-        //    Assert.Equal(
-        //        new WithCustomDataExtended(
-        //            new WithCustomData(customHashCode),
-        //            customHashCode
-        //        ).ToTest()
-        //    );
-        //}
+        [Fact]
+        public void SameEqualButDifferentHashCode()
+        {
+            var customHashCode = new WithCustomHashCode("11", 1);
+            Assert.Null(
+                new ObjectSharedArguments(
+                        new WithCustomDataExtended(
+                            new WithCustomData(customHashCode),
+                            customHashCode
+                        )
+                ).Argument(new WithCustomHashCode("11", 2))
+            );
+        }
     }
 }
 

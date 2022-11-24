@@ -344,9 +344,9 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "Can not find a constructor for IncorrectArgumentsClass object, valid constructor is not available." +
-                $"{Environment.NewLine}IncorrectArgumentsClass:{Environment.NewLine}" +
-                $"  null first - not found in object{Environment.NewLine}" +
-                $"  null second - not found in object{Environment.NewLine}",
+                $"{Environment.NewLine}ctor IncorrectArgumentsClass{Environment.NewLine}" +
+                $"  int first - not found in object{Environment.NewLine}" +
+                $"  int second - not found in object{Environment.NewLine}",
                 new IncorrectArgumentsClass(1, 2).ToTest().Log(_output)
             );
         }

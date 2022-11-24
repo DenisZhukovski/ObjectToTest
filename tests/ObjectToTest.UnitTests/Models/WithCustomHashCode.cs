@@ -13,6 +13,10 @@
 
         public override bool Equals(object? obj)
         {
+            if (obj is WithCustomHashCode customData)
+            {
+                return this.data.Equals(customData.data); 
+            }
             return this.data.Equals(obj);
         }
 
