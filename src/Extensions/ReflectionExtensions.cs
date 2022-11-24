@@ -42,20 +42,29 @@ namespace ObjectToTest
         internal static string GenericTypeName(this Type type)
         {
             var genericArguments = type.GetGenericArguments();
-            var arguments = string.Join(",", genericArguments.Select(argumentType =>
-            {
-                if (Aliases.ContainsKey(argumentType))
-                {
-                    return Aliases[argumentType];
-                }
-                return argumentType.Name;
-            }));
+            var arguments = string.Join(",", genericArguments.Select(argumentType => argumentType.TypeName()));
             return $"{type.Name.Replace($"`{genericArguments.Length}", string.Empty)}<{arguments}>";
+        }
+        
+        internal static string TypeName(this Type type)
+        {
+            if (Aliases.ContainsKey(type))
+            {
+                return Aliases[type];
+            }
+            return type.Name;
         }
 
         public static bool Contains(this object @object, ParameterInfo parameter)
         {
             return @object.Contains(parameter.Name);
+        }
+        
+        public static object? Default(this ParameterInfo parameter)
+        {
+            return parameter.ParameterType.IsValueType
+                ? Activator.CreateInstance(parameter.ParameterType)
+                : null;
         }
 
         public static bool Contains(this object @object, string name)

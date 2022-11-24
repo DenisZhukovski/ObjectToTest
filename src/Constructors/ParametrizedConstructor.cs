@@ -1,4 +1,5 @@
-﻿using ObjectToTest.Arguments;
+﻿using System;
+using ObjectToTest.Arguments;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -55,26 +56,19 @@ namespace ObjectToTest.Constructors
             if (_object.Contains(parameter))
             {
                 var sharedArgument = _sharedArguments.Argument(_object.Value(parameter));
-                if (TheSameArgument(sharedArgument, parameter))
+                if (sharedArgument != null)
                 {
                     return sharedArgument;
                 }
             }
 
             return new Argument(
-                parameter.Name, 
+                parameter.Name,
                 _object.Contains(parameter) 
                     ? _object.Value(parameter)
-                    : null,
+                    : parameter.Default(),
                 Constructor(parameter)
             );
-        }
-
-        private bool TheSameArgument(IArgument? sharedArgument, ParameterInfo parameter)
-        {
-            return sharedArgument != null;
-                //&& sharedArgument.Name == parameter.Name
-                //&& sharedArgument.Object?.GetType() == parameter.ParameterType;
         }
 
         private IConstructor Constructor(ParameterInfo parameter)

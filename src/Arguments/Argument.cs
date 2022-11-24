@@ -28,6 +28,11 @@ namespace ObjectToTest.Arguments
 
         public override int GetHashCode()
         {
+            if (Object != null)
+            {
+                return Object.GetHashCode();
+            }
+            
             int hashCode = 726871525;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
             hashCode = hashCode * -1521134295 + EqualityComparer<IConstructor>.Default.GetHashCode(Constructor);

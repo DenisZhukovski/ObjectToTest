@@ -19,7 +19,6 @@ namespace ObjectToTest
         public override string ToString()
         {
             var result = new StringBuilder();
-            result.AppendLine();
             foreach (var ctor in _object.Constructors(_sharedArguments))
             {
                 result.Append(ConstructorDetails(ctor, ""));
@@ -31,24 +30,10 @@ namespace ObjectToTest
         private string ConstructorDetails(IConstructor ctor, string intent)
         {
             var result = new StringBuilder();
-
-            var objectType = ctor.Object != null
-                    ? ctor.Object.GetType().Name
-                    : "null";
-            result.AppendLine($"{intent}{objectType}:");
+            result.AppendLine($"{intent}ctor {ctor.Type()}");
             foreach (var argument in ctor.Arguments)
             {
-                var isValid = argument.Constructor.IsValid ? "valid" : "invalid";
-                var contains = ctor.Object?.Contains(argument.Name) ?? false;
-                if (!contains)
-                {
-                    isValid = "not found in object";
-                }
-
-                var argumentType = argument.Object != null
-                    ? argument.Object.GetType().Name
-                    : "null";
-                result.AppendLine($"{intent}  {argumentType} {argument.Name} - {isValid}");
+                result.AppendLine($"{intent}  {argument.Type()} {argument.Name} - {ArgumentState(ctor, argument)}");
                 if (!argument.Constructor.IsValid && argument.Constructor.Arguments.Any())
                 {
                     result.Append(ConstructorDetails(argument.Constructor, intent + "  "));
@@ -56,6 +41,18 @@ namespace ObjectToTest
             }
 
             return result.ToString();
+        }
+
+        private string ArgumentState(IConstructor ctor, IArgument argument)
+        {
+            var state = argument.Constructor.IsValid ? "valid" : "invalid";
+            var contains = ctor.Object?.Contains(argument.Name) ?? false;
+            if (!contains)
+            {
+                state = "not found in object";
+            }
+
+            return state;
         }
     }
 }
