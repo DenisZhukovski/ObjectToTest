@@ -55,16 +55,16 @@ namespace ObjectToTest
             return type.Name;
         }
 
-        public static bool Contains(this object @object, ParameterInfo parameter)
-        {
-            return @object.Contains(parameter.Name);
-        }
-        
         public static object? Default(this ParameterInfo parameter)
         {
             return parameter.ParameterType.IsValueType
                 ? Activator.CreateInstance(parameter.ParameterType)
                 : null;
+        }
+        
+        public static bool Contains(this object @object, ParameterInfo parameter)
+        {
+            return @object.Contains(parameter.Name);
         }
 
         public static bool Contains(this object @object, string name)

@@ -2,11 +2,16 @@
 {
     public class WithCustomData
     {
-        private readonly WithCustomHashCode withCustomHashCode;
+        private readonly WithCustomHashCode _withCustomHashCode;
 
         public WithCustomData(WithCustomHashCode withCustomHashCode)
         {
-            this.withCustomHashCode = withCustomHashCode;
+            _withCustomHashCode = withCustomHashCode;
+        }
+
+        public WithCustomHashCode Foo()
+        {
+            return _withCustomHashCode;
         }
     }
 }

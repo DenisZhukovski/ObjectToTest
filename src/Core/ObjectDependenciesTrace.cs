@@ -43,7 +43,7 @@ namespace ObjectToTest
             return result.ToString();
         }
 
-        private string ArgumentState(IConstructor ctor, IArgument argument)
+        private static string ArgumentState(IConstructor ctor, IArgument argument)
         {
             var state = argument.Constructor.IsValid ? "valid" : "invalid";
             var contains = ctor.Object?.Contains(argument.Name) ?? false;

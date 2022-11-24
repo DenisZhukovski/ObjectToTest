@@ -3,13 +3,18 @@ namespace ObjectToTest.UnitTests.Models
 {
     public class WithCustomDataExtended
     {
-        private readonly WithCustomData data;
-        private readonly WithCustomHashCode withCustomHashCode;
+        private readonly WithCustomData _data;
+        private readonly WithCustomHashCode _withCustomHashCode;
 
         public WithCustomDataExtended(WithCustomData data, WithCustomHashCode withCustomHashCode)
         {
-            this.data = data;
-            this.withCustomHashCode = withCustomHashCode;
+            this._data = data;
+            this._withCustomHashCode = withCustomHashCode;
+        }
+
+        public string Foo()
+        {
+            return _data + _withCustomHashCode.ToString();
         }
     }
 }
