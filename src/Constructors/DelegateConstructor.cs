@@ -24,6 +24,8 @@ namespace ObjectToTest.Constructors
             _object = @object;
         }
 
+        public object? Object => _object;
+
         public bool IsValid => true;
         
         public IList<IArgument> Arguments => new List<IArgument>();

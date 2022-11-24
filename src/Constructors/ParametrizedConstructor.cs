@@ -26,6 +26,8 @@ namespace ObjectToTest.Constructors
             .Select(MapParameter)
             .ToList();
 
+        public object? Object => _object;
+
         public override bool Equals(object? obj)
         {
             return (obj is IConstructor constructor && constructor.Equals(_object))
@@ -53,7 +55,7 @@ namespace ObjectToTest.Constructors
             if (_object.Contains(parameter))
             {
                 var sharedArgument = _sharedArguments.Argument(_object.Value(parameter));
-                if (sharedArgument != null)
+                if (TheSameArgument(sharedArgument, parameter))
                 {
                     return sharedArgument;
                 }
@@ -66,6 +68,13 @@ namespace ObjectToTest.Constructors
                     : null,
                 Constructor(parameter)
             );
+        }
+
+        private bool TheSameArgument(IArgument? sharedArgument, ParameterInfo parameter)
+        {
+            return sharedArgument != null;
+                //&& sharedArgument.Name == parameter.Name
+                //&& sharedArgument.Object?.GetType() == parameter.ParameterType;
         }
 
         private IConstructor Constructor(ParameterInfo parameter)

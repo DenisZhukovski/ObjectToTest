@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Xml.Linq;
 using ObjectToTest.Arguments;
 
 namespace ObjectToTest.Constructors
@@ -21,6 +18,8 @@ namespace ObjectToTest.Constructors
         public bool IsValid => false;
 
         public IList<IArgument> Arguments => new List<IArgument>();
+
+        public object? Object => _object;
 
         public override bool Equals(object? obj)
         {

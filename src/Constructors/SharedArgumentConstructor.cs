@@ -13,6 +13,8 @@ namespace ObjectToTest.Constructors
             _argument = argument;
         }
 
+        public object? Object => _argument.Object;
+
         bool IConstructor.IsValid => _argument.Constructor.IsValid;
 
         IList<IArgument> IConstructor.Arguments => _argument.Constructor.Arguments;
