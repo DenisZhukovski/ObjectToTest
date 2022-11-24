@@ -22,7 +22,7 @@ namespace ObjectToTest
         public IArgument? Argument(object? argument)
         {
             return ToList().FirstOrDefault(
-                a => a.Equals(argument)
+                a => a.Equals(argument) && a.GetHashCode() == argument.GetHashCode()
             );
         }
 

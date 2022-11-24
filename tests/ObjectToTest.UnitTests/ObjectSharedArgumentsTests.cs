@@ -51,7 +51,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void NoSharedArgumentsInit()
+        public void EmptyStringWhenNoSharedArguments()
         {
             var withUser = new WithUserPublicProperty
             {
@@ -123,6 +123,32 @@ namespace ObjectToTest.UnitTests
                 new ObjectSharedArguments(new WithSingletonArgument(SingletonClass.Instance)).ToList()
             );
         }
+
+        [Fact]
+        public void SameEqualSameHashCode()
+        {
+            var customHashCode = new WithCustomHashCode("11", 1);
+            Assert.Equal(
+                "var customHashCode = new WithCustomHashCode(\"11\", 1)",
+                new ObjectSharedArguments(
+                    new WithCustomDataExtended(
+                        new WithCustomData(customHashCode),
+                        customHashCode
+                    )
+                ).ToString().Log(_output)
+            );
+        }
+
+        //public void SameEqualButDifferentHashCode()
+        //{
+        //    var customHashCode = new WithCustomHashCode("11", 1);
+        //    Assert.Equal(
+        //        new WithCustomDataExtended(
+        //            new WithCustomData(customHashCode),
+        //            customHashCode
+        //        ).ToTest()
+        //    );
+        //}
     }
 }
 
