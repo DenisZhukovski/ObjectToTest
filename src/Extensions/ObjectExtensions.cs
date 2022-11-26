@@ -72,18 +72,30 @@ namespace ObjectToTest
                 return new SingletonConstructor(@object);
             }
 
-            foreach (var constructor in @object.Constructors())
-            {
-                var ctor = constructor.GetParameters().Any()
-                    ? new ParametrizedConstructor(@object, constructor, sharedArguments)
-                    : (IConstructor)new DefaultConstructor(@object, sharedArguments);
-                if (ctor.IsValid)
-                {
-                    return ctor;
-                }
-            }
+            return @object
+                .Constructors(sharedArguments)
+                .FirstOrDefault(c => c.IsValid) ?? throw new NoConstructorException(@object);
+        }
 
-            throw new NoConstructorException(@object.GetType());
+        internal static IEnumerable<IConstructor> Constructors(
+           this object @object,
+           IArguments sharedArguments)
+        {
+            return @object.Constructors(
+                constructor =>
+                constructor.GetParameters().Any()
+                    ? new ParametrizedConstructor(@object, constructor, sharedArguments)
+                    : new DefaultConstructor(@object, sharedArguments)
+            );
+        }
+
+        internal static IEnumerable<IConstructor> Constructors(
+            this object @object,
+            Func<ConstructorInfo, IConstructor> map)
+        {
+            return @object
+                .Constructors()
+                .Select(ctorInfo => map(ctorInfo));
         }
 
         internal static IArgument AsSharedArgument(this object @object, IArguments sharedArguments)

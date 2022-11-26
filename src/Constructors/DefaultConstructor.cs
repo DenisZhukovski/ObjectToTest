@@ -22,6 +22,8 @@ namespace ObjectToTest.Constructors
 
         public IList<IArgument> Arguments => new List<IArgument>();
 
+        public object? Object => _object;
+
         public override bool Equals(object? obj)
         {
             return (obj is IConstructor constructor && constructor.Equals(_object)) || _object.Equals(obj);

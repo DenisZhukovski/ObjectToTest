@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.Exceptions;
@@ -37,10 +38,12 @@ namespace ObjectToTest
             }
             catch(NoConstructorException ex)
             {
-                return ex.Message + new ObjectDependenciesTrace(
-                    _object,
-                    SharedArguments
-                );
+                return ex.Message + 
+                       Environment.NewLine + 
+                       new ObjectDependenciesTrace(
+                           _object,
+                           SharedArguments
+                       );
             }
         }
 

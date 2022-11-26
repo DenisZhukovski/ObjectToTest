@@ -13,7 +13,10 @@ namespace ObjectToTest
             _comment = comment;
         }
 
+        public object? Object => null;
+
         bool IConstructor.IsValid => true;
+
         IList<IArgument> IConstructor.Arguments => new List<IArgument>();
 
         public override string ToString()

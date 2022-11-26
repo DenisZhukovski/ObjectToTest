@@ -11,7 +11,7 @@ namespace ObjectToTest.UnitTests
         public void Deserialization()
         {
             Assert.NotNull(
-                new NoConstructorException(typeof(WithClassParam)).Deserialize()
+                new NoConstructorException(new WithClassParam(new EmptyObject())).Deserialize()
             );
         }
     }

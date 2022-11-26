@@ -8,6 +8,8 @@ namespace ObjectToTest.Constructors
         bool IsValid { get; }
 
         IList<IArgument> Arguments { get; }
+
+        object? Object { get; }
     }
 }
 

@@ -1,4 +1,7 @@
+﻿using System.Linq;
+using System.Text;
 using ObjectToTest.Arguments;
+using ObjectToTest.Constructors;
 
 namespace ObjectToTest
 {
@@ -13,30 +16,43 @@ namespace ObjectToTest
             _sharedArguments = sharedArguments;
         }
 
-        /**
-        * @todo #60m/ARCH Need to implement object dependencies tracing logic.
-         * The object should create a text report which will help the developers to understand why ToTest extension
-         * method was not able to reconstruct an object entity.
-         * There are 2 possible options:
-         * - object does not have a public ctor
-         * - one or more object's constructor arguments is invalid.
-         *
-         * When an object's constructor argument is invalid there are a couple of cases:
-         * - counterpart was not found inside object's fields or properties. Now ToTest extension method is using
-         * naming convention to find a counterpart for an argument.
-         * - object argument is complex and some of its constructor arguments is invalid. In that case the report should
-         * recursively generate the explanation about the argument.
-         * Example:
-         * ObjectCtor:
-         * int a1 - valid
-         * ISize size - invalid
-         *  Size:
-         *  int index - not found in Size class
-        */
         public override string ToString()
         {
-            // Implementation should be done here
-            return string.Empty;
+            var result = new StringBuilder();
+            foreach (var ctor in _object.Constructors(_sharedArguments))
+            {
+                result.Append(ConstructorDetails(ctor, ""));
+            }
+
+            return result.ToString();
+        }
+
+        private string ConstructorDetails(IConstructor ctor, string intent)
+        {
+            var result = new StringBuilder();
+            result.AppendLine($"{intent}ctor {ctor.Type()}");
+            foreach (var argument in ctor.Arguments)
+            {
+                result.AppendLine($"{intent}  {argument.Type()} {argument.Name} - {ArgumentState(ctor, argument)}");
+                if (!argument.Constructor.IsValid && argument.Constructor.Arguments.Any())
+                {
+                    result.Append(ConstructorDetails(argument.Constructor, intent + "  "));
+                }
+            }
+
+            return result.ToString();
+        }
+
+        private static string ArgumentState(IConstructor ctor, IArgument argument)
+        {
+            var state = argument.Constructor.IsValid ? "valid" : "invalid";
+            var contains = ctor.Object?.Contains(argument.Name) ?? false;
+            if (!contains)
+            {
+                state = "not found in object";
+            }
+
+            return state;
         }
     }
 }

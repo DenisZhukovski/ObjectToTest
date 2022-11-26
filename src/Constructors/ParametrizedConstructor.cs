@@ -1,4 +1,5 @@
-﻿using ObjectToTest.Arguments;
+﻿using System;
+using ObjectToTest.Arguments;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -25,6 +26,8 @@ namespace ObjectToTest.Constructors
             .GetParameters()
             .Select(MapParameter)
             .ToList();
+
+        public object? Object => _object;
 
         public override bool Equals(object? obj)
         {
@@ -60,10 +63,10 @@ namespace ObjectToTest.Constructors
             }
 
             return new Argument(
-                parameter.Name, 
+                parameter.Name,
                 _object.Contains(parameter) 
                     ? _object.Value(parameter)
-                    : null,
+                    : parameter.Default(),
                 Constructor(parameter)
             );
         }

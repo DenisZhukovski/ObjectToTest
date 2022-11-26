@@ -1,5 +1,4 @@
-﻿using System;
-using ObjectToTest.Arguments;
+﻿using ObjectToTest.Arguments;
 using System.Collections.Generic;
 
 namespace ObjectToTest.Constructors
@@ -16,6 +15,8 @@ namespace ObjectToTest.Constructors
         public bool IsValid => true;
 
         public IList<IArgument> Arguments => new List<IArgument>();
+
+        public object? Object => _object;
 
         public override bool Equals(object? obj)
         {
