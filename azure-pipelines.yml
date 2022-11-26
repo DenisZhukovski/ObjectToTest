@@ -26,6 +26,13 @@ steps:
     packageType: 'sdk'
     version: '6.0.x'
 
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
+  inputs:
+    packageType: sdk
+    version: 3.1.402
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
 - task: NuGetToolInstaller@1
 - task: NuGetCommand@2
   inputs:
@@ -45,12 +52,6 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: VisualStudioTestPlatformInstaller@1
-  displayName: "VsTest Platform Installer"
-  inputs:
-    versionSelector: "SpecificVersion"
-    testPlatformVersion: "17.2.0"
 
 - task: DotNetCoreCLI@2
   displayName: 'Run tests'
