@@ -47,11 +47,11 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VisualStudioTestPlatformInstaller@1
-    displayName: "VsTest Platform Installer"
-    inputs:
-      versionSelector: "SpecificVersion"
-      testPlatformVersion: "17.2.0"
-      
+  displayName: "VsTest Platform Installer"
+  inputs:
+    versionSelector: "SpecificVersion"
+    testPlatformVersion: "17.2.0"
+
 - task: DotNetCoreCLI@2
   displayName: 'Run tests'
   inputs:
