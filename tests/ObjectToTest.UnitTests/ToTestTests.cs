@@ -317,12 +317,34 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
+        public void CtorWithEmptyListInt()
+        {
+            Assert.Equal(
+               "new WithListArgument(new List<int>())",
+               new WithListArgument(new List<int>())
+                       .ToTest()
+                       .Log(_output)
+           );
+        }
+
+        [Fact]
         public void CtorWithDictionaryIntString()
         {
             Assert.Equal(
                 "new WithDictionaryArgument(new Dictionary<int,string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
                 new WithDictionaryArgument(
                     new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
+                ).ToTest().Log(_output)
+            );
+        }
+
+        [Fact]
+        public void CtorWithEmptyDictionaryIntString()
+        {
+            Assert.Equal(
+                "new WithDictionaryArgument(new Dictionary<int,string>())",
+                new WithDictionaryArgument(
+                    new Dictionary<int, string>()
                 ).ToTest().Log(_output)
             );
         }

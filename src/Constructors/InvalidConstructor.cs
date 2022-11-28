@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using ObjectToTest.Arguments;
+using ObjectToTest.Exceptions;
 
 namespace ObjectToTest.Constructors
 {
     public class InvalidConstructor : IConstructor
     {
         private readonly object _object;
-        private readonly ParameterInfo _parameter;
 
-        public InvalidConstructor(object @object, ParameterInfo parameter)
+        public InvalidConstructor(object @object)
         {
             _object = @object;
-            _parameter = parameter;
         }
 
         public bool IsValid => false;
@@ -33,7 +31,7 @@ namespace ObjectToTest.Constructors
 
         public override string ToString()
         {
-            return $"No valid parameter was found for {_parameter.Name} in object: {_object}";
+            throw new NoConstructorException(_object);
         }
     }
 }

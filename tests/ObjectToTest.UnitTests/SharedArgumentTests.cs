@@ -10,7 +10,7 @@ namespace ObjectToTest.UnitTests
         public void ArgumentEquals()
         {
             var user = new User("user");
-            var argument = new Argument("user", user, user.ValidConstructor(new MockArguments()));
+            var argument = new Argument("user", user, user.Constructor(new MockArguments()));
             Assert.Equal<object>(
                 argument,
                 new SharedArgument(
@@ -23,7 +23,7 @@ namespace ObjectToTest.UnitTests
         public void Name()
         {
             var user = new User("user");
-            var argument = new Argument("user", user, user.ValidConstructor(new MockArguments()));
+            var argument = new Argument("user", user, user.Constructor(new MockArguments()));
             Assert.Equal(
                 argument.Name,
                 new SharedArgument(
@@ -36,7 +36,7 @@ namespace ObjectToTest.UnitTests
         public void Constructor()
         {
             var user = new User("user");
-            var argument = new Argument("user", user, user.ValidConstructor(new MockArguments()));
+            var argument = new Argument("user", user, user.Constructor(new MockArguments()));
             Assert.Equal(
                 argument.Constructor,
                 new SharedArgument(
@@ -49,7 +49,7 @@ namespace ObjectToTest.UnitTests
         public void HashCode()
         {
             var user = new User("user");
-            var argument = new Argument("user", user, user.ValidConstructor(new MockArguments()));
+            var argument = new Argument("user", user, user.Constructor(new MockArguments()));
             Assert.Equal(
                 argument.GetHashCode(),
                 new SharedArgument(
@@ -68,7 +68,7 @@ namespace ObjectToTest.UnitTests
                         new Argument(
                             "user",
                             user,
-                            user.ValidConstructor(new MockArguments())
+                            user.Constructor(new MockArguments())
                         )
                  ).ToString()
             );
@@ -82,7 +82,7 @@ namespace ObjectToTest.UnitTests
                    new Argument(
                        "user",
                        user,
-                       user.ValidConstructor(new MockArguments())
+                       user.Constructor(new MockArguments())
                    )
             );
 
