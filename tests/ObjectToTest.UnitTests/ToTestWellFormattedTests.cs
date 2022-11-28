@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 namespace ObjectToTest.UnitTests
 {
     /*
-    * @todo #5:60m/DEV Implement proper formatting. Base puzzle with all rules for references.
+     * @todo #5 60m/DEV Implement proper formatting. Base puzzle with all rules for references.
      * The rules are following:
      * 1. if there is new operator in arguments, all arguments should be properly formatted.
      * 2. spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
@@ -21,45 +21,45 @@ namespace ObjectToTest.UnitTests
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: if there is new operator in arguments, all arguments should be properly formatted.
+    * @todo #5 60m/DEV Implement rule: if there is new operator in arguments, all arguments should be properly formatted.
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
+    * @todo #5 60m/DEV Implement rule: spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: Lambdas are always from new string.
+    * @todo #5 60m/DEV Implement rule: Lambdas are always from new string.
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: Indention is 4 spaces.
+    * @todo #5 60m/DEV Implement rule: Indention is 4 spaces.
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: Inner properties should be from separate lines.
+    * @todo #5 60m/DEV Implement rule: Inner properties should be from separate lines.
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: Lines bigger than 80 characters should be properly formatted.
+    * @todo #5 60m/DEV Implement rule: Lines bigger than 80 characters should be properly formatted.
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: All arrays should be placed with proper formatting.
+    * @todo #5 60m/DEV Implement rule: All arrays should be placed with proper formatting.
     */
 
     /*
-    * @todo #5:60m/DEV Implement rule: Dictionary should be formatted with separate set of rules.
+    * @todo #5 60m/DEV Implement rule: Dictionary should be formatted with separate set of rules.
     */
 
     /*
-   * @todo #5:60m/DEV In ToTestWellFormattedTests:
+   * @todo #5 60m/DEV In ToTestWellFormattedTests:
      * review tests, remove duplicates, rewrite to use new API.
      * review failed tests and define what rules should be implemented to fulfill.
    */
 
     /*
-    * @todo #5:60m/DEV Implement a test to check rule: Lines bigger than 80 characters should be properly formatted..
+    * @todo #5 60m/DEV Implement a test to check rule: Lines bigger than 80 characters should be properly formatted..
     */
 
     public class ToTestWellFormattedTests
