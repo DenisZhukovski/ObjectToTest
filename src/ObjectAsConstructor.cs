@@ -39,11 +39,11 @@ namespace ObjectToTest
             catch(NoConstructorException ex)
             {
                 return ex.Message + 
-                       Environment.NewLine + 
-                       new ObjectDependenciesTrace(
-                           _object,
-                           SharedArguments
-                       );
+                    Environment.NewLine +
+                    new ObjectDependenciesTrace(
+                        _object,
+                        SharedArguments
+                    );
             }
         }
 
@@ -54,7 +54,7 @@ namespace ObjectToTest
             {
                 return new CommentLine($"Target object stored in: '{argument.Name}'");
             }
-            return _object.ValidConstructor(sharedArguments);
+            return _object.Constructor(sharedArguments);
         }
     }
 }

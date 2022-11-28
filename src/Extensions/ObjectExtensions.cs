@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
-using ObjectToTest.Exceptions;
 
 namespace ObjectToTest
 {
@@ -45,7 +44,9 @@ namespace ObjectToTest
             return valueStr;
         }
 
-        internal static IConstructor ValidConstructor(this object? @object, IArguments sharedArguments)
+        internal static IConstructor Constructor(
+            this object? @object,
+            IArguments sharedArguments)
         {
             if (@object == null)
             {
@@ -74,7 +75,8 @@ namespace ObjectToTest
 
             return @object
                 .Constructors(sharedArguments)
-                .FirstOrDefault(c => c.IsValid) ?? throw new NoConstructorException(@object);
+                .FirstOrDefault(c => c.IsValid)
+                ?? new InvalidConstructor(@object);
         }
 
         internal static IEnumerable<IConstructor> Constructors(
@@ -104,7 +106,7 @@ namespace ObjectToTest
                 new Argument(
                     VariableName(@object),
                     @object,
-                    @object.ValidConstructor(sharedArguments)
+                    @object.Constructor(sharedArguments)
                 )
             );
         }

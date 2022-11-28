@@ -1,5 +1,4 @@
-﻿using System;
-using ObjectToTest.Arguments;
+﻿using ObjectToTest.Arguments;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -77,9 +76,9 @@ namespace ObjectToTest.Constructors
             {
                 return _object
                     .Value(parameter)
-                    .ValidConstructor(_sharedArguments);
+                    .Constructor(_sharedArguments);
             }
-            return new InvalidConstructor(_object, parameter);
+            return new InvalidConstructor(_object);
         }
     }
 }

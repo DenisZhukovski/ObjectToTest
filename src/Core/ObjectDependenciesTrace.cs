@@ -10,6 +10,16 @@ namespace ObjectToTest
         private readonly object _object;
         private readonly IArguments _sharedArguments;
 
+        public ObjectDependenciesTrace(object @object)
+            : this(
+                @object,
+                new SharedCircularProperties(
+                    new ObjectSharedArguments(@object)
+                )
+              )
+        {
+        }
+
         public ObjectDependenciesTrace(object @object, IArguments sharedArguments)
         {
             _object = @object;

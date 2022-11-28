@@ -28,7 +28,7 @@ namespace ObjectToTest.UnitTests
                 }
             );
             Assert.Equal(
-                new Argument("user", user, user.ValidConstructor(new MockArguments())),
+                new Argument("user", user, user.Constructor(new MockArguments())),
                 new ObjectSharedArguments(withUser).Argument(user)
             );
         }
