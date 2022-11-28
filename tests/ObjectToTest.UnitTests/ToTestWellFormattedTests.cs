@@ -80,29 +80,6 @@ namespace ObjectToTest.UnitTests
         }
 #pragma warning restore CS8604
         
-        [Fact]
-        public void DefaultConstructor()
-        {
-            Assert.Equal(
-                "new EmptyObject()",
-                new EmptyObject().ToTest().Log(_output)
-            );
-        }
-
-        [Fact]
-        /*
-         * Its been decided not to initialize the properties that have default value.
-         * In this particular case PropertyName is declared as nullable and null by default
-         * but it should not be reflected during initialization.
-         */
-        public void NullPropertyInitializer()
-        {
-            Assert.Equal(
-                "new WithOnePublicProperty()",
-                new WithOnePublicProperty().ToTest().Log(_output)
-            );
-        }
-
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void StringPropertyInitializer()
         {
@@ -349,24 +326,6 @@ namespace ObjectToTest.UnitTests
             ); 
         }
         
-        [Fact(Skip = "Need to be fixed")]
-        public void OtherObjectMethodReferenceAsArgument()
-        {
-            /*
-            * @todo #:60m/DEV Make OtherObjectMethodReferenceAsArgument test to be green.
-            * Now DelegateConstructor does not support object method as reference.
-             * DelegateConstructor class should be able to generate the body for such cases
-            */
-            var user = new User("user Name");
-            Assert.Equal(
-                $"var user = new User(\"user Name\"){Environment.NewLine}" +
-                "new WithFuncArgument(user.Age)",
-                new WithFuncArgument(user.Age)
-                    .ToTest()
-                    .Log(_output)
-            );
-        }
-
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithActionArgument()
         {
@@ -584,35 +543,6 @@ namespace ObjectToTest.UnitTests
                 "    new Price(10)" +
                 ")",
                 new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
-                    .ToTest()
-                    .Log(_output)
-            );
-        }
-        
-        [Fact(Skip = "Need to fix this test")]
-        public void NotFullyRecreatedWarningComment()
-        {
-            /*
-             * @todo #:60m/LEAD
-             * Warning comment when object has an internal state that can not be initialized through the constructor.
-             * It means that the state of an object has been changed after its been created and it's happened through the method or event
-             */
-
-            Assert.Equal(
-                @"
-    /*
-     * Warning!!!
-     * Current object was not fully recreated because of some internal object field was changed
-     * after the object was created.
-     */
-    new ChangedStateObject(new Price(10),new WithUserPublicProperty(){User = new User(""Test Name"")})",
-                new ChangedStateObject(
-                        new Price(10),
-                        new WithUserPublicProperty
-                        {
-                            User = new User("Test Name")
-                        }
-                    ).ChangeState()
                     .ToTest()
                     .Log(_output)
             );
