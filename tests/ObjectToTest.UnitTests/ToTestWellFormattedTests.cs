@@ -1,21 +1,76 @@
 ﻿using System;
+using System.Collections.Generic;
+using ObjectToTest.UnitTests.Data;
+using ObjectToTest.UnitTests.Models;
 using Xunit;
 using Xunit.Abstractions;
-using ObjectToTest.UnitTests.Models;
-using ObjectToTest.UnitTests.Data;
-using System.Collections.Generic;
 
 namespace ObjectToTest.UnitTests
 {
-    public class ToTestTests
+    /*
+    * @todo #5:60m/DEV Implement proper formatting. Base puzzle with all rules for references.
+     * The rules are following:
+     * 1. if there is new operator in arguments, all arguments should be properly formatted.
+     * 2. spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
+     * 3. Lambdas are always from new string.
+     * 4. Indention is 4 spaces.
+     * 5. Inner properties should be from separate lines.
+     * 6. Lines bigger than 80 characters should be properly formatted.
+     * 7. All arrays should be placed with proper formatting.
+     * 8. Dictionary should be formatted with separate set of rules.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: if there is new operator in arguments, all arguments should be properly formatted.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: Lambdas are always from new string.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: Indention is 4 spaces.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: Inner properties should be from separate lines.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: Lines bigger than 80 characters should be properly formatted.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: All arrays should be placed with proper formatting.
+    */
+
+    /*
+    * @todo #5:60m/DEV Implement rule: Dictionary should be formatted with separate set of rules.
+    */
+
+    /*
+   * @todo #5:60m/DEV In ToTestWellFormattedTests:
+     * review tests, remove duplicates, rewrite to use new API.
+     * review failed tests and define what rules should be implemented to fulfill.
+   */
+
+    /*
+    * @todo #5:60m/DEV Implement a test to check rule: Lines bigger than 80 characters should be properly formatted..
+    */
+
+    public class ToTestWellFormattedTests
     {
         private readonly ITestOutputHelper _output;
 
-        public ToTestTests(ITestOutputHelper output)
+        public ToTestWellFormattedTests(ITestOutputHelper output)
         {
             _output = output;
         }
-
+        
 #pragma warning disable CS8604
         [Fact]
         public void ThrowArgumentNullException()
@@ -24,7 +79,7 @@ namespace ObjectToTest.UnitTests
             Assert.Throws<ArgumentNullException>(() => obj.ToTest());
         }
 #pragma warning restore CS8604
-
+        
         [Fact]
         public void DefaultConstructor()
         {
@@ -48,11 +103,14 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void StringPropertyInitializer()
         {
             Assert.Equal(
-                "new WithOnePublicProperty(){PropertyName = \"Test\"}",
+                "new WithOnePublicProperty()" +
+                "{" +
+                "    PropertyName = \"Test\"" +
+                "}",
                 new WithOnePublicProperty
                 {
                     PropertyName = "Test"
@@ -60,11 +118,14 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void IntPropertyInitializer()
         {
             Assert.Equal(
-                "new WithOnePublicIntProperty(){PropertyName = 42}",
+                "new WithOnePublicIntProperty()" +
+                "{" +
+                "    PropertyName = 42" +
+                "}",
                 new WithOnePublicIntProperty
                 {
                     PropertyName = 42
@@ -72,16 +133,20 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void MultipleValueTypesPropertyInitializer()
         {
             Assert.Equal(
-                "new WithTwoProperties(){IntProperty = 42, StringProperty = \"Test\"}",
-                 new WithTwoProperties
-                 {
-                     IntProperty = 42,
-                     StringProperty = "Test"
-                 }.ToTest().Log(_output)
+                "new WithTwoProperties()" +
+                "{" +
+                "    IntProperty = 42," +
+                "    StringProperty = \"Test\"" +
+                "}",
+                new WithTwoProperties
+                {
+                    IntProperty = 42,
+                    StringProperty = "Test"
+                }.ToTest().Log(_output)
             );
         }
 
@@ -91,8 +156,8 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithOneParameterContructorAndPublicReadProperty(42)",
                 new WithOneParameterContructorAndPublicReadProperty(42)
-                        .ToTest()
-                        .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
@@ -105,11 +170,11 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
         public void CtorWithMultipleValueTypeArguments()
         {
             Assert.Equal(
-                "new WithTwoParamOneFieldAndOneProperty(42,\"Test\")",
+                "new WithTwoParamOneFieldAndOneProperty(42, \"Test\")",
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test"
@@ -117,20 +182,25 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithReferenceTypeArgument()
         {
             Assert.Equal(
-                "new WithClassParam(new EmptyObject())",
+                "new WithClassParam(" +
+                "    new EmptyObject()" +
+                ")",
                 new WithClassParam(new EmptyObject()).ToTest().Log(_output)
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithMultipleComplexTypesArguments()
         {
             Assert.Equal(
-                "new WithClassAndIntParams(42,new EmptyObject())",
+                "new WithClassAndIntParams(" +
+                "    42," +
+                "    new EmptyObject()" +
+                ")",
                 new WithClassAndIntParams(
                     42,
                     new EmptyObject()
@@ -138,46 +208,46 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
         public void TimeSpanConstructor()
         {
             Assert.Equal(
-                "new TimeSpan(18,17,34,24,5)",
+                "new TimeSpan(18, 17, 34, 24, 5)",
                 new TimeSpan(18, 17, 34, 24, 5)
-                        .ToTest()
-                        .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithComplexDependencyArgument()
         {
             Assert.Equal(
-                "new WithClassParamThatDependsOnClass(new WithClassParam(new EmptyObject()))",
+                "new WithClassParamThatDependsOnClass(" +
+                "    new WithClassParam(" +
+                "        new EmptyObject()" +
+                "    )" +
+                ")",
                 new WithClassParamThatDependsOnClass(
                     new WithClassParam(new EmptyObject())
                 ).ToTest().Log(_output)
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithComplexDependencySeveralArguments()
         {
-            /*
-             * @todo #:60m/DEV Proper declaration format is expected. It would be nice to start each constructor argument on its own line with proper intend
-             * new WithTwoClassParamAndIntParam(
-             *  new WithClassParam(
-             *      new EmptyObject()
-             *  ),
-             *  new WithClassAndIntParams(
-             *      42,
-             *      new EmptyObject()
-             *  ),
-             *  42
-             * )
-             */
             Assert.Equal(
-                "new WithTwoClassParamAndIntParam(new WithClassParam(new EmptyObject()),new WithClassAndIntParams(42,new EmptyObject()),42)",
+                "new WithTwoClassParamAndIntParam(" +
+                "    new WithClassParam(" +
+                "        new EmptyObject()" +
+                "    )," +
+                "    new WithClassAndIntParams(" +
+                "        42," +
+                "        new EmptyObject()" +
+                "    )," +
+                "    42" +
+                ")",
                 new WithTwoClassParamAndIntParam(
                     new WithClassParam(new EmptyObject()),
                     new WithClassAndIntParams(
@@ -189,15 +259,21 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithComplexArgumentsAndProperties()
         {
             Assert.Equal(
-                "new WithClassParamWithProp(new WithOnePublicProperty(){PropertyName = \"Test\"},42)",
-                 new WithClassParamWithProp(
-                     new WithOnePublicProperty { PropertyName = "Test" },
-                     42
-                 ).ToTest().Log(_output)
+                "new WithClassParamWithProp(" +
+                "    new WithOnePublicProperty()" +
+                "    {" +
+                "        PropertyName = \"Test\"" +
+                "    }," +
+                "    42" +
+                ")",
+                new WithClassParamWithProp(
+                    new WithOnePublicProperty { PropertyName = "Test" },
+                    42
+                ).ToTest().Log(_output)
             );
         }
 
@@ -210,14 +286,18 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void With2GenericArguments()
         {
             Assert.Equal(
-                "new With2GenericArguments<IPrice,IUser>(new Price(10))",
+                "new With2GenericArguments<IPrice,IUser>(" +
+                "    new Price(" +
+                "        10" +
+                "    )" +
+                ")",
                 new With2GenericArguments<IPrice, IUser>(new Price(10))
-                        .ToTest()
-                        .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
@@ -226,20 +306,22 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new With3GenericArguments<int,decimal,string>()",
-                  new With3GenericArguments<int, decimal, string>()
-                      .ToTest()
-                      .Log(_output)
+                new With3GenericArguments<int, decimal, string>()
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
         public void CtorWithStructArgument()
         {
             Assert.Equal(
-               "new WithStructArgument(new Vector3(0,0,1))",
+                "new WithStructArgument(" +
+                "    new Vector3(0, 0, 1)" +
+                ")",
                 new WithStructArgument(UnityEngine.Vector3.forward)
-                     .ToTest()
-                     .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
@@ -247,24 +329,26 @@ namespace ObjectToTest.UnitTests
         public void CtorWithEnumArgument()
         {
             Assert.Equal(
-               "new WithEnumArgument(FlaggedEnum.Advanced)",
+                "new WithEnumArgument(FlaggedEnum.Advanced)",
                 new WithEnumArgument(FlaggedEnum.Advanced)
-                     .ToTest()
-                     .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithFuncArgument()
         {
             Assert.Equal(
-               "new WithFuncArgument(() => 0)",
+                "new WithFuncArgument(" +
+                "    () => 0" +
+                ")",
                 new WithFuncArgument(() => 0)
-                     .ToTest()
-                     .Log(_output)
-           );
+                    .ToTest()
+                    .Log(_output)
+            ); 
         }
-
+        
         [Fact(Skip = "Need to be fixed")]
         public void OtherObjectMethodReferenceAsArgument()
         {
@@ -283,36 +367,54 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithActionArgument()
         {
             Assert.Equal(
-               "new WithActionArgument(pos => {})",
+                "new WithActionArgument(" +
+                "    pos => {}" +
+                ")",
                 new WithActionArgument((pos) => { })
-                     .ToTest()
-                     .Log(_output)
-           );
-        }
-
-        [Fact]
-        public void CtorWithIEnumerableInt()
-        {
-            Assert.Equal(
-                "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
-                new WithIEnumerableInt(new[] { 1, 2, 4, 5 })
-                        .ToTest()
-                        .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        public void CtorWithIEnumerableInt()
+        {
+            Assert.Equal(
+                "new WithIEnumerableInt(" +
+                "    new[] " +
+                "    {" +
+                "        1," +
+                "        2," +
+                "        4," +
+                "        5" +
+                "    }" +
+                ")",
+                new WithIEnumerableInt(new[] { 1, 2, 4, 5 })
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
+
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithListInt()
         {
             Assert.Equal(
-                "new WithListArgument(new List<int> { 1, 2, 4, 5 })",
+                "new WithListArgument(" +
+                "    new List<int> " +
+                "    {" +
+                "        1," +
+                "        2," +
+                "        4," +
+                "        5" +
+                "    }" +
+                ")",
                 new WithListArgument(new List<int> { 1, 2, 4, 5 })
-                        .ToTest()
-                        .Log(_output)
+                    .ToTest()
+                    .Log(_output)
             );
         }
 
@@ -320,20 +422,27 @@ namespace ObjectToTest.UnitTests
         public void CtorWithEmptyListInt()
         {
             Assert.Equal(
-               "new WithListArgument(new List<int>())",
-               new WithListArgument(new List<int>())
-                       .ToTest()
-                       .Log(_output)
-           );
+                "new WithListArgument(new List<int>())",
+                new WithListArgument(new List<int>())
+                    .ToTest()
+                    .Log(_output)
+            );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithDictionaryIntString()
         {
             Assert.Equal(
-                "new WithDictionaryArgument(new Dictionary<int,string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
+                "new WithDictionaryArgument(" +
+                "    new Dictionary<int,string>" +
+                "    {" +
+                "        { 1, \"1\" }," +
+                "        { 2, \"2\" }," +
+                "        { 3, \"3\" }" +
+                "    }" +
+                ")",
                 new WithDictionaryArgument(
-                    new Dictionary<int, string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
+                    new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
                 ).ToTest().Log(_output)
             );
         }
@@ -349,11 +458,14 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact]
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void CtorWithInterfaceArguments()
         {
             Assert.Equal(
-                "new Foo(new Price(10),new User(\"User Name\"))",
+                "new Foo(" +
+                "    new Price(10)," +
+                "    new User(\"User Name\")" +
+                ")",
                 new Foo(
                     new Price(10),
                     new User("User Name")
@@ -389,7 +501,7 @@ namespace ObjectToTest.UnitTests
                 o1.ToTest().Log(_output)
             );
         }
-
+        
         [Fact]
         public void ComplexCircularReferenceDetection()
         {
@@ -405,7 +517,7 @@ namespace ObjectToTest.UnitTests
                 $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();{Environment.NewLine}" +
                 $"circularRefPublicProperty2.PropertyName3 = circularRefPublicProperty3;{Environment.NewLine}" +
                 $"circularRefPublicProperty3.PropertyName = circularRefPublicProperty1;{Environment.NewLine}" +
-                $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}" +
+                $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}" + 
                 "// Target object stored in: 'circularRefPublicProperty1'",
                 o1.ToTest().Log(_output)
             );
@@ -414,6 +526,10 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void TheSameObjectDetection()
         {
+            /*
+            * @todo #5:60m/DEV Adjust this test with formatting rules.
+            */
+
             var user = new User("user name");
             var withUser = new WithUserArgument(
                 user,
@@ -435,35 +551,44 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithSingletonArgument(SingletonClass.Instance)",
                 new WithSingletonArgument(SingletonClass.Instance)
-                        .ToTest()
-                        .Log(_output)
-            );
-        }
-
-        [Fact]
-        public void SingletonAsSharedArgument()
-        {
-            Assert.Equal(
-                "new SharedSingletons(new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10)),new WithSingletonArgument(SingletonClass.Instance))",
-                new SharedSingletons(
-                    new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
-                    new WithSingletonArgument(SingletonClass.Instance)
-                ).ToTest()
-                 .Log(_output)
-            );
-        }
-
-        [Fact]
-        public void SingletonWithOtherArgument()
-        {
-            Assert.Equal(
-                "new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10))",
-                new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
                     .ToTest()
                     .Log(_output)
             );
         }
 
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        public void SingletonAsSharedArgument()
+        {
+            Assert.Equal(
+                "new SharedSingletons(" +
+                "    new WithSingletonAndOtherArgument(" +
+                "        SingletonClass.Instance," +
+                "        new Price(10)" +
+                "    )," +
+                "    new WithSingletonArgument(SingletonClass.Instance)" +
+                ")",
+                new SharedSingletons(
+                        new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
+                        new WithSingletonArgument(SingletonClass.Instance)
+                    ).ToTest()
+                    .Log(_output)
+            );
+        }
+
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        public void SingletonWithOtherArgument()
+        {
+            Assert.Equal(
+                "new WithSingletonAndOtherArgument(" +
+                "    SingletonClass.Instance," +
+                "    new Price(10)" +
+                ")",
+                new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
+        
         [Fact(Skip = "Need to fix this test")]
         public void NotFullyRecreatedWarningComment()
         {
@@ -482,14 +607,14 @@ namespace ObjectToTest.UnitTests
      */
     new ChangedStateObject(new Price(10),new WithUserPublicProperty(){User = new User(""Test Name"")})",
                 new ChangedStateObject(
-                    new Price(10),
-                    new WithUserPublicProperty
-                    {
-                        User = new User("Test Name")
-                    }
-                ).ChangeState()
-                 .ToTest()
-                 .Log(_output)
+                        new Price(10),
+                        new WithUserPublicProperty
+                        {
+                            User = new User("Test Name")
+                        }
+                    ).ChangeState()
+                    .ToTest()
+                    .Log(_output)
             );
         }
     }
