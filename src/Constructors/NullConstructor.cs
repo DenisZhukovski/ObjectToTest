@@ -10,7 +10,7 @@ namespace ObjectToTest.Constructors
         public bool IsValid => true;
 
         public IList<IArgument> Arguments => _arguments ??= new List<IArgument>();
-        
+
         public object? Object => null;
 
         public string Type => "null";

@@ -18,7 +18,7 @@ namespace ObjectToTest.Constructors
         public bool IsValid => true;
 
         public IList<IArgument> Arguments => _arguments ??= new List<IArgument>();
-        
+
         public object? Object => _object;
 
         public override string ToString()
