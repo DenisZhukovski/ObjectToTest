@@ -10,12 +10,12 @@ namespace ObjectToTest.Arguments
             : this(name, @object.GetType(), @object, @object.Constructor(new MockArguments()))
         {
         }
-        
+
         public Argument(string name, object @object, IConstructor constructor)
         : this(name, @object.GetType(), @object, constructor)
         {
         }
-        
+
         public Argument(string name, Type type, object? @object, IConstructor constructor)
         {
             Name = name;
@@ -25,13 +25,13 @@ namespace ObjectToTest.Arguments
         }
 
         public string Name { get; }
-        
+
         public string Type { get; }
-        
+
         public object? Object { get; }
 
         public IConstructor Constructor { get; }
-        
+
         public override bool Equals(object? obj)
         {
             return ReferenceEquals(this, obj)

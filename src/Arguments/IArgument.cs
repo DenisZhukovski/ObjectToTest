@@ -6,6 +6,9 @@ namespace ObjectToTest.Arguments
     {
         string Name { get;  }
 
+        /// <summary>
+        /// It an argument type name
+        /// </summary>
         string Type { get; }
         
         object? Object { get; }
