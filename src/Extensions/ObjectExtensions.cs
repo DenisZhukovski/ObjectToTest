@@ -16,6 +16,16 @@ namespace ObjectToTest
             ).ToString();
         }
 
+        /*
+         * @todo #80 60m/DEV Define approach for formatting.
+         * Possible option:
+         * IDecompiledCodeAsString|string object.ToString(IFormat), where IFormat can be abstract interface with implementation for each formatting rule.
+         */
+        public static string ToTestWellFormatted(this object @object)
+        {
+            throw new NotImplementedException();
+        }
+
         internal static string ToStringForInitialization(this object? @object)
         {
             string valueStr;
