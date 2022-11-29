@@ -65,7 +65,15 @@ namespace ObjectToTest.UnitTests
         {
             _output = output;
         }
-        
+
+        [Fact]
+        public void NotImplementedForCurrentFunctionalityRevision()
+        {
+            // Remove this test after draft for ToTestWellFormatted
+            object? obj = null;
+            Assert.Throws<NotImplementedException>(() => obj.ToTestWellFormatted());
+        }
+
 #pragma warning disable CS8604
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void ThrowArgumentNullException_ShouldBehaveAsNotFormatted()
