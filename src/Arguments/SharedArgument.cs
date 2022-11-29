@@ -13,11 +13,13 @@ namespace ObjectToTest.Arguments
         }
 
         public string Name => _argument.Name;
+        
+        public string Type => _argument.Type;
+        
+        public object? Object => _argument.Object;
 
         public IConstructor Constructor => _constructor ??= new SharedArgumentConstructor(_argument);
        
-        public object? Object => _argument.Object;
-
         public override bool Equals(object? obj)
         {
             return _argument.Equals(obj);
