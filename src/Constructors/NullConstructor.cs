@@ -13,6 +13,8 @@ namespace ObjectToTest.Constructors
 
         public object? Object => null;
 
+        public string Type => "null";
+
         public override string ToString()
         {
             return "null";

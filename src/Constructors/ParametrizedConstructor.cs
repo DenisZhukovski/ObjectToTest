@@ -63,6 +63,7 @@ namespace ObjectToTest.Constructors
 
             return new Argument(
                 parameter.Name,
+                parameter.ParameterType,
                 _object.Contains(parameter) 
                     ? _object.Value(parameter)
                     : parameter.Default(),

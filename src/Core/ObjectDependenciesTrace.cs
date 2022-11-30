@@ -43,7 +43,7 @@ namespace ObjectToTest
             result.AppendLine($"{intent}ctor {ctor.Type()}");
             foreach (var argument in ctor.Arguments)
             {
-                result.AppendLine($"{intent}  {argument.Type()} {argument.Name} - {ArgumentState(ctor, argument)}");
+                result.AppendLine($"{intent}  {argument.Type} {argument.Name} - {ArgumentState(ctor, argument)}");
                 if (!argument.Constructor.IsValid && argument.Constructor.Arguments.Any())
                 {
                     result.Append(ConstructorDetails(argument.Constructor, intent + "  "));

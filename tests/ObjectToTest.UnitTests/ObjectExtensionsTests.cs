@@ -1,4 +1,6 @@
 using System;
+using ObjectToTest.Arguments;
+using ObjectToTest.Constructors;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using UnityEngine;
@@ -90,6 +92,15 @@ namespace ObjectToTest.UnitTests
         public void DecimalIsPrimitive()
         {
             Assert.True(20m.IsPrimitive());
+        }
+        
+        [Fact]
+        public void ParametrizedConstructor()
+        {
+            Assert.Equal(
+                typeof(ParametrizedConstructor),
+                new User("user Name").Constructor(new MockArguments()).GetType()
+            );
         }
 
         [Fact]

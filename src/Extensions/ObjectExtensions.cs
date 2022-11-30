@@ -115,6 +115,7 @@ namespace ObjectToTest
             return new SharedArgument(
                 new Argument(
                     VariableName(@object),
+                    @object.GetType(),
                     @object,
                     @object.Constructor(sharedArguments)
                 )
