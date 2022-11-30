@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ObjectToTest.Arguments;
+using ObjectToTest.CodeFormatting;
 using ObjectToTest.Constructors;
 
 namespace ObjectToTest
@@ -17,13 +18,12 @@ namespace ObjectToTest
         }
 
         /*
-         * @todo #80 60m/DEV Define approach for formatting.
-         * Possible option:
-         * IDecompiledCodeAsString|string object.ToString(IFormat), where IFormat can be abstract interface with implementation for each formatting rule.
+         * @todo #85 60m/ARCH: Can we extend ObjectAsConstructor to be able to check if object created with issues?
+         * It is needed to define whether we need to format the code at all.
          */
         public static string ToTestWellFormatted(this object @object)
         {
-            throw new NotImplementedException();
+            return new WellFormattedCode(@object.ToTest()).ToString();
         }
 
         internal static string ToStringForInitialization(this object? @object)
