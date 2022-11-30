@@ -74,10 +74,19 @@ namespace ObjectToTest.UnitTests
         public void Type()
         {
             Assert.Equal(
-                
-                new DelegateConstructor(new Action<int, string>((i, str) => { }))
-                    .ToString()
-                    .Log(_output)
+                "Action`2",
+                new DelegateConstructor(new Action<int, string>((i, str) => { })).Type
+            );
+        }
+        
+        
+        [Fact]
+        public void Object()
+        {
+            var item = new Action<int, string>((i, str) => { });
+            Assert.Equal(
+                item,
+                new DelegateConstructor(item).Object
             );
         }
         
