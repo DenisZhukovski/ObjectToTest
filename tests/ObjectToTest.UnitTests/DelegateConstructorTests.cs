@@ -70,6 +70,26 @@ namespace ObjectToTest.UnitTests
             );
         }
         
+        [Fact]
+        public void Type()
+        {
+            Assert.Equal(
+                "Action`2",
+                new DelegateConstructor(new Action<int, string>((i, str) => { })).Type
+            );
+        }
+        
+        
+        [Fact]
+        public void Object()
+        {
+            var item = new Action<int, string>((i, str) => { });
+            Assert.Equal(
+                item,
+                new DelegateConstructor(item).Object
+            );
+        }
+        
         [Fact(Skip = "Need to be fixed")]
         public void ActionCtorWith2ParamsAndBody()
         {

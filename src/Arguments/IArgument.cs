@@ -6,8 +6,13 @@ namespace ObjectToTest.Arguments
     {
         string Name { get;  }
 
-        IConstructor Constructor { get; }
+        /// <summary>
+        /// It an object type name which is encapsulated by argument 
+        /// </summary>
+        string Type { get; }
         
         object? Object { get; }
+        
+        IConstructor Constructor { get; }
     }
 }
