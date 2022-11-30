@@ -559,8 +559,8 @@ namespace ObjectToTest.UnitTests
                     "  int second - not found in object",
                     string.Empty
                 ).ToString(),
-                new IncorrectArgumentsClass(1, 2).
-                    ToTestWellFormatted()
+                new IncorrectArgumentsClass(1, 2)
+                    .ToTestWellFormatted()
                     .Log(_output)
             );
         }
