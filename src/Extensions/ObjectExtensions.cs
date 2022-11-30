@@ -18,8 +18,8 @@ namespace ObjectToTest
         }
 
         /*
-         * @question: Can we extend ObjectAsConstructor to be able to check if object created without issues?
-         * It is needed to define whether we need to format code at all.
+         * @todo #85 60m/ARCH: Can we extend ObjectAsConstructor to be able to check if object created with issues?
+         * It is needed to define whether we need to format the code at all.
          */
         public static string ToTestWellFormatted(this object @object)
         {
