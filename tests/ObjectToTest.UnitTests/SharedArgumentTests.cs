@@ -31,9 +31,18 @@ namespace ObjectToTest.UnitTests
             var argument = new Argument("user", user.GetType(), user, user.Constructor(new MockArguments()));
             Assert.Equal(
                 argument.Name,
-                new SharedArgument(
-                        argument
-                 ).Name
+                new SharedArgument(argument).Name
+            );
+        }
+        
+        [Fact]
+        public void Type()
+        {
+            var user = new User("user");
+            var argument = new Argument("user", user.GetType(), user, user.Constructor(new MockArguments()));
+            Assert.Equal(
+                argument.Type,
+                new SharedArgument(argument).Type
             );
         }
 
@@ -44,9 +53,7 @@ namespace ObjectToTest.UnitTests
             var argument = new Argument("user", user.GetType(), user, user.Constructor(new MockArguments()));
             Assert.Equal(
                 argument.Constructor,
-                new SharedArgument(
-                        argument
-                 ).Constructor
+                new SharedArgument(argument).Constructor
             );
         }
 
@@ -57,9 +64,7 @@ namespace ObjectToTest.UnitTests
             var argument = new Argument("user", user.GetType(), user, user.Constructor(new MockArguments()));
             Assert.Equal(
                 argument.GetHashCode(),
-                new SharedArgument(
-                        argument
-                 ).GetHashCode()
+                new SharedArgument(argument).GetHashCode()
             );
         }
 
@@ -72,9 +77,7 @@ namespace ObjectToTest.UnitTests
                 new SharedArgument(
                         new Argument(
                             "user",
-                            user.GetType(),
-                            user,
-                            user.Constructor(new MockArguments())
+                            user
                         )
                  ).ToString()
             );
@@ -87,9 +90,7 @@ namespace ObjectToTest.UnitTests
             var argument = new SharedArgument(
                    new Argument(
                        "user",
-                       user.GetType(),
-                       user,
-                       user.Constructor(new MockArguments())
+                       user
                    )
             );
 
