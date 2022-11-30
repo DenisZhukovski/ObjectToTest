@@ -21,8 +21,6 @@ namespace ObjectToTest.Constructors
 
         public bool IsValid => Arguments.All(a => _object.Contains(a.Name) && a.Constructor.IsValid);
 
-        public string Type => _object.GetType().TypeName();
-        
         public IList<IArgument> Arguments => _arguments ??= _constructor
             .GetParameters()
             .Select(MapParameter)
