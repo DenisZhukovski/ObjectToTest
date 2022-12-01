@@ -547,5 +547,22 @@ namespace ObjectToTest.UnitTests
                     .Log(_output)
             );
         }
+        
+        [Fact]
+        public void IncorrectArgumentsClass()
+        {
+            Assert.Equal(
+                new NewLineSeparatedString(
+                "Can not find a constructor for IncorrectArgumentsClass object, valid constructor is not available.",
+                    "ctor IncorrectArgumentsClass",
+                    "  int first - not found in object",
+                    "  int second - not found in object",
+                    string.Empty
+                ).ToString(),
+                new IncorrectArgumentsClass(1, 2)
+                    .ToTestWellFormatted()
+                    .Log(_output)
+            );
+        }
     }
 }

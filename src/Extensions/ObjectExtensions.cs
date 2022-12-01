@@ -17,13 +17,17 @@ namespace ObjectToTest
             ).ToString();
         }
 
-        /*
-         * @todo #85 60m/ARCH: Can we extend ObjectAsConstructor to be able to check if object created with issues?
-         * It is needed to define whether we need to format the code at all.
-         */
         public static string ToTestWellFormatted(this object @object)
         {
-            return new WellFormattedCode(@object.ToTest()).ToString();
+            var objectAsConstructor = new ObjectAsConstructor(
+                @object ?? throw new ArgumentNullException(nameof(@object))
+            );
+            if (objectAsConstructor.Constructor.IsValid)
+            {
+                return new WellFormattedCode(objectAsConstructor.ToString()).ToString();
+            }
+
+            return objectAsConstructor.ToString();
         }
 
         internal static string ToStringForInitialization(this object? @object)

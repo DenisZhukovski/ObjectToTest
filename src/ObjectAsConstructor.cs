@@ -30,11 +30,24 @@ namespace ObjectToTest
             new ObjectSharedArguments(_object)
         );
         
+        public IConstructor Constructor 
+        {
+            get
+            {
+                var argument = SharedArguments.Argument(_object);
+                if (argument != null)
+                {
+                    return new CommentLine($"Target object stored in: '{argument.Name}'");
+                }
+                return _object.Constructor(SharedArguments);
+            }
+        }
+        
         public override string ToString()
         {
             try
             {
-                return $"{SharedArguments}{Constructor(SharedArguments)}";
+                return $"{SharedArguments}{Constructor}";
             }
             catch(NoConstructorException ex)
             {
@@ -45,16 +58,6 @@ namespace ObjectToTest
                         SharedArguments
                     );
             }
-        }
-
-        private IConstructor Constructor(IArguments sharedArguments)
-        {
-            var argument = sharedArguments.Argument(_object);
-            if (argument != null)
-            {
-                return new CommentLine($"Target object stored in: '{argument.Name}'");
-            }
-            return _object.Constructor(sharedArguments);
         }
     }
 }
