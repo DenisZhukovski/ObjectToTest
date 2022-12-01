@@ -1,4 +1,4 @@
-﻿namespace ObjectToTest.CodeFormatting.Syntax
+﻿namespace ObjectToTest.CodeFormatting.Syntax.Contracts
 {
     /// <summary>
     /// var a

@@ -1,4 +1,4 @@
-﻿namespace ObjectToTest.CodeFormatting.Syntax
+﻿namespace ObjectToTest.CodeFormatting.Syntax.Contracts
 {
     /// <summary>
     /// someCustomVariable, _privateField, "stringConstant", 1234, Values.ValueFromEnum, Singleton.Instance
