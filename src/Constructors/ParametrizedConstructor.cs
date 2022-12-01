@@ -23,8 +23,8 @@ namespace ObjectToTest.Constructors
 
         public IList<IArgument> Arguments => _arguments ??= _constructor
             .GetParameters()
-            .Select(MapParameter)
-            .ToList();
+            .Select(parameterInfo => new ParameterInfoAsArgument(parameterInfo, _object, _sharedArguments))
+            .ToList<IArgument>();
 
         public object? Object => _object;
 
@@ -48,38 +48,6 @@ namespace ObjectToTest.Constructors
                 return $"new {objectType.GenericTypeName()}({paramsStr}){new ObjectProperties(_object, _sharedArguments)}";
             }
             return $"new {objectType.Name}({paramsStr}){new ObjectProperties(_object, _sharedArguments)}";
-        }
-
-        protected virtual IArgument MapParameter(ParameterInfo parameter)
-        {
-            if (_object.Contains(parameter))
-            {
-                var sharedArgument = _sharedArguments.Argument(_object.Value(parameter));
-                if (sharedArgument != null)
-                {
-                    return sharedArgument;
-                }
-            }
-
-            return new Argument(
-                parameter.Name,
-                parameter.ParameterType,
-                _object.Contains(parameter) 
-                    ? _object.Value(parameter)
-                    : parameter.Default(),
-                Constructor(parameter)
-            );
-        }
-
-        private IConstructor Constructor(ParameterInfo parameter)
-        {
-            if (_object.Contains(parameter))
-            {
-                return _object
-                    .Value(parameter)
-                    .Constructor(_sharedArguments);
-            }
-            return new InvalidConstructor(_object);
         }
     }
 }

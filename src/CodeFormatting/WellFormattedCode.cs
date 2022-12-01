@@ -1,9 +1,7 @@
 ﻿namespace ObjectToTest.CodeFormatting
 {
     /*
-     * @todo #85 60m/DEV Decompose code formatting to create syntax tree from code.
-     * Better to parse code and format it properly. It isolates existing functionality.
-     * Probably need to invest some time to find existing ability to create syntax tree from code.
+     * @todo #91 60m/DEV Create hierarchy for code formatting based on ISyntaxTree.
      */
     public class WellFormattedCode
     {

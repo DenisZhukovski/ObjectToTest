@@ -1,4 +1,5 @@
 ﻿using System;
+using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
 using Xunit.Abstractions;
@@ -18,33 +19,58 @@ namespace ObjectToTest.UnitTests
         public void IncorrectArgumentsClass()
         {
             Assert.Equal(
-                $"ctor IncorrectArgumentsClass{Environment.NewLine}" +
-                $"  int first - not found in object{Environment.NewLine}" +
-                $"  int second - not found in object{Environment.NewLine}",
+                new NewLineSeparatedString(
+                    "ctor IncorrectArgumentsClass",
+                    "  int first - not found in object",
+                    "  int second - not found in object",
+                    string.Empty
+                ).ToString(),
                 new  ObjectDependenciesTrace(new IncorrectArgumentsClass(1, 2))
                     .ToString()
                     .Log(_output)
             );
         }
 
-        [Fact(Skip = "Need to fix this test")]
+        [Fact]
+        public void InvalidDependencyUser()
+        {
+            Assert.Equal(
+                new NewLineSeparatedString(
+                    "ctor InvalidDependencyUser",
+                    "  IPrice price - valid",
+                    "  IRepository repository - invalid",
+                    "    ctor IncorrectArgumentsClass",
+                    "      int first - not found in object",
+                    "      int second - not found in object",
+                    string.Empty
+                ).ToString(),
+                new  ObjectDependenciesTrace(
+                        new InvalidDependencyUser(
+                            new Price(20),
+                            new IncorrectArgumentsClass(1, 2)
+                        )
+                ).ToString()
+                 .Log(_output)
+            );
+        }
+
+        [Fact]
         public void ComplexObjectDependenciesTrace()
         {
-            /*
-             * @todo #64 60m/DEV ObjectDependenciesTrace does not support recursive analyzes for invalid constructor
-             * arguments. The test should be fixed and recursive analyzes implemented.
-            */
             Assert.Equal(
-                $"ctor ComplexObjectWithInvalidArguments{Environment.NewLine}" +
-                $"  IUser user - invalid{Environment.NewLine}" +
-                $"    ctor InvalidDependencyUser user{Environment.NewLine}" +
-                $"      IPrice price - valid{Environment.NewLine}" +
-                $"      IRepository repository - invalid{Environment.NewLine}" +
-                $"        ctor IncorrectArgumentsClass{Environment.NewLine}" +
-                $"          int first - not found in object{Environment.NewLine}" +
-                $"          int second - not found in object{Environment.NewLine}" +
-                $"  IPrice price - valid{Environment.NewLine}",
-                new  ObjectDependenciesTrace(
+                new NewLineSeparatedString(
+                    "ctor ComplexObjectWithInvalidArguments",
+                    "  IUser user - invalid",
+                    "    ctor InvalidDependencyUser",
+                    "      IPrice price - valid",
+                    "      IRepository repository - invalid",
+                    "        ctor IncorrectArgumentsClass",
+                    "          int first - not found in object",
+                    "          int second - not found in object",
+                    "  IPrice price - valid",
+                    string.Empty
+                ).ToString(),
+                new ObjectDependenciesTrace(
                         new ComplexObjectWithInvalidArguments(
                             new InvalidDependencyUser(new Price(20), new IncorrectArgumentsClass(1, 2)),
                             new Price(30)
