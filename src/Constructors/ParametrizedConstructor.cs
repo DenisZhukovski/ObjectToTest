@@ -79,7 +79,7 @@ namespace ObjectToTest.Constructors
                     .Value(parameter)
                     .Constructor(_sharedArguments);
             }
-            return new InvalidConstructor(_object);
+            return new InvalidConstructor(_object, _sharedArguments);
         }
     }
 }

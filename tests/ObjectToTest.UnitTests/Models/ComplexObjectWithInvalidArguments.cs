@@ -8,11 +8,6 @@ namespace ObjectToTest.UnitTests.Models
         private readonly IUser _user;
         private readonly IPrice _price;
 
-        public ComplexObjectWithInvalidArguments(IUser user)
-            : this(user, new Price(10))
-        {
-        }
-        
         public ComplexObjectWithInvalidArguments(IUser user, IPrice price)
         {
             _user = user;
