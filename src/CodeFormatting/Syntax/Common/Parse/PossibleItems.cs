@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ObjectToTest.CodeFormatting.Syntax.Common
+namespace ObjectToTest.CodeFormatting.Syntax.Common.Parse
 {
     public class PossibleItems<TOut> : IPossibleItems<TOut>
     {

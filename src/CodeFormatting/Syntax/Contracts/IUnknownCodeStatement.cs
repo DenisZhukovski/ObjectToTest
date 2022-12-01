@@ -1,4 +1,4 @@
-﻿namespace ObjectToTest.CodeFormatting.Syntax
+﻿namespace ObjectToTest.CodeFormatting.Syntax.Contracts
 {
     public interface IUnknownCodeStatement : ICodeStatement
     {

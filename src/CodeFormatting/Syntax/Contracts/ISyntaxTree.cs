@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ObjectToTest.CodeFormatting.Syntax.Common;
-using ObjectToTest.CodeFormatting.Syntax.Common.Strings;
+﻿using System.Collections.Generic;
 
-namespace ObjectToTest.CodeFormatting.Syntax
+namespace ObjectToTest.CodeFormatting.Syntax.Contracts
 {
     public interface ISyntaxTree : IEnumerable<ICodeStatement>
     {

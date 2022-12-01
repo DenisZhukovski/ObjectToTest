@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using ObjectToTest.CodeFormatting.Syntax.Common.Strings;
+using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 {

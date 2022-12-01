@@ -1,4 +1,6 @@
 ﻿using ObjectToTest.CodeFormatting.Syntax.Common;
+using ObjectToTest.CodeFormatting.Syntax.Common.Parse;
+using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 {

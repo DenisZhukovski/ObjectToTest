@@ -1,4 +1,4 @@
-﻿namespace ObjectToTest.CodeFormatting.Syntax
+﻿namespace ObjectToTest.CodeFormatting.Syntax.Contracts
 {
     /// <summary>
     /// new Foo(), new int[] {}, dictionary or list

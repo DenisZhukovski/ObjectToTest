@@ -1,4 +1,4 @@
-﻿namespace ObjectToTest.CodeFormatting.Syntax.Common
+﻿namespace ObjectToTest.CodeFormatting.Syntax.Common.Parse
 {
     public interface IPossibleItems<TOut>
     {

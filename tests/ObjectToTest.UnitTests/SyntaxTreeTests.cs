@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax;
+using ObjectToTest.CodeFormatting.Syntax.Implementation;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit;
 
