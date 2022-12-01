@@ -90,7 +90,7 @@ namespace ObjectToTest
             return @object
                 .Constructors(sharedArguments)
                 .FirstOrDefault(c => c.IsValid)
-                ?? new InvalidConstructor(@object);
+                ?? new InvalidConstructor(@object, sharedArguments);
         }
 
         internal static IEnumerable<IConstructor> Constructors(

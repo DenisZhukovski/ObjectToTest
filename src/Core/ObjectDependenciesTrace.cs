@@ -31,26 +31,24 @@ namespace ObjectToTest
             var result = new StringBuilder();
             foreach (var ctor in _object.Constructors(_sharedArguments))
             {
-                result.Append(ConstructorDetails(ctor, ""));
+                ConstructorDetails(ctor, "", result);
             }
 
             return result.ToString();
         }
 
-        private string ConstructorDetails(IConstructor ctor, string intent)
+        private void ConstructorDetails(IConstructor ctor, string intent, StringBuilder result)
         {
-            var result = new StringBuilder();
             result.AppendLine($"{intent}ctor {ctor.Type()}");
             foreach (var argument in ctor.Arguments)
             {
-                result.AppendLine($"{intent}  {argument.Type} {argument.Name} - {ArgumentState(ctor, argument)}");
-                if (!argument.Constructor.IsValid && argument.Constructor.Arguments.Any())
+                var state = ArgumentState(ctor, argument);
+                result.AppendLine($"{intent}  {argument.Type} {argument.Name} - {state}");
+                if (state == "invalid" && argument.Constructor.Arguments.Any())
                 {
-                    result.Append(ConstructorDetails(argument.Constructor, intent + "  "));
+                    ConstructorDetails(argument.Constructor, intent + "    ", result);
                 }
             }
-
-            return result.ToString();
         }
 
         private static string ArgumentState(IConstructor ctor, IArgument argument)
