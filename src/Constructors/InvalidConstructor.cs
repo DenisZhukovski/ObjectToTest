@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using ObjectToTest.Arguments;
 using ObjectToTest.Exceptions;
 
@@ -33,7 +32,7 @@ namespace ObjectToTest.Constructors
                     var arguments = new List<IArgument>();
                     foreach (var parameter in ctor.GetParameters())
                     {
-                        arguments.Add(MapParameter(parameter));
+                        arguments.Add(new ParameterInfoAsArgument(parameter, _object, _sharedArguments));
                     }
 
                     if (arguments.Any(a => !a.Constructor.IsValid))
@@ -61,38 +60,6 @@ namespace ObjectToTest.Constructors
         public override string ToString()
         {
             throw new NoConstructorException(_object);
-        }
-        
-        protected virtual IArgument MapParameter(ParameterInfo parameter)
-        {
-            if (_object.Contains(parameter))
-            {
-                var sharedArgument = _sharedArguments.Argument(_object.Value(parameter));
-                if (sharedArgument != null)
-                {
-                    return sharedArgument;
-                }
-            }
-
-            return new Argument(
-                parameter.Name,
-                parameter.ParameterType,
-                _object.Contains(parameter) 
-                    ? _object.Value(parameter)
-                    : parameter.Default(),
-                Constructor(parameter)
-            );
-        }
-
-        private IConstructor Constructor(ParameterInfo parameter)
-        {
-            if (_object.Contains(parameter))
-            {
-                return _object
-                    .Value(parameter)
-                    .Constructor(_sharedArguments);
-            }
-            return new InvalidConstructor(_object, _sharedArguments);
         }
     }
 }
