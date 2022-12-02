@@ -13,7 +13,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 
         public override string ToString()
         {
-            return base.ToString();
+            return _codeStatement;
         }
     }
 }
