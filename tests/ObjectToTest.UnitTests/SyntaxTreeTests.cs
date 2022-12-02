@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax;
+using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Implementation;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit;
@@ -33,6 +34,27 @@ namespace ObjectToTest.UnitTests
                     )
                     .Count()
             );
+        }
+
+        [Fact]
+        public void InstantiationShouldBeDetectedCorrectly()
+        {
+            new SyntaxTree(
+                    "new Foo()"
+                )
+                .ElementAt(0)
+                .ClaimIs<IInstantiationStatement>();
+
+        }
+
+        [Fact]
+        public void InstantiationInLiteralShouldBeIgnored()
+        {
+            new SyntaxTree(
+                    "\"new Foo()\""
+                )
+                .ElementAt(0)
+                .ClaimIsNot<IInstantiationStatement>();
         }
     }
 }

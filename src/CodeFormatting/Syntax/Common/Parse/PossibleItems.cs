@@ -15,11 +15,11 @@ namespace ObjectToTest.CodeFormatting.Syntax.Common.Parse
         {
             foreach (var match in _matches)
             {
-                var result = match(value);
+                var resultingMatch = match(value);
 
-                if (result is ParseSuccessful<TOut> successful)
+                if (resultingMatch is ParseSuccessful successful && successful.GenericValue is TOut result)
                 {
-                    return successful.Value;
+                    return result;
                 }
             }
 
