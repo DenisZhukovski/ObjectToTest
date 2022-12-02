@@ -14,6 +14,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Implementation
         public PossibleCodeStatements()
         {
             _possibleStatements = new PossibleItems<ICodeStatement>(
+                codeStatement => InstantiationStatement.Parse(codeStatement),
                 codeStatement => new ParseSuccessful<ICodeStatement>(new UnknownCodeStatement(codeStatement))
             );
         }
