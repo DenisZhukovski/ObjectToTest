@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using ObjectToTest.CodeFormatting.Syntax.Common.Strings;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
+using ObjectToTest.CodeFormatting.Syntax.Implementation;
 
-namespace ObjectToTest.CodeFormatting.Syntax.Implementation
+namespace ObjectToTest.CodeFormatting.Syntax
 {
     public class SyntaxTree : ISyntaxTree
     {
