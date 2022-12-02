@@ -9,5 +9,11 @@
          * @todo #91 60m/DEV Define necessary properties
          * Most likely: new [TypeDefinition]([Arguments]) {[InlinePropertiesAssignment]}
          */
+
+        ITypeDefinition Type { get; }
+
+        IArguments Arguments { get; }
+
+        IPropertyAssignments InlinePropertiesAssignment { get; }
     }
 }
