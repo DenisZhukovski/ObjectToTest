@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Common.Strings
 {
-    public class LiteralAwareSeparateWordSubstrings : IEnumerable<ISubstring>
+    public class LiteralAwareSubstring : IEnumerable<ISubstring>
     {
         private readonly string _source;
         private readonly string _pattern;
 
-        public LiteralAwareSeparateWordSubstrings(string source, string pattern)
+        public LiteralAwareSubstring(string source, string pattern)
         {
             _source = source;
             _pattern = pattern;
@@ -17,11 +16,12 @@ namespace ObjectToTest.CodeFormatting.Syntax.Common.Strings
 
         public IEnumerator<ISubstring> GetEnumerator()
         {
-            var matches = new LiteralAwareSubstring(_source, _pattern);
+            var allMatches = new Substrings(_source, _pattern);
+            var literals = new LiteralSubstrings(_source);
 
-            var result = matches.ExcludeNotSeparateWords(_source).ToList();
+            var matches = allMatches.ExcludeOnesThatAreIn(literals);
 
-            return result.GetEnumerator();
+            return matches.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

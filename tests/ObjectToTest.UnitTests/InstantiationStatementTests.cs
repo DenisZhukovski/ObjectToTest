@@ -35,5 +35,14 @@ namespace ObjectToTest.UnitTests
         {
             InstantiationStatement.Parse("=new Foo.Foo()").ClaimIs<ParseSuccessful>();
         }
+
+        [Fact]
+        public void InstantiationShouldBeParsedCorrectly()
+        {
+            var statement = new InstantiationStatement("new Foo(123, \"new Foo()\") {A = 5, B = \"new Foo()\"};");
+            statement.Type.ToString().ClaimEqual("Foo");
+            statement.Arguments.ToString().ClaimEqual("123, \"new Foo()\"");
+            statement.InlinePropertiesAssignment.ToString().ClaimEqual("A = 5, B = \"new Foo()\"");
+        }
     }
 }
