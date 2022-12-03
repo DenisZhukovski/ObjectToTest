@@ -90,20 +90,14 @@ namespace ObjectToTest.UnitTests
             );
         }
         
-        [Fact(Skip = "Need to be fixed")]
+        [Fact()]
         public void ActionCtorWith2ParamsAndBody()
         {
-            /*
-            * @todo #43:60m/DEV Make ActionCtorWith2ParamsAndBody test to be green.
-            * Now DelegateConstructor does not support delegate body generation.
-             * DelegateConstructor class should be able to generate the body for the Func
-            */
-            
             var count = 0;
             var data = string.Empty;
             Assert.Equal(
                 $"var count = 0;{Environment.NewLine}" +
-                $"var data = string.Empty;{Environment.NewLine}" +
+                $"var data = \"\";{Environment.NewLine}" +
                 $"(i, str) => {{{Environment.NewLine}" +
                 $"\tcount = i;{Environment.NewLine}" +
                 $"\tdata = str;{Environment.NewLine}" +
