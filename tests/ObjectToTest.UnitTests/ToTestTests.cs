@@ -265,19 +265,30 @@ namespace ObjectToTest.UnitTests
            );
         }
 
-        [Fact(Skip = "Need to be fixed")]
+        [Fact]
         public void OtherObjectMethodReferenceAsArgument()
         {
-            /*
-            * @todo #:60m/DEV Make OtherObjectMethodReferenceAsArgument test to be green.
-            * Now DelegateConstructor does not support object method as reference.
-             * DelegateConstructor class should be able to generate the body for such cases
-            */
-            var user = new User("user Name");
             Assert.Equal(
-                $"var user = new User(\"user Name\"){Environment.NewLine}" +
-                "new WithFuncArgument(user.Age)",
-                new WithFuncArgument(user.Age)
+                "new WithFuncArgument(new User(\"user Name\").Age)",
+                new WithFuncArgument(new User("user Name").Age)
+                    .ToTest()
+                    .Log(_output)
+            );
+        }
+
+        [Fact(Skip = "Need to be fixed")]
+        public void SharedOtherObjectMethodsReferenceAsArgument()
+        {        
+            /*
+            * @todo #:60m/DEV Make SharedOtherObjectMethodsReferenceAsArgument test to be green.
+            * Now DelegateConstructor does not support shared objects.
+            * DelegateConstructor should be able to generate code with shared arguments in such cases.
+            */
+            var user = new User("user name");
+            Assert.Equal(
+                $"var user = new User(\"user Name\");{Environment.NewLine}" +
+                $"new With2FuncArguments(user.Age, user.LoginToAsync)",
+                new With2FuncArguments(user.Age, user.LoginToAsync)
                     .ToTest()
                     .Log(_output)
             );
