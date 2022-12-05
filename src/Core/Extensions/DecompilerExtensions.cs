@@ -62,7 +62,10 @@ namespace ObjectToTest.Extensions
                 }
                 return $"{@delegate.ClosuresParamsAsString()}({method.ParametersAsString()}) => {method.BodyAsString()}";
             }
-            return method.ToString();
+            else
+            {
+                return $"{@delegate.Target.ToTest()}.{method.Name}";
+            }
         }
 
         private static string ClosuresParamsAsString(this Delegate @delegate)
