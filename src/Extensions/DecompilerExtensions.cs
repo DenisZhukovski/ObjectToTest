@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Text;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.CSharp.Syntax;
@@ -46,7 +47,7 @@ namespace ObjectToTest.Extensions
                 @delegate.Target.GetType().Module.Assembly.Location,
                 new DecompilerSettings(LanguageVersion.Latest)
             );
-            
+
             var decompiledCode = decompiler.Decompile(
                     decompiler
                         .Method(@delegate)
@@ -57,12 +58,23 @@ namespace ObjectToTest.Extensions
             {
                 if (method.Parameters.Count == 1)
                 {
-                    return $"{method.ParametersAsString()} => {method.BodyAsString()}";
+                    return $"{@delegate.ClosuresParamsAsString()}{method.ParametersAsString()} => {method.BodyAsString()}";
                 }
-                return $"({method.ParametersAsString()}) => {method.BodyAsString()}";
+                return $"{@delegate.ClosuresParamsAsString()}({method.ParametersAsString()}) => {method.BodyAsString()}";
             }
             return method.ToString();
         }
+
+        private static string ClosuresParamsAsString(this Delegate @delegate)
+            => @delegate.Target.GetType().GetFields()
+                .Where(x => !x.IsStatic)
+                .Aggregate(new StringBuilder(), (builder, info) => builder
+                    .Append("var ")
+                    .Append(info.Name)
+                    .Append(" = ")
+                    .Append(info.GetValue(@delegate.Target).ToTest())
+                    .Append($";{Environment.NewLine}"))
+                .ToString();
 
         private static string BodyAsString(this MethodDeclaration method)
         {
