@@ -13,14 +13,14 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(expected, actual);
         }
 
-        public static void Equal<T>(T actual, T expected, string message = null)
+        public static void Equal<T>(T actual, T expected, string? message = null)
         {
             Assert.Equal(expected, actual);
         }
 
-        public static void ClaimEqual<T>(this T actual, T expected, string message = null) => Equal(actual, expected, message);
+        public static void ClaimEqual<T>(this T actual, T expected, string? message = null) => Equal(actual, expected, message);
 
-        public static void ClaimReferenceNotEqual<T>(this T actual, T expected, string message = null) => ReferenceNotEqual(actual, expected);
+        public static void ClaimReferenceNotEqual<T>(this T actual, T expected, string? message = null) => ReferenceNotEqual(actual, expected);
 
         public static void ClaimNotEqual<T>(this T actual, T expected) => NotEqual(actual, expected);
 
@@ -38,7 +38,7 @@ namespace ObjectToTest.UnitTests
             Assert.Fail("Not Implemented");
         }
 
-        public static void True(bool condition, string message = null)
+        public static void True(bool condition, string? message = null)
         {
             Assert.True(condition, message ?? string.Empty);
         }

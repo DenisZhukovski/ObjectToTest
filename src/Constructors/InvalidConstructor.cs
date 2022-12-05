@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ObjectToTest.Arguments;
 using ObjectToTest.Exceptions;
 
 namespace ObjectToTest.Constructors
 {
+    [SuppressMessage("Blocker Code Smell", "S3877:Exceptions should not be thrown from unexpected methods")]
     public class InvalidConstructor : IConstructor
     {
         private readonly object _object;

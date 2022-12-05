@@ -1,8 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using System.Transactions;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Common.Strings
 {
@@ -19,7 +16,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Common.Strings
         {
             foreach (var s in _source.Split(';'))
             {
-                if (string.IsNullOrWhiteSpace(s) == false)
+                if (!string.IsNullOrWhiteSpace(s))
                 {
                     yield return s;
                 }

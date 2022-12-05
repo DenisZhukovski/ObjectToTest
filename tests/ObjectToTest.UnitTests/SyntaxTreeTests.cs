@@ -50,9 +50,7 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void InstantiationInLiteralShouldBeIgnored()
         {
-            new SyntaxTree(
-                    "\"new Foo()\""
-                )
+            new SyntaxTree("\"new Foo()\"")
                 .ElementAt(0)
                 .ClaimIsNot<IInstantiationStatement>();
         }
