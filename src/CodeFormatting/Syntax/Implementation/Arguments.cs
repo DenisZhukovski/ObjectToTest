@@ -1,14 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using ObjectToTest.CodeFormatting.Syntax.Common.Strings;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 {
     public class Arguments : IArguments
     {
-        /*
-        * @todo #103 60m/DEV Parse arguments.
-        */
+        private readonly Lazy<PossibleArguments> _possibleArguments = new(() => new PossibleArguments());
 
         private readonly string _source;
 
@@ -24,7 +24,10 @@ namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 
         public IEnumerator<IArgument> GetEnumerator()
         {
-            yield break;
+            foreach (var characterSeparatedSubstring in new CharacterSeparatedSubstrings(_source, ',', notAnalyzeIn: new LiteralsAndClosuresSubstrings(_source)))
+            {
+                yield return _possibleArguments.Value.BestMatch(characterSeparatedSubstring.ToString());
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
