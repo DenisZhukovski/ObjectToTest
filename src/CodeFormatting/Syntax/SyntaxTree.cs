@@ -6,6 +6,29 @@ using ObjectToTest.CodeFormatting.Syntax.Implementation;
 
 namespace ObjectToTest.CodeFormatting.Syntax
 {
+    /*
+    * @todo #106 60m/DEV Adjust project structure.
+     *
+     * Folders should reflect SyntaxTree dependencies.
+     * - CodeStatements
+     * -- Instantiation
+     * --- Arguments
+     * --- Properties
+     * -- Assignment
+     * etc.
+     *
+     * All core classes should be placed into Core folder for SyntaxTree considering hierarchy if any - substrings, substring, character.
+    */
+
+    /*
+    * @todo #106 60m/DEV Change split implementation to consider closures, lambdas and inline initializations.
+     *
+    */
+
+    /*
+    * @todo #106 60m/DEV Refactoring for all logic to be moved from constructor into lazy initializations or lazy executables.
+     *
+    */
     public class SyntaxTree : ISyntaxTree
     {
         private readonly string _code;

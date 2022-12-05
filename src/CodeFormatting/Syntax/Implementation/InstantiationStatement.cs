@@ -7,6 +7,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 {
     public class InstantiationStatement : IInstantiationStatement
     {
+        private readonly string _codeStatement;
         /*
         * @todo #103 60m/DEV Think about array assignment.
          * It is not required right now, but to reuse this class when instantiation statement is used
@@ -18,6 +19,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Implementation
 
         public InstantiationStatement(string codeStatement)
         {
+            _codeStatement = codeStatement;
             Type = new RawTypeDefinition(new SubstringBetween(codeStatement, "new ", "(").ToString());
 
             var argumentsClosure = new LiteralAwareClosureSubstrings(codeStatement, '(', ')');
@@ -57,6 +59,11 @@ namespace ObjectToTest.CodeFormatting.Syntax.Implementation
             }
 
             return new ParseFail();
+        }
+
+        public override string ToString()
+        {
+            return _codeStatement.Trim();
         }
     }
 }
