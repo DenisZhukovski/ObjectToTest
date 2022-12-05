@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Authors>Denis Zhukovski, Maksym Shustov</Authors>
+    <Authors>Denis Zhukovski, Maksym Shustov, Stanislau Kanaplianik</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>0.0.6</Version>
     <Title>Object To Test</Title>
