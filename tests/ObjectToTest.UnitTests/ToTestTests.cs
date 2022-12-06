@@ -30,7 +30,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new EmptyObject()",
-                new EmptyObject().ToTest().Log(_output)
+                new EmptyObject().ToTest(_output)
             );
         }
 
@@ -44,7 +44,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOnePublicProperty()",
-                new WithOnePublicProperty().ToTest().Log(_output)
+                new WithOnePublicProperty().ToTest(_output)
             );
         }
 
@@ -56,7 +56,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicProperty
                 {
                     PropertyName = "Test"
-                }.ToTest().Log(_output)
+                }.ToTest(_output)
             );
         }
 
@@ -68,7 +68,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicIntProperty
                 {
                     PropertyName = 42
-                }.ToTest().Log(_output)
+                }.ToTest(_output)
             );
         }
 
@@ -81,7 +81,7 @@ namespace ObjectToTest.UnitTests
                  {
                      IntProperty = 42,
                      StringProperty = "Test"
-                 }.ToTest().Log(_output)
+                 }.ToTest(_output)
             );
         }
 
@@ -90,9 +90,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOneParameterContructorAndPublicReadProperty(42)",
-                new WithOneParameterContructorAndPublicReadProperty(42)
-                        .ToTest()
-                        .Log(_output)
+                new WithOneParameterContructorAndPublicReadProperty(42).ToTest(_output)
             );
         }
 
@@ -101,7 +99,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOneParamAndPrivateField(42)",
-                new WithOneParamAndPrivateField(42).ToTest().Log(_output)
+                new WithOneParamAndPrivateField(42).ToTest(_output)
             );
         }
 
@@ -113,7 +111,7 @@ namespace ObjectToTest.UnitTests
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test"
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -122,7 +120,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithClassParam(new EmptyObject())",
-                new WithClassParam(new EmptyObject()).ToTest().Log(_output)
+                new WithClassParam(new EmptyObject()).ToTest(_output)
             );
         }
 
@@ -134,7 +132,7 @@ namespace ObjectToTest.UnitTests
                 new WithClassAndIntParams(
                     42,
                     new EmptyObject()
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -143,9 +141,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new TimeSpan(18,17,34,24,5)",
-                new TimeSpan(18, 17, 34, 24, 5)
-                        .ToTest()
-                        .Log(_output)
+                new TimeSpan(18, 17, 34, 24, 5).ToTest(_output)
             );
         }
 
@@ -156,7 +152,7 @@ namespace ObjectToTest.UnitTests
                 "new WithClassParamThatDependsOnClass(new WithClassParam(new EmptyObject()))",
                 new WithClassParamThatDependsOnClass(
                     new WithClassParam(new EmptyObject())
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -185,7 +181,7 @@ namespace ObjectToTest.UnitTests
                         new EmptyObject()
                     ),
                     42
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -197,7 +193,7 @@ namespace ObjectToTest.UnitTests
                  new WithClassParamWithProp(
                      new WithOnePublicProperty { PropertyName = "Test" },
                      42
-                 ).ToTest().Log(_output)
+                 ).ToTest(_output)
             );
         }
 
@@ -206,7 +202,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
-                new WithGenericArgument<IPrice>().ToTest().Log(_output)
+                new WithGenericArgument<IPrice>().ToTest(_output)
             );
         }
 
@@ -215,9 +211,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new With2GenericArguments<IPrice,IUser>(new Price(10))",
-                new With2GenericArguments<IPrice, IUser>(new Price(10))
-                        .ToTest()
-                        .Log(_output)
+                new With2GenericArguments<IPrice, IUser>(new Price(10)).ToTest(_output)
             );
         }
 
@@ -226,9 +220,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new With3GenericArguments<int,decimal,string>()",
-                  new With3GenericArguments<int, decimal, string>()
-                      .ToTest()
-                      .Log(_output)
+                  new With3GenericArguments<int, decimal, string>().ToTest(_output)
             );
         }
 
@@ -237,9 +229,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                "new WithStructArgument(new Vector3(0,0,1))",
-                new WithStructArgument(UnityEngine.Vector3.forward)
-                     .ToTest()
-                     .Log(_output)
+                new WithStructArgument(UnityEngine.Vector3.forward).ToTest(_output)
             );
         }
 
@@ -248,9 +238,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                "new WithEnumArgument(FlaggedEnum.Advanced)",
-                new WithEnumArgument(FlaggedEnum.Advanced)
-                     .ToTest()
-                     .Log(_output)
+                new WithEnumArgument(FlaggedEnum.Advanced).ToTest(_output)
             );
         }
 
@@ -259,9 +247,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                "new WithFuncArgument(() => 0)",
-                new WithFuncArgument(() => 0)
-                     .ToTest()
-                     .Log(_output)
+                new WithFuncArgument(() => 0).ToTest(_output)
            );
         }
 
@@ -270,9 +256,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithFuncArgument(new User(\"user Name\").Age)",
-                new WithFuncArgument(new User("user Name").Age)
-                    .ToTest()
-                    .Log(_output)
+                new WithFuncArgument(new User("user Name").Age).ToTest(_output)
             );
         }
 
@@ -288,9 +272,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 $"var user = new User(\"user Name\");{Environment.NewLine}" +
                 $"new With2FuncArguments(user.Age, user.LoginToAsync)",
-                new With2FuncArguments(user.Age, user.LoginToAsync)
-                    .ToTest()
-                    .Log(_output)
+                new With2FuncArguments(user.Age, user.LoginToAsync).ToTest(_output)
             );
         }
 
@@ -299,9 +281,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                "new WithActionArgument(pos => {})",
-                new WithActionArgument((pos) => { })
-                     .ToTest()
-                     .Log(_output)
+                new WithActionArgument((pos) => { }).ToTest(_output)
            );
         }
 
@@ -310,9 +290,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithIEnumerableInt(new[] { 1, 2, 4, 5 })",
-                new WithIEnumerableInt(new[] { 1, 2, 4, 5 })
-                        .ToTest()
-                        .Log(_output)
+                new WithIEnumerableInt(new[] { 1, 2, 4, 5 }).ToTest(_output)
             );
         }
 
@@ -321,9 +299,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithListArgument(new List<int> { 1, 2, 4, 5 })",
-                new WithListArgument(new List<int> { 1, 2, 4, 5 })
-                        .ToTest()
-                        .Log(_output)
+                new WithListArgument(new List<int> { 1, 2, 4, 5 }).ToTest(_output)
             );
         }
 
@@ -332,9 +308,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                "new WithListArgument(new List<int>())",
-               new WithListArgument(new List<int>())
-                       .ToTest()
-                       .Log(_output)
+               new WithListArgument(new List<int>()).ToTest(_output)
            );
         }
 
@@ -345,7 +319,7 @@ namespace ObjectToTest.UnitTests
                 "new WithDictionaryArgument(new Dictionary<int,string> { { 1, \"1\" }, { 2, \"2\" }, { 3, \"3\" } })",
                 new WithDictionaryArgument(
                     new Dictionary<int, string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -356,7 +330,7 @@ namespace ObjectToTest.UnitTests
                 "new WithDictionaryArgument(new Dictionary<int,string>())",
                 new WithDictionaryArgument(
                     new Dictionary<int, string>()
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -368,7 +342,7 @@ namespace ObjectToTest.UnitTests
                 new Foo(
                     new Price(10),
                     new User("User Name")
-                ).ToTest().Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -380,7 +354,7 @@ namespace ObjectToTest.UnitTests
                 $"{Environment.NewLine}ctor IncorrectArgumentsClass{Environment.NewLine}" +
                 $"  int first - not found in object{Environment.NewLine}" +
                 $"  int second - not found in object{Environment.NewLine}",
-                new IncorrectArgumentsClass(1, 2).ToTest().Log(_output)
+                new IncorrectArgumentsClass(1, 2).ToTest(_output)
             );
         }
 
@@ -397,7 +371,7 @@ namespace ObjectToTest.UnitTests
                 $"circularRefPublicProperty2.PropertyName1 = circularRefPublicProperty1;{Environment.NewLine}" +
                 $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}" +
                 "// Target object stored in: 'circularRefPublicProperty1'",
-                o1.ToTest().Log(_output)
+                o1.ToTest(_output)
             );
         }
 
@@ -418,7 +392,7 @@ namespace ObjectToTest.UnitTests
                 $"circularRefPublicProperty3.PropertyName = circularRefPublicProperty1;{Environment.NewLine}" +
                 $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}" +
                 "// Target object stored in: 'circularRefPublicProperty1'",
-                o1.ToTest().Log(_output)
+                o1.ToTest(_output)
             );
         }
 
@@ -436,7 +410,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "var user = new User(\"user name\");" + Environment.NewLine +
                 "new WithUserArgument(user,new WithUserPublicProperty(){User = user})",
-                withUser.ToTest().Log(_output)
+                withUser.ToTest(_output)
             );
         }
 
@@ -445,9 +419,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithSingletonArgument(SingletonClass.Instance)",
-                new WithSingletonArgument(SingletonClass.Instance)
-                        .ToTest()
-                        .Log(_output)
+                new WithSingletonArgument(SingletonClass.Instance).ToTest(_output)
             );
         }
 
@@ -459,8 +431,7 @@ namespace ObjectToTest.UnitTests
                 new SharedSingletons(
                     new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
                     new WithSingletonArgument(SingletonClass.Instance)
-                ).ToTest()
-                 .Log(_output)
+                ).ToTest(_output)
             );
         }
 
@@ -469,9 +440,10 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10))",
-                new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
-                    .ToTest()
-                    .Log(_output)
+                new WithSingletonAndOtherArgument(
+                        SingletonClass.Instance,
+                        new Price(10)
+                ).ToTest(_output)
             );
         }
 
@@ -498,8 +470,7 @@ namespace ObjectToTest.UnitTests
                         User = new User("Test Name")
                     }
                 ).ChangeState()
-                 .ToTest()
-                 .Log(_output)
+                 .ToTest(_output)
             );
         }
     }
