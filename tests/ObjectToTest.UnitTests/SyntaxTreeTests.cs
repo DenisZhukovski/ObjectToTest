@@ -14,36 +14,28 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 3,
                 new SyntaxTree(
-                        new NewLineSeparatedString(
-                            "first; something second;",
-                            "third;"
-                        ).ToString()
-                    )
-                    .Count()
+                    new NewLineSeparatedString(
+                        "first; something second;",
+                        "third;"
+                    ).ToString()
+                ).Count()
             );
         }
 
         [Fact]
         public void SingleLineWithoutSemicolon()
         {
-            Assert.Equal(
-                1,
-                new SyntaxTree(
-                        "first"
-                    )
-                    .Count()
+            Assert.Single(
+                new SyntaxTree("first")
             );
         }
 
         [Fact]
         public void InstantiationShouldBeDetectedCorrectly()
         {
-            new SyntaxTree(
-                    "new Foo()"
-                )
+            new SyntaxTree("new Foo()")
                 .ElementAt(0)
                 .ClaimIs<IInstantiationStatement>();
-
         }
 
         [Fact]
