@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
+using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Args
@@ -34,6 +36,19 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Args
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public static IArguments Parse(string codeStatement)
+        {
+            var argumentsClosure = new LiteralAwareClosureSubstrings(codeStatement, '(', ')');
+            if (argumentsClosure.Any())
+            {
+                return new Args.Arguments(argumentsClosure.First().WithoutBorders().ToString());
+            }
+            else
+            {
+                return new SkippedArguments();
+            }
         }
     }
 }

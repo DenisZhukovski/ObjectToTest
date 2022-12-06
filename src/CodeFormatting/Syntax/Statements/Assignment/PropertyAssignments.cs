@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
+using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
+using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {
@@ -30,6 +33,19 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public static IPropertyAssignments Parse(string codeStatement)
+        {
+            var propertiesClosure = new LiteralAwareClosureSubstrings(codeStatement, '{', '}').ToArray();
+            if (propertiesClosure.Any())
+            {
+                return new PropertyAssignments(propertiesClosure.First().WithoutBorders().ToString());
+            }
+            else
+            {
+                return new EmptyPropertyAssignment();
+            }
         }
     }
 }
