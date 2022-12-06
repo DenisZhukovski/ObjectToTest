@@ -260,7 +260,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed")]
+        [Fact(Skip = "Need to be fixed as part of #116 puzzle")]
         public void SharedOtherObjectMethodsReferenceAsArgument()
         {        
             /*

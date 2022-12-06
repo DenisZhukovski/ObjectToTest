@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using UnityEngine;
 using Xunit;
@@ -46,6 +48,28 @@ namespace ObjectToTest.UnitTests
                         new WithCustomData(customHashCode),
                         customHashCode
                     )
+                ).ToList()
+            );
+        }
+
+        [Fact]
+        public void SharedAsMethodDelegate()
+        {
+            var user = new User("user name");
+            Assert.Equal(
+                2,
+                new SharedObjects(
+                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                ).ToList().Count
+            );
+        }
+
+        [Fact]
+        public void NotSharedDelegateMethod()
+        {
+            Assert.Empty(
+                new SharedObjects(
+                    new WithActionArgument((pos) => { })
                 ).ToList()
             );
         }

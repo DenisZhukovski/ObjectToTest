@@ -133,7 +133,7 @@ namespace ObjectToTest
 
         internal static bool HasCircularReference(this object @object)
         {
-            if (!@object.IsSingleton())
+            if (!@object.IsSingleton() && !@object.IsDelegate())
             {
                 foreach (var value in @object.Values())
                 {
