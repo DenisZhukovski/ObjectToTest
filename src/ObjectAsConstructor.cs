@@ -8,6 +8,14 @@ using ObjectToTest.Exceptions;
 
 namespace ObjectToTest
 {
+    /*
+     * @todo #:60m/ARCH ObjectAsConstructor class has to be structurally fixed to support logging
+     * as decorator. Now when the class does not work as expected
+     * its not an easy one to understand how the logic works. Ideally we should
+     * be able to wrap the original object with Logged one to be able to see the whole
+     * execution process. It seems it was a bad idea to use extension method for some
+     * crucial pieces of code.
+     */
     public class ObjectAsConstructor
     {
         private readonly object _object;
