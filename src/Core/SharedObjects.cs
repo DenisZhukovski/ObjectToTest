@@ -26,7 +26,32 @@ namespace ObjectToTest
                 SharedObjectsRecursive(_object, new List<object>());
             }
             
-            return _sharedObjects;
+            return WithoutSingleDelegates(_sharedObjects);
+        }
+
+        private List<object> WithoutSingleDelegates(List<object> sharedObjects)
+        {
+            for (int i = sharedObjects.Count - 1; i >= 0; i--)
+            {
+                if (sharedObjects[i] is Delegate @delegate)
+                {
+                    if (sharedObjects.Count(item => IsDelegateOrTarget(item, @delegate)) < 2)
+                    {
+                        sharedObjects.RemoveAt(i);
+                    }
+                }
+            }
+
+            return sharedObjects;
+        }
+
+        private bool IsDelegateOrTarget(object item, Delegate @delegate)
+        {
+            if (item is Delegate itemAsMethod)
+            {
+                return itemAsMethod.Target.Equals(@delegate.Target);
+            }
+            return item.Equals(@delegate.Target);
         }
 
         private void SharedObjectsRecursive(object @object, List<object> allReferencedObjects)
@@ -44,14 +69,24 @@ namespace ObjectToTest
                     allReferencedObjects
                 );
                 objectStates.Add(value);
-                SharedObjectsRecursive(value, allReferencedObjects);
+                if (!value.IsDelegate())
+                {
+                    SharedObjectsRecursive(value, allReferencedObjects);  
+                }
             }
         }
 
         private void TryAddToShared(object @object, List<object> allReferencedObjects)
         {
             // was already used in other object
-            if (allReferencedObjects.Contains(@object)) 
+            var item = @object;
+            if (item is Delegate @delegate)
+            {
+                item = @delegate.Target;
+                allReferencedObjects.Add(item);
+            }
+            
+            if (allReferencedObjects.Contains(item)) 
             {
                 if (!AlreadyShared(@object))
                 {
@@ -60,7 +95,7 @@ namespace ObjectToTest
             }
             else
             {
-                allReferencedObjects.Add(@object);
+                allReferencedObjects.Add(item);
             }
         }
 
@@ -73,7 +108,6 @@ namespace ObjectToTest
         {
             return @object == null
                 || @object.IsPrimitive()
-                || @object.IsDelegate()
                 || @object.IsSingleton()
                 || @object.IsCollection()
                 || @object.IsValueType()
