@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using ObjectToTest.CodeFormatting.Syntax.Common.Strings;
+using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
 using Xunit;
 
 namespace ObjectToTest.UnitTests

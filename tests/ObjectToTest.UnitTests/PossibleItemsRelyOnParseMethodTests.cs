@@ -1,6 +1,5 @@
 ﻿using System;
-using ObjectToTest.CodeFormatting.Syntax.Common;
-using ObjectToTest.CodeFormatting.Syntax.Common.Parse;
+using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
 using Xunit;
 
 namespace ObjectToTest.UnitTests
