@@ -1,5 +1,5 @@
-﻿using ObjectToTest.CodeFormatting.Syntax.Common.Parse;
-using ObjectToTest.CodeFormatting.Syntax.Implementation;
+﻿using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
+using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 using Xunit;
 
 namespace ObjectToTest.UnitTests

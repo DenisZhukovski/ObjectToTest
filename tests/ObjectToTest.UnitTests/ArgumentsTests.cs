@@ -9,7 +9,7 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void ArgumentsShouldBeParsedCorrectly()
         {
-            var arguments = new CodeFormatting.Syntax.Implementation.Arguments("123, \"new Foo()\", new Foo()");
+            var arguments = new CodeFormatting.Syntax.Statements.Args.Arguments("123, \"new Foo()\", new Foo()");
             arguments.ElementAt(0).ToString().ClaimEqual("123");
             arguments.ElementAt(1).ToString().ClaimEqual("\"new Foo()\"");
             arguments.ElementAt(2).ClaimIs<IInstantiationStatement>();
@@ -19,7 +19,7 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void InnerArgumentsShouldBeIgnored()
         {
-            var arguments = new CodeFormatting.Syntax.Implementation.Arguments("new Foo(123, \"new Foo()\")");
+            var arguments = new CodeFormatting.Syntax.Statements.Args.Arguments("new Foo(123, \"new Foo()\")");
             arguments.ElementAt(0).ClaimIs<IInstantiationStatement>();
             arguments.ElementAt(0).ToString().ClaimEqual("new Foo(123, \"new Foo()\")");
         }
