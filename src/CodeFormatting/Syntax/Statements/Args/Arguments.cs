@@ -37,18 +37,5 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Args
         {
             return GetEnumerator();
         }
-
-        public static IArguments Parse(string codeStatement)
-        {
-            var argumentsClosure = new LiteralAwareClosureSubstrings(codeStatement, '(', ')');
-            if (argumentsClosure.Any())
-            {
-                return new Args.Arguments(argumentsClosure.First().WithoutBorders().ToString());
-            }
-            else
-            {
-                return new SkippedArguments();
-            }
-        }
     }
 }
