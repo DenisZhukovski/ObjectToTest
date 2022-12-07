@@ -33,4 +33,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CodeFormatting\Formatting\FormattedCodeInternals\" />
+  </ItemGroup>
 </Project>
