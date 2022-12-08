@@ -49,7 +49,7 @@ namespace ObjectToTest.Arguments
                 var sharedArgument = _sharedArguments.Argument(_object.Value(parameter));
                 if (sharedArgument != null)
                 {
-                    return sharedArgument;
+                    return new ParameterInfoAsSharedArgument(sharedArgument, parameter);
                 }
             }
 
