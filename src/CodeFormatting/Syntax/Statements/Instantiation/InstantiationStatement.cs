@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
 using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
@@ -11,6 +12,13 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
     public class InstantiationStatement : IInstantiationStatement
     {
         private readonly string _codeStatement;
+
+        private readonly Lazy<ITypeDefinition> _type;
+
+        private readonly Lazy<IArguments> _arguments;
+
+        private readonly Lazy<IPropertyAssignments> _propertyAssignments;
+
         /*
         * @todo #103 60m/DEV Think about array assignment.
          * It is not required right now, but to reuse this class when instantiation statement is used
@@ -23,34 +31,50 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
         public InstantiationStatement(string codeStatement)
         {
             _codeStatement = codeStatement;
-            Type = new RawTypeDefinition(new SubstringBetween(codeStatement, "new ", "(").ToString());
 
-            var argumentsClosure = new LiteralAwareClosureSubstrings(codeStatement, '(', ')');
-            if (argumentsClosure.Any())
-            {
-                Arguments = new Args.Arguments(argumentsClosure.First().WithoutBorders().ToString());
-            }
-            else
-            {
-                Arguments = new SkippedArguments();
-            }
-            
-            var propertiesClosure = new LiteralAwareClosureSubstrings(codeStatement, '{', '}').ToArray();
-            if (propertiesClosure.Any())
-            {
-                InlinePropertiesAssignment = new PropertyAssignments(propertiesClosure.First().WithoutBorders().ToString());
-            }
-            else
-            {
-                InlinePropertiesAssignment = new EmptyPropertyAssignment();
-            }
+            _type = new(
+                () =>
+                    new RawTypeDefinition(
+                        new SubstringBetween(codeStatement, "new ", "(").ToString()
+                    )
+            );
+
+            _arguments = new(
+                () =>
+                {
+                    var argumentsClosure = new LiteralAwareClosureSubstrings(_codeStatement, '(', ')');
+                    if (argumentsClosure.Any())
+                    {
+                        return new Args.Arguments(argumentsClosure.First().WithoutBorders().ToString());
+                    }
+                    else
+                    {
+                        return new SkippedArguments();
+                    }
+                }
+            );
+
+            _propertyAssignments = new(
+                () =>
+                {
+                    var propertiesClosure = new LiteralAwareClosureSubstrings(_codeStatement, '{', '}').ToArray();
+                    if (propertiesClosure.Any())
+                    {
+                        return new PropertyAssignments(propertiesClosure.First().WithoutBorders().ToString());
+                    }
+                    else
+                    {
+                        return new EmptyPropertyAssignment();
+                    }
+                }
+            );
         }
 
-        public ITypeDefinition Type { get; }
+        public ITypeDefinition Type => _type.Value;
 
-        public IArguments Arguments { get; }
+        public IArguments Arguments => _arguments.Value;
 
-        public IPropertyAssignments InlinePropertiesAssignment { get; }
+        public IPropertyAssignments InlinePropertiesAssignment => _propertyAssignments.Value;
 
         public static ParseResult Parse(string codeStatement)
         {

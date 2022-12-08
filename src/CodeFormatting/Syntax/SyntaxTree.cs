@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
@@ -10,15 +11,11 @@ namespace ObjectToTest.CodeFormatting.Syntax
     * @todo #106 60m/DEV Change split implementation to consider closures, lambdas and inline initializations.
      *
     */
-
-    /*
-    * @todo #106 60m/DEV Refactoring for all logic to be moved from constructor into lazy initializations or lazy executables.
-     *
-    */
     public class SyntaxTree : ISyntaxTree
     {
         private readonly string _code;
-        private readonly PossibleCodeStatements _codeStatements = new();
+
+        private readonly Lazy<PossibleCodeStatements> _codeStatements = new(() => new PossibleCodeStatements());
 
         public SyntaxTree(string code)
         {
@@ -29,7 +26,7 @@ namespace ObjectToTest.CodeFormatting.Syntax
         {
             foreach (var s in new StringsWithSemicolonIfMultiline(_code))
             {
-                yield return _codeStatements.BestMatch(s);
+                yield return _codeStatements.Value.BestMatch(s);
             }
         }
 

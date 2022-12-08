@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
@@ -28,10 +29,6 @@ namespace ObjectToTest.UnitTests
 
     /*
     * @todo #5 60m/DEV Implement rule: if there is new operator in arguments, all arguments should be properly formatted.
-    */
-
-    /*
-    * @todo #5 60m/DEV Implement rule: spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
     */
 
     /*
@@ -149,7 +146,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
+        [Fact]
         public void ShortArgumentsWithoutNewPlacedInline_CtorWithMultipleValueTypeArguments()
         {
             Assert.Equal(
@@ -211,6 +208,15 @@ namespace ObjectToTest.UnitTests
         [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
         public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
         {
+            /*
+            * @todo #98 60m/DEV This should work but is is not.
+             *
+             * Ideally it should look like:
+             *
+             * Something is with code formatting. Need to add test to check that new TimeSpan(18, 17, 34, 24, 5) is parsed correctly,
+             * because for some reason last argument is ignored when it is 1 char size.
+            */
+
             Assert.Equal(
                 "new TimeSpan(18, 17, 34, 24, 5)",
                 new TimeSpan(18, 17, 34, 24, 5)
