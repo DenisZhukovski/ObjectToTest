@@ -422,11 +422,6 @@ namespace ObjectToTest.UnitTests
          */
         public void SharedObjectButCustomClass()
         {
-            /*
-             * @todo #:60m/DEV When constructor argument is shared object the name and return type is not correct because of the custom
-             * object class name which does not fir the argument name and type
-             */
-            
             var customUser = new CustomUser();
             var withUser = new WithUserArgument(
                 customUser,
@@ -438,6 +433,33 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 new NewLineSeparatedString(
                     "var customUser = new CustomUser();",
+                    "new WithUserArgument(customUser,new WithUserPublicProperty(){User = customUser})"
+                ).ToString(),
+                withUser.ToTest(_output)
+            );
+        }
+        
+        [Fact(Skip = "Need to be fixed as a part of the incident")]
+        /*
+         * When shared object is used several times its children also considered as shared objects
+         */
+        public void SharedObjectWithDependencyUsedMultipleTimes()
+        {
+            /*
+             * @todo #:60m/DEV When shared object is used several times its children also considered as shared objects
+             */
+            
+            var customUser = new CustomUserWithDependency(new User("user name"));
+            var withUser = new WithUserArgument(
+                customUser,
+                new WithUserPublicProperty
+                {
+                    User = customUser
+                }
+            );
+            Assert.Equal(
+                new NewLineSeparatedString(
+                    "var customUser = new CustomUserWithDependency(new User(\"user name\"))",
                     "new WithUserArgument(customUser,new WithUserPublicProperty(){User = customUser})"
                 ).ToString(),
                 withUser.ToTest(_output)
