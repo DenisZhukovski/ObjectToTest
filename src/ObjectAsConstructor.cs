@@ -19,27 +19,34 @@ namespace ObjectToTest
     public class ObjectAsConstructor
     {
         private readonly object _object;
-        private IArguments? _sharedArguments;
+        private readonly IArguments? _sharedArguments;
         
         public ObjectAsConstructor(object @object)
+            : this(
+                @object,
+                new SharedCircularProperties(
+                    new ObjectSharedArguments(@object)
+                )
+            )
+        {
+        }
+        
+        public ObjectAsConstructor(object @object, IArguments sharedArguments)
         {
             _object = @object;
+            _sharedArguments = sharedArguments;
         }
 
-        private IArguments SharedArguments => _sharedArguments ??= new SharedCircularProperties(
-            new ObjectSharedArguments(_object)
-        );
-        
         public IConstructor Constructor 
         {
             get
             {
-                var argument = SharedArguments.Argument(_object);
+                var argument = _sharedArguments.Argument(_object);
                 if (argument != null)
                 {
                     return new CommentLine($"Target object stored in: '{argument.Name}'");
                 }
-                return _object.Constructor(SharedArguments);
+                return _object.Constructor(_sharedArguments);
             }
         }
         
@@ -47,7 +54,7 @@ namespace ObjectToTest
         {
             try
             {
-                return $"{SharedArguments}{Constructor}";
+                return $"{_sharedArguments}{Constructor}";
             }
             catch(NoConstructorException ex)
             {
@@ -55,7 +62,7 @@ namespace ObjectToTest
                     Environment.NewLine +
                     new ObjectDependenciesTrace(
                         _object,
-                        SharedArguments
+                        _sharedArguments
                     );
             }
         }

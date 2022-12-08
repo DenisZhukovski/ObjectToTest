@@ -23,7 +23,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new Simple()",
-                new WellFormattedCode("new Simple()").ToString().Log(_output)
+                new WellFormattedCode("new Simple()").ToString(_output)
             );
         }
 
@@ -38,7 +38,9 @@ namespace ObjectToTest.UnitTests
                 "    PropertyName = \"Test\"",
                 "}"
                 ).ToString(),
-                new WellFormattedCode("new WithProperty(){IntProperty = 42,PropertyName = \"Test\"}").ToString().Log(_output)
+                new WellFormattedCode(
+                        "new WithProperty(){IntProperty = 42,PropertyName = \"Test\"}"
+                ).ToString(_output)
             );
         }
 
@@ -47,7 +49,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithParam(42)",
-                new WellFormattedCode("new WithParam(42)").ToString().Log(_output)
+                new WellFormattedCode("new WithParam(42)").ToString(_output)
             );
         }
 
@@ -56,7 +58,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithTwoParams(42, \"Test\")",
-                new WellFormattedCode("new WithTwoParams(42,\"Test\")").ToString().Log(_output)
+                new WellFormattedCode("new WithTwoParams(42,\"Test\")").ToString(_output)
             );
         }
 
@@ -70,7 +72,9 @@ namespace ObjectToTest.UnitTests
                 "    \"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\"",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithTwoParamOneFieldAndOneProperty(42,\"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\")").ToString().Log(_output)
+                new WellFormattedCode(
+                    "new WithTwoParamOneFieldAndOneProperty(42,\"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\")"
+                ).ToString(_output)
             );
         }
 
@@ -83,7 +87,7 @@ namespace ObjectToTest.UnitTests
                 "    new EmptyObject()",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithClassParam(new EmptyObject())").ToString().Log(_output)
+                new WellFormattedCode("new WithClassParam(new EmptyObject())").ToString(_output)
             );
         }
 
@@ -97,7 +101,7 @@ namespace ObjectToTest.UnitTests
                 "    new EmptyObject()",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithClassAndIntParams(42,new EmptyObject())").ToString().Log(_output)
+                new WellFormattedCode("new WithClassAndIntParams(42,new EmptyObject())").ToString(_output)
             );
         }
 
@@ -117,7 +121,9 @@ namespace ObjectToTest.UnitTests
                 "    42",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithTwoClassParamAndIntParam(new WithClassParam(new EmptyObject()),new WithClassAndIntParams(42,new EmptyObject()),42)").ToString().Log(_output)
+                new WellFormattedCode(
+                    "new WithTwoClassParamAndIntParam(new WithClassParam(new EmptyObject()),new WithClassAndIntParams(42,new EmptyObject()),42)"
+                ).ToString(_output)
 
             );
         }
@@ -131,7 +137,7 @@ namespace ObjectToTest.UnitTests
                 "    () => 0",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithFuncArgument(() => 0)").ToString().Log(_output)
+                new WellFormattedCode("new WithFuncArgument(() => 0)").ToString(_output)
             );
         }
 
@@ -144,7 +150,7 @@ namespace ObjectToTest.UnitTests
                 "    pos => {}",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithActionArgument(pos => {})").ToString().Log(_output)
+                new WellFormattedCode("new WithActionArgument(pos => {})").ToString(_output)
             );
         }
 
@@ -161,7 +167,7 @@ namespace ObjectToTest.UnitTests
                 "    }",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithIEnumerableInt(new[]{1,2})").ToString().Log(_output)
+                new WellFormattedCode("new WithIEnumerableInt(new[]{1,2})").ToString(_output)
             );
         }
 
@@ -179,7 +185,9 @@ namespace ObjectToTest.UnitTests
                 "    }",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithDictionaryArgument(new Dictionary<int,string>{{ 1, \"1\" },{ 2, \"2\" },{ 3, \"3\" }})").ToString().Log(_output)
+                new WellFormattedCode(
+                    "new WithDictionaryArgument(new Dictionary<int,string>{{ 1, \"1\" },{ 2, \"2\" },{ 3, \"3\" }})"
+                ).ToString(_output)
             );
         }
 
@@ -197,8 +205,9 @@ namespace ObjectToTest.UnitTests
                 "    }",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("var user = new User(\"user name\");new WithUserArgument(user,new WithUserPublicProperty(){User = user})").ToString().Log(_output)
-
+                new WellFormattedCode(
+                    "var user = new User(\"user name\");new WithUserArgument(user,new WithUserPublicProperty(){User = user})"
+                ).ToString(_output)
             );
         }
     }

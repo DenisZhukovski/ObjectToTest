@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 using ObjectToTest.UnitTests.Models;
 using ObjectToTest.UnitTests.Data;
 using System.Collections.Generic;
+using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.UnitTests
 {
@@ -89,8 +90,8 @@ namespace ObjectToTest.UnitTests
         public void CtorWithIntArgumentForProperty()
         {
             Assert.Equal(
-                "new WithOneParameterContructorAndPublicReadProperty(42)",
-                new WithOneParameterContructorAndPublicReadProperty(42).ToTest(_output)
+                "new WithOneParameterConstructorAndPublicReadProperty(42)",
+                new WithOneParameterConstructorAndPublicReadProperty(42).ToTest(_output)
             );
         }
 
@@ -410,6 +411,35 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "var user = new User(\"user name\");" + Environment.NewLine +
                 "new WithUserArgument(user,new WithUserPublicProperty(){User = user})",
+                withUser.ToTest(_output)
+            );
+        }
+        
+        [Fact(Skip = "Need to be fixed as a part of the incident")]
+        /*
+         * When constructor argument is shared object the name and return type is not correct because of the custom
+         * object class name which does not fir the argument name and type
+         */
+        public void SharedObjectButCustomClass()
+        {
+            /*
+             * @todo #:60m/DEV When constructor argument is shared object the name and return type is not correct because of the custom
+             * object class name which does not fir the argument name and type
+             */
+            
+            var customUser = new CustomUser();
+            var withUser = new WithUserArgument(
+                customUser,
+                new WithUserPublicProperty
+                {
+                    User = customUser
+                }
+            );
+            Assert.Equal(
+                new NewLineSeparatedString(
+                    "var customUser = new CustomUser();",
+                    "new WithUserArgument(customUser,new WithUserPublicProperty(){User = customUser})"
+                ).ToString(),
                 withUser.ToTest(_output)
             );
         }

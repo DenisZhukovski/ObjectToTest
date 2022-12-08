@@ -130,8 +130,8 @@ namespace ObjectToTest.UnitTests
         public void ShortArgumentsWithoutNewPlacedInline_CtorWithIntArgumentForProperty()
         {
             Assert.Equal(
-                "new WithOneParameterContructorAndPublicReadProperty(42)",
-                new WithOneParameterContructorAndPublicReadProperty(42)
+                "new WithOneParameterConstructorAndPublicReadProperty(42)",
+                new WithOneParameterConstructorAndPublicReadProperty(42)
                     .ToTestWellFormatted()
                     .Log(_output)
             );

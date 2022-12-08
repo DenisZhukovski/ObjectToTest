@@ -15,5 +15,10 @@ namespace ObjectToTest.UnitTests
         {
             return item.ToTest().Log(output);
         }
+        
+        public static string ToString(this object item, ITestOutputHelper output)
+        {
+            return item.ToString().Log(output);
+        }
     }
 }
