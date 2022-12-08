@@ -414,8 +414,8 @@ namespace ObjectToTest.UnitTests
                 withUser.ToTest(_output)
             );
         }
-        
-        [Fact(Skip = "Need to be fixed as a part of the incident")]
+
+        [Fact]
         /*
          * When constructor argument is shared object the name and return type is not correct because of the custom
          * object class name which does not fir the argument name and type
