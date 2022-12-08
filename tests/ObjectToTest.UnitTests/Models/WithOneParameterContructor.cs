@@ -1,8 +1,8 @@
 ﻿namespace ObjectToTest.UnitTests.Models
 {
-    public class WithOneParameterContructorAndPublicReadProperty
+    public class WithOneParameterConstructorAndPublicReadProperty
     {
-        public WithOneParameterContructorAndPublicReadProperty(int intProperty)
+        public WithOneParameterConstructorAndPublicReadProperty(int intProperty)
         {
             IntProperty = intProperty;
         }

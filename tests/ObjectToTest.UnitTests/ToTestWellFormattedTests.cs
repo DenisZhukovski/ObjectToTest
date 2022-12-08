@@ -131,7 +131,7 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOneParameterContructorAndPublicReadProperty(42)",
-                new WithOneParameterContructorAndPublicReadProperty(42)
+                new WithOneParameterConstructorAndPublicReadProperty(42)
                     .ToTestWellFormatted()
                     .Log(_output)
             );

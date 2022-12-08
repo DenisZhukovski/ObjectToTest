@@ -89,8 +89,8 @@ namespace ObjectToTest.UnitTests
         public void CtorWithIntArgumentForProperty()
         {
             Assert.Equal(
-                "new WithOneParameterContructorAndPublicReadProperty(42)",
-                new WithOneParameterContructorAndPublicReadProperty(42).ToTest(_output)
+                "new WithOneParameterConstructorAndPublicReadProperty(42)",
+                new WithOneParameterConstructorAndPublicReadProperty(42).ToTest(_output)
             );
         }
 
