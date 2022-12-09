@@ -367,11 +367,13 @@ namespace ObjectToTest.UnitTests
             o1.PropertyName = o2;
             o2.PropertyName1 = o1;
             Assert.Equal(
-                $"var circularRefPublicProperty2 = new CircularRefPublicProperty2();{Environment.NewLine}" +
-                $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();{Environment.NewLine}" +
-                $"circularRefPublicProperty2.PropertyName1 = circularRefPublicProperty1;{Environment.NewLine}" +
-                $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}" +
-                "// Target object stored in: 'circularRefPublicProperty1'",
+                new NewLineSeparatedString(
+                    $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();",
+                    $"var circularRefPublicProperty2 = new CircularRefPublicProperty2();",
+                    $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;",
+                    $"circularRefPublicProperty2.PropertyName1 = circularRefPublicProperty1;",
+                    "// Target object stored in: 'circularRefPublicProperty1'"
+                ).ToString(),
                 o1.ToTest(_output)
             );
         }
@@ -386,13 +388,15 @@ namespace ObjectToTest.UnitTests
             o2.PropertyName3 = o3;
             o3.PropertyName = o1;
             Assert.Equal(
-                $"var circularRefPublicProperty2 = new CircularRefPublicProperty2();{Environment.NewLine}" +
-                $"var circularRefPublicProperty3 = new CircularRefPublicProperty3();{Environment.NewLine}" +
-                $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();{Environment.NewLine}" +
-                $"circularRefPublicProperty2.PropertyName3 = circularRefPublicProperty3;{Environment.NewLine}" +
-                $"circularRefPublicProperty3.PropertyName = circularRefPublicProperty1;{Environment.NewLine}" +
-                $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;{Environment.NewLine}" +
-                "// Target object stored in: 'circularRefPublicProperty1'",
+                new NewLineSeparatedString(
+                    $"var circularRefPublicProperty1 = new CircularRefPublicProperty1();",
+                    $"var circularRefPublicProperty2 = new CircularRefPublicProperty2();",
+                    $"var circularRefPublicProperty3 = new CircularRefPublicProperty3();",
+                    $"circularRefPublicProperty1.PropertyName = circularRefPublicProperty2;",
+                    $"circularRefPublicProperty2.PropertyName3 = circularRefPublicProperty3;",
+                    $"circularRefPublicProperty3.PropertyName = circularRefPublicProperty1;",
+                    "// Target object stored in: 'circularRefPublicProperty1'"
+                ).ToString(),
                 o1.ToTest(_output)
             );
         }
@@ -438,29 +442,25 @@ namespace ObjectToTest.UnitTests
                 withUser.ToTest(_output)
             );
         }
-        
-        [Fact(Skip = "Need to be fixed as a part of the incident")]
+
         /*
          * When shared object is used several times its children also considered as shared objects
          */
+        [Fact]
         public void SharedObjectWithDependencyUsedMultipleTimes()
         {
-            /*
-             * @todo #:60m/DEV When shared object is used several times its children also considered as shared objects
-             */
-            
-            var customUser = new CustomUserWithDependency(new User("user name"));
+            var customUserWithDependency = new CustomUserWithDependency(new User("user name"));
             var withUser = new WithUserArgument(
-                customUser,
+                customUserWithDependency,
                 new WithUserPublicProperty
                 {
-                    User = customUser
+                    User = customUserWithDependency
                 }
             );
             Assert.Equal(
                 new NewLineSeparatedString(
-                    "var customUser = new CustomUserWithDependency(new User(\"user name\"))",
-                    "new WithUserArgument(customUser,new WithUserPublicProperty(){User = customUser})"
+                    "var customUserWithDependency = new CustomUserWithDependency(new User(\"user name\"));",
+                    "new WithUserArgument(customUserWithDependency,new WithUserPublicProperty(){User = customUserWithDependency})"
                 ).ToString(),
                 withUser.ToTest(_output)
             );

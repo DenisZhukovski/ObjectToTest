@@ -23,7 +23,7 @@ namespace ObjectToTest
             _sharedObjects.Clear();
             if (_object != null)
             {
-                SharedObjectsRecursive(_object, new List<object>());
+                SharedObjectsRecursive(_object, new Dictionary<object, List<object>>());
             }
             
             return WithoutSingleDelegates(_sharedObjects);
@@ -54,7 +54,7 @@ namespace ObjectToTest
             return item.Equals(@delegate.Target);
         }
 
-        private void SharedObjectsRecursive(object @object, List<object> allReferencedObjects)
+        private void SharedObjectsRecursive(object @object, Dictionary<object, List<object>> allReferencedObjects)
         {
             var objectStates = new List<object>();
             foreach (var value in @object.Values())
@@ -66,6 +66,7 @@ namespace ObjectToTest
 
                 TryAddToShared(
                     value,
+                    @object,
                     allReferencedObjects
                 );
                 objectStates.Add(value);
@@ -76,27 +77,52 @@ namespace ObjectToTest
             }
         }
 
-        private void TryAddToShared(object @object, List<object> allReferencedObjects)
+        private void TryAddToShared(
+            object @object,
+            object parent,
+            Dictionary<object, List<object>> allReferencedObjects)
         {
+            if (!allReferencedObjects.ContainsKey(parent))
+            {
+                allReferencedObjects.Add(parent, new List<object>());
+            }
+
             // was already used in other object
             var item = @object;
             if (item is Delegate @delegate)
             {
                 item = @delegate.Target;
-                allReferencedObjects.Add(item);
+
+                // Here there is a trick. The code has to simulate multiple usage for delegates
+                // just to be able to detect that multiple delegates were used
+                allReferencedObjects[parent].Add(item);
+                allReferencedObjects[parent].Add(item);
             }
-            
-            if (allReferencedObjects.Contains(item)) 
+            else if (!allReferencedObjects[parent].Contains(item))
             {
-                if (!AlreadyShared(@object))
+                allReferencedObjects[parent].Add(item);
+            }
+
+            if (MultipleUsage(item, allReferencedObjects) && !AlreadyShared(@object)) 
+            {
+                _sharedObjects.Add(@object);
+            }
+        }
+
+        private bool MultipleUsage(
+            object @object,
+            Dictionary<object, List<object>> allReferencedObjects)
+        {
+            var count = 0;
+            foreach (var pair in allReferencedObjects)
+            {
+                count += pair.Value.Count(item => item.Equals(@object));
+                if (pair.Key == @object)
                 {
-                    _sharedObjects.Add(@object);
+                    count++;
                 }
             }
-            else
-            {
-                allReferencedObjects.Add(item);
-            }
+            return count > 1;
         }
 
         private bool AlreadyShared(object @object)
