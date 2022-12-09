@@ -277,6 +277,22 @@ namespace ObjectToTest.UnitTests
             );
         }
 
+        [Fact(Skip = "Need to be fixed as part of the puzzle")]
+        public void SharedArgumentWhenSeveralTimesAsCtorArgument()
+        {
+            /*
+            * @todo 60m/DEV Make SharedArgumentWhenSeveralTimesAsCtorArgument test to be green.
+            * Now when object is used several times as the same ctor argument it's not detected as shared object.
+            * The issue need ot be fixed.
+            */
+            var user = new User("user name");
+            Assert.Equal(
+                $"var user = new User(\"user Name\");{Environment.NewLine}" +
+                $"new With2FuncArguments(user, user)",
+                new With2ObjectArguments(user, user).ToTest(_output)
+            );
+        }
+
         [Fact]
         public void CtorWithActionArgument()
         {
@@ -421,8 +437,9 @@ namespace ObjectToTest.UnitTests
 
         [Fact]
         /*
-         * When constructor argument is shared object the name and return type is not correct because of the custom
-         * object class name which does not fir the argument name and type
+         * It was an issue:
+         *      When constructor argument is shared object the name and return type is not correct.
+         *   It's because of the custom object class name which does not fit the argument's name and type.
          */
         public void SharedObjectButCustomClass()
         {
@@ -481,7 +498,10 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new SharedSingletons(new WithSingletonAndOtherArgument(SingletonClass.Instance,new Price(10)),new WithSingletonArgument(SingletonClass.Instance))",
                 new SharedSingletons(
-                    new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
+                    new WithSingletonAndOtherArgument(
+                        SingletonClass.Instance,
+                        new Price(10)
+                    ),
                     new WithSingletonArgument(SingletonClass.Instance)
                 ).ToTest(_output)
             );

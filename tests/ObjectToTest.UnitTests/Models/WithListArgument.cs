@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ObjectToTest.UnitTests.Models
 {
@@ -11,6 +9,11 @@ namespace ObjectToTest.UnitTests.Models
         public WithListArgument(List<int> listArgument)
         {
             _listArgument = listArgument;
+        }
+
+        public List<int> ToList()
+        {
+            return _listArgument;
         }
     }
 }
