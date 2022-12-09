@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
@@ -17,7 +16,7 @@ namespace ObjectToTest.UnitTests
             o1.PropertyName = o2;
             o2.PropertyName1 = o1;
             Assert.Equal(
-                new List<object>{ o2, o1 },
+                new List<object>{ o1, o2 },
                 new SharedObjects(o1).ToList()
             );
         }
@@ -70,6 +69,25 @@ namespace ObjectToTest.UnitTests
             Assert.Empty(
                 new SharedObjects(
                     new WithActionArgument((pos) => { })
+                ).ToList()
+            );
+        }
+
+        [Fact]
+        public void ChildrenOfSharedConsideredAsNotShared()
+        {
+            var customUser = new CustomUserWithDependency(new User("user name"));
+            var withUser = new WithUserArgument(
+                customUser,
+                new WithUserPublicProperty
+                {
+                    User = customUser
+                }
+            );
+
+            Assert.Single(
+                new SharedObjects(
+                    withUser
                 ).ToList()
             );
         }
