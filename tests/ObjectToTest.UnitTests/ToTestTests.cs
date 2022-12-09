@@ -281,7 +281,7 @@ namespace ObjectToTest.UnitTests
         public void SharedArgumentWhenSeveralTimesAsCtorArgument()
         {
             /*
-            * @todo 60m/DEV Make SharedArgumentWhenSeveralTimesAsCtorArgument test to be green.
+            * @todo #:60m/DEV Make SharedArgumentWhenSeveralTimesAsCtorArgument test to be green.
             * Now when object is used several times as the same ctor argument it's not detected as shared object.
             * The issue need ot be fixed.
             */
