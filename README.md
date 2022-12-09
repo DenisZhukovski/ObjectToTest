@@ -46,21 +46,11 @@ This generated code can be easily insterted into Unit Test.
 
 # Object state recreation diagram
 
-The diagram shows an algorithm that an object [uses](https://github.com/DenisZhukovski/ObjectToTest/blob/master/src/ObjectAsConstructor.cs) to recreate itself with initiated internal state. The interesting thing is that an object can have the arguments which are reused in other objects. Such objects are called [Shared Arguments](https://github.com/DenisZhukovski/ObjectToTest/blob/master/src/Arguments/ObjectSharedArguments.cs).
+The diagram shows an algorithm that an object [uses](https://github.com/DenisZhukovski/ObjectToTest/blob/master/src/ObjectAsConstructor.cs) uses to recreate itself with initiated internal state. The interesting thing is that an object can have arguments which are reused in other objects. Such objects are called [Shared Arguments](https://github.com/DenisZhukovski/ObjectToTest/blob/master/src/Arguments/ObjectSharedArguments.cs).
 
 ![Alt text](./docs/ObjectAsConstructor.drawio.svg?raw=true "Object state parsing diagram")
 
-# Object constructor selection diagram
-
-Once an object needs to recreate itself it has to find proper constructor with arguments that will allow it to recreate it's internal state. The logic is recursive and called by the object's constructor arguments to as well.
-
-![Alt text](./docs/ObjectConstructorSearch.drawio.svg?raw=true "Object state parsing diagram")
-
-# Object state parsing diagram
-
-The object does the analyses of it's fields and properties trying to find proper constructor for recreation operation.
-
-![Alt text](./docs/ObjectToTest.drawio.svg?raw=true "Object state parsing diagram")
+More details about project architecture can be found on [wiki page](https://github.com/DenisZhukovski/ObjectToTest/wiki)
 
 ## IL Decompilator
 
