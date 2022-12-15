@@ -7,14 +7,14 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
 {
     public class ArrayWithFormat<T> : IObjectWithFormat where T : IEnumerable
     {
-        private readonly Func<string[], string> _format;
+        private readonly Func<string[], Tabs, (string, Tabs)> _format;
 
-        public ArrayWithFormat(Func<string[], string> format)
+        public ArrayWithFormat(Func<string[], Tabs, (string, Tabs)> format)
         {
             _format = format;
         }
 
-        public string Format(object item)
+        public (string, Tabs) Format(object item, Tabs tabs)
         {
             if (item is IEnumerable expected)
             {
@@ -28,10 +28,10 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
 
                 var indexes = result.Select(index => "{" + index + "}").ToArray();
 
-                return _format(indexes);
+                return _format(indexes, tabs);
             }
 
-            return "";
+            return ("", tabs);
         }
 
         public object[] Args(object item)

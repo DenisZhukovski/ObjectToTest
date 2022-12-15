@@ -24,8 +24,32 @@ namespace ObjectToTest.CodeFormatting.Formatting
             _conditionalFormats.Add(new FormatAndCondition()
             {
                 IsApplicable = x => x is IEnumerable<T>,
-                Format = new ArrayWithFormat<T[]>(format)
+                Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
             });
+        }
+
+        public void OverrideForArrayOf<T>(Func<object, bool> condition, Func<string[], string> format)
+        {
+            _conditionalFormats.Insert(
+                0,
+                new FormatAndCondition()
+                {
+                    IsApplicable = x => x is IEnumerable<T> && condition(x),
+                    Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
+                }
+            );
+        }
+
+        public void OverrideForArrayOf<T>(Func<object, bool> condition, Func<string[], Tabs, (string, Tabs)> format)
+        {
+            _conditionalFormats.Insert(
+                0,
+                new FormatAndCondition()
+                {
+                    IsApplicable = x => x is IEnumerable<T> && condition(x),
+                    Format = new ArrayWithFormat<T[]>(format)
+                }
+            );
         }
 
         public void OverrideForArrayOf<T>(Func<string[], string> format)
@@ -35,7 +59,7 @@ namespace ObjectToTest.CodeFormatting.Formatting
                 new FormatAndCondition()
                 {
                     IsApplicable = x => x is IEnumerable<T>,
-                    Format = new ArrayWithFormat<T[]>(format)
+                    Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
                 }
             );
         }
@@ -54,6 +78,15 @@ namespace ObjectToTest.CodeFormatting.Formatting
             _conditionalTransformations.Add(new TransformationAndCondition()
             {
                 IsApplicable = isApplicable,
+                Format = (x, parentTabs) => (transform(x), parentTabs)
+            });
+        }
+
+        public void If(Func<object, bool> isApplicable, Func<string, Tabs, (string, Tabs)> transform)
+        {
+            _conditionalTransformations.Add(new TransformationAndCondition()
+            {
+                IsApplicable = isApplicable,
                 Format = transform
             });
         }
@@ -62,9 +95,9 @@ namespace ObjectToTest.CodeFormatting.Formatting
         {
             var results = new List<DataAndString>();
 
-            return Resolve(root);
+            return Resolve(root, new Tabs(0));
 
-            string Resolve(object arg)
+            string Resolve(object arg, Tabs parentTabs)
             {
                 var potentialResult = results.FirstOrDefault(x => ReferenceEquals(x.Data, arg));
 
@@ -79,16 +112,16 @@ namespace ObjectToTest.CodeFormatting.Formatting
                 {
                     var chainOfTransformations = _conditionalTransformations.Where(x => x.IsApplicable(arg));
 
-                    var format = conditionalFormat.Format.Format(arg);
+                    var (format, tabs) = conditionalFormat.Format.Format(arg, parentTabs);
 
                     foreach (var transformationAndCondition in chainOfTransformations)
                     {
-                        format = transformationAndCondition.Format(format);
+                        (format, tabs) = transformationAndCondition.Format(format, tabs);
                     }
 
                     var result = new FormattedString(
                         format,
-                        conditionalFormat.Format.Args(arg).Select(Resolve).ToArray()
+                        conditionalFormat.Format.Args(arg).Select(x => Resolve(x, tabs)).ToArray()
                     );
 
                     results.Add(new DataAndString()
@@ -124,7 +157,7 @@ namespace ObjectToTest.CodeFormatting.Formatting
 
         private record TransformationAndCondition
         {
-            public Func<string, string> Format { get; set; }
+            public Func<string, Tabs, (string, Tabs)> Format { get; set; }
 
             public Func<object, bool> IsApplicable { get; set; }
         }

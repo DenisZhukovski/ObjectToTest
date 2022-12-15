@@ -36,10 +36,6 @@ namespace ObjectToTest.UnitTests
     */
 
     /*
-    * @todo #5 60m/DEV Implement rule: Indention is 4 spaces.
-    */
-
-    /*
     * @todo #5 60m/DEV Implement rule: Inner properties should be from separate lines.
     */
 

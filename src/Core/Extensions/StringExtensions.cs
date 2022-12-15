@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ObjectToTest.CodeFormatting.Formatting;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
+using static ObjectToTest.CodeFormatting.Formatting.Join;
 
 namespace ObjectToTest.Extensions
 {
@@ -18,6 +20,18 @@ namespace ObjectToTest.Extensions
         {
             return new JointString(self.Select(x => x.ToString()).ToArray());
         }
+
+        public static string If(this string value, bool condition)
+        {
+            if (condition)
+            {
+                return value;
+            }
+
+            return string.Empty;
+        }
+
+        public static Join FormatEach(this string[] items, Func<ItemInfo, string> formatEach) => new(items, formatEach);
     }
 }
 

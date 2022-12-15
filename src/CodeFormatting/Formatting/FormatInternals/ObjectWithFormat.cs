@@ -14,9 +14,9 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
             _args = args;
         }
 
-        public string Format(object item)
+        public (string, Tabs) Format(object item, Tabs tabs)
         {
-            return _format;
+            return (_format, tabs);
         }
 
         public object[] Args(object item)

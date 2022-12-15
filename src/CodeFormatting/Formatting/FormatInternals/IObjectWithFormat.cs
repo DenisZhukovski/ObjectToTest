@@ -2,7 +2,7 @@
 {
     public interface IObjectWithFormat
     {
-        public string Format(object item);
+        public (string, Tabs) Format(object item, Tabs tabs);
 
         public object[] Args(object item);
     }

@@ -16,7 +16,8 @@ namespace ObjectToTest.CodeFormatting
         {
             return new FormattedCode(
                 new SyntaxTree(_notFormattedCode),
-                new SpacesBetweenArgumentsAreRequired()
+                new SpacesBetweenArgumentsAreRequired(),
+                new ArgumentsBiggerThan80SpacesShouldBeFormatted()
             ).ToString();
 
             /*
@@ -26,7 +27,6 @@ namespace ObjectToTest.CodeFormatting
              *
              * new FormattedSyntaxTree(new SyntaxTree(_notFormattedCode),
              *    new MakeOneSpaceBetweenArguments(),
-             *    new IndentionShouldBe(4.Spaces()),
              *    new LineBiggerThanXSpacesShouldBeFormatted(80.Spaces()),
              *    new LambdaShouldBeFormatted(),
              *    new PropertiesShouldBeInitializedFromSeparateLines()
