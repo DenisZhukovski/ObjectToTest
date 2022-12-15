@@ -73,15 +73,15 @@ namespace ObjectToTest.UnitTests
             f.For<B>("{0}{1}", x => new Args(x.J, x.Arr));
             f.ForArrayOf<C>(x => string.Join(Environment.NewLine, x));
             f.For<C>("{0}", x => new Args(x.K));
-            f.If(x => x is B, (x, parentTabs) => ($"{Environment.NewLine}{parentTabs.Tab()}{x}", parentTabs));
+            f.If(x => x is B, (x, parentTabs) => ($"{Environment.NewLine}{parentTabs.Tab()}{x}", parentTabs.Tab()));
             f.OverrideForArrayOf<C>(x => x is C[], (x, parentTabs) =>
                 {
                     return (
                         $"{Environment.NewLine}" +
-                        $"{parentTabs.Tab()}{{{{{Environment.NewLine}" +
-                        $"{new Join(x, i => $"{parentTabs.Tab().Tab()}{i.String}{Environment.NewLine}")}" +
-                        $"{parentTabs.Tab()}}}}}",
-                        parentTabs.Tab().Tab());
+                        $"{parentTabs}{{{{{Environment.NewLine}" +
+                        $"{new Join(x, i => $"{parentTabs.Tab()}{i.String}{Environment.NewLine}")}" +
+                        $"{parentTabs}}}}}",
+                        parentTabs.Tab());
                 }
             );
             f.ApplyTo(a)
