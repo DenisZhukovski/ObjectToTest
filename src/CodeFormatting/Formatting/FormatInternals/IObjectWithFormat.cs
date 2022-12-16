@@ -1,9 +1,7 @@
 ﻿namespace ObjectToTest.CodeFormatting.Formatting.Core
 {
-    public interface IObjectWithFormat
+    public interface IObjectWithFormat : IFormatWithTabs
     {
-        public (string, Tabs) Format(object item, Tabs tabs);
-
-        public object[] Args(object item);
+        object[] Args(object item);
     }
 }

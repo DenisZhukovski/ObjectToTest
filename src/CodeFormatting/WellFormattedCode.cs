@@ -17,7 +17,8 @@ namespace ObjectToTest.CodeFormatting
             return new FormattedCode(
                 new SyntaxTree(_notFormattedCode),
                 new SpacesBetweenArgumentsAreRequired(),
-                new ArgumentsBiggerThan80SpacesShouldBeFormatted()
+                new ArgumentsBiggerThan80SpacesShouldBeEachFromSeparateLine(),
+                new ArgumentsThatContainsInstantiationShouldBeEachFromSeparateLine()
             ).ToString();
         }
     }
