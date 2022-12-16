@@ -146,7 +146,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 6")]
+        [Fact]
         public void StringMoreThan80CharsShouldBeFormatted_CtorWithMultipleLongValueTypeArguments()
         {
             Assert.Equal(
@@ -163,7 +163,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_CtorWithReferenceTypeArgument()
         {
             Assert.Equal(
@@ -176,7 +176,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_CtorWithMultipleComplexTypesArguments()
         {
             Assert.Equal(
@@ -211,7 +211,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_CtorWithComplexDependencyArgument()
         {
             Assert.Equal(
@@ -410,7 +410,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_CtorWithEmptyListInt()
         {
             Assert.Equal(
@@ -460,7 +460,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_And_ShortArgumentsWithoutNewPlacedInline_CtorWithInterfaceArguments()
         {
             Assert.Equal(
@@ -503,7 +503,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_SingletonAsSharedArgument()
         {
             Assert.Equal(
@@ -524,7 +524,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_SingletonWithOtherArgument()
         {
             Assert.Equal(

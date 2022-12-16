@@ -70,8 +70,7 @@ namespace ObjectToTest.UnitTests
                 "new WithTwoParamOneFieldAndOneProperty(",
                 "    42,",
                 "    \"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\"",
-                ")",
-                ""
+                ")"
                 ).ToString(),
                 new WellFormattedCode(
                     "new WithTwoParamOneFieldAndOneProperty(42,\"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\")"
@@ -79,7 +78,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldStartFromNewLine()
         {
             Assert.Equal(
@@ -92,7 +91,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void IfOneOfArgumentsWithNewShouldStartFromNewLine()
         {
             Assert.Equal(
@@ -106,7 +105,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ComplexObjectsShouldBeWithInnerIndention()
         {
             Assert.Equal(
