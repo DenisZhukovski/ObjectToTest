@@ -10,25 +10,21 @@ using Xunit.Abstractions;
 namespace ObjectToTest.UnitTests
 {
     /*
-     * @todo #5 60m/DEV Implement proper formatting. Base puzzle with all rules for references.
+     * @todo #125 60m/DEV Add rules into documentation.
      * The rules are following:
      * 0. API should be compatible with old one.
-     * 1. if there is new operator in arguments, all arguments should be properly formatted.
-     * 2. spaces between arguments are required: (0, 0, 1) instead of (0,0,1).
+     * 1. if there is new operator in arguments, all arguments should be from new lines.
+     * 2. spaces between arguments are required if arguments list are in one line: (0, 0, 1) instead of (0,0,1).
      * 3. Lambdas are always from new string.
      * 4. Indention is 4 spaces.
      * 5. Inner properties should be from separate lines.
      * 6. Lines bigger than 80 characters should be properly formatted.
-     * 7. All arrays should be placed with proper formatting.
-     * 8. Dictionary should be formatted with separate set of rules.
+     * 7. All arrays should be placed with proper formatting. Each argument on separate line.
+     * 8. Dictionary should be formatted with separate set of rules. Each pair on separate line.
     */
 
     /*
-     * @todo #80 60m/DEV Describe formatting rules in readme file.
-     */
-
-    /*
-    * @todo #5 60m/DEV Implement rule: if there is new operator in arguments, all arguments should be properly formatted.
+    * @todo #5 60m/DEV Implement rule: if there is an inline instantiation (new operator) in arguments, all arguments should be properly formatted.
     */
 
     /*
@@ -37,10 +33,6 @@ namespace ObjectToTest.UnitTests
 
     /*
     * @todo #5 60m/DEV Implement rule: Inner properties should be from separate lines.
-    */
-
-    /*
-    * @todo #5 60m/DEV Implement rule: Lines bigger than 80 characters should be properly formatted.
     */
 
     /*
@@ -206,8 +198,6 @@ namespace ObjectToTest.UnitTests
         {
             /*
             * @todo #98 60m/DEV This should work but is is not.
-             *
-             * Ideally it should look like:
              *
              * Something is with code formatting. Need to add test to check that new TimeSpan(18, 17, 34, 24, 5) is parsed correctly,
              * because for some reason last argument is ignored when it is 1 char size.

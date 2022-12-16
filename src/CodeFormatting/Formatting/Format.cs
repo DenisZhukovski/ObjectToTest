@@ -7,6 +7,19 @@ namespace ObjectToTest.CodeFormatting.Formatting
 {
     public class Format : IFormat, IExternalToStringDefinition, ITransformationDefinition
     {
+        /*
+        * @todo #125 60m/DEV Use Insert 0 instead of add.
+         *
+         * Logic should be - latest format is (most likely) less abstract and applicable for shorter range of entities, so it should be analyzed first.
+        */
+
+        /*
+        * @todo #125 60m/DEV Rename Override to just ForArrayOf.
+         *
+         * ...because there should be no knowledge about internals. Pure declarative style.
+         *
+        */
+
         private readonly List<FormatAndCondition> _conditionalFormats = new();
         private readonly List<TransformationAndCondition> _conditionalTransformations = new();
 
