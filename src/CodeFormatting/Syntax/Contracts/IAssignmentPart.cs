@@ -5,6 +5,7 @@
     /// var i = 5;
     /// int a = 3;
     /// a = "234";
+    /// a = () => { Do(); };
     /// var some = new Foo(bar) {A = 5};
     /// </summary>
     public interface IAssignmentPart : ICodeStatement

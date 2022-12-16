@@ -9,8 +9,12 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements
     public class PossibleCodeStatements : IPossibleItems<ICodeStatement>
     {
         /*
-         * @todo #97 60m/DEV Implement different statements and register them here.
+         * @todo #125 60m/DEV Implement invocation statement.
          */
+
+        /*
+        * @todo #125 60m/DEV Implement assignment statement.
+        */
         private readonly Lazy<PossibleItems<ICodeStatement>> _possibleStatements = new(
             () =>
                 new PossibleItems<ICodeStatement>(

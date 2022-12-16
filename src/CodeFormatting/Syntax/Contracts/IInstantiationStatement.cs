@@ -6,9 +6,14 @@
     public interface IInstantiationStatement : IRightAssignmentPart, ICodeStatement, IArgument
     {
         /*
-         * @todo #91 60m/DEV Define necessary properties
-         * Most likely: new [TypeDefinition]([Arguments]) {[InlinePropertiesAssignment]}
-         */
+        * @todo #125 60m/LEAD IInstantiationStatement is ICodeStatement and IArgument at the same time.
+         *
+         * It may not be an issue, but need to analyze if this can affect
+         * formatting. Current implementation relies on conditions like (x is IArgument)
+         * so top level IInstantiationStatement could be treated as IArgument and formatted as IArgument.
+         *
+         * Most probably this is not a case.
+        */
 
         ITypeDefinition Type { get; }
 
