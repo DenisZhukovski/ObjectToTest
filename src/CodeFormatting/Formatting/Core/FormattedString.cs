@@ -1,4 +1,6 @@
-﻿namespace ObjectToTest.CodeFormatting.Formatting.Core
+﻿using System;
+
+namespace ObjectToTest.CodeFormatting.Formatting.Core
 {
     public class FormattedString
     {
@@ -13,7 +15,14 @@
 
         public override string ToString()
         {
-            return string.Format(_format, _args);
+            try
+            {
+                return string.Format(_format, _args);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"'{_format}' is incorrect", e);
+            }
         }
     }
 }

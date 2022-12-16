@@ -20,6 +20,8 @@ namespace ObjectToTest.UnitTests
 
         public static void ClaimEqual<T>(this T actual, T expected, string? message = null) => Equal(actual, expected, message);
 
+        public static void ClaimEqual(this string actual, string expected) => Assert.Equal(expected, actual);
+
         public static void ClaimReferenceNotEqual<T>(this T actual, T expected, string? message = null) => ReferenceNotEqual(actual, expected);
 
         public static void ClaimNotEqual<T>(this T actual, T expected) => NotEqual(actual, expected);

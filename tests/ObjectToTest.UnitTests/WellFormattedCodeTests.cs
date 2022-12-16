@@ -62,7 +62,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 6")]
+        [Fact]
         public void StringMoreThan80CharsShouldBeFormatted()
         {
             Assert.Equal(
@@ -70,7 +70,8 @@ namespace ObjectToTest.UnitTests
                 "new WithTwoParamOneFieldAndOneProperty(",
                 "    42,",
                 "    \"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\"",
-                ")"
+                ")",
+                ""
                 ).ToString(),
                 new WellFormattedCode(
                     "new WithTwoParamOneFieldAndOneProperty(42,\"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test\")"

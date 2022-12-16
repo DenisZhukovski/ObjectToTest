@@ -17,7 +17,7 @@ namespace ObjectToTest.CodeFormatting.Formatting
             _format = new(
                 () =>
                 {
-                    var format = new SyntaxTreeFormat(tree);
+                    var format = new SyntaxTreeFormat();
 
                     foreach (var rule in _rules)
                     {

@@ -11,7 +11,7 @@ namespace ObjectToTest.UnitTests
         {
             var tree = new SyntaxTree("new Foo(1,233)  ; new   Bar(1,  2)");
 
-            new SyntaxTreeFormat(tree).ApplyTo(tree).ClaimEqual("new Foo(1,233);new Bar(1,2)");
+            new SyntaxTreeFormat().ApplyTo(tree).ClaimEqual("new Foo(1,233);new Bar(1,2)");
         }
     }
 }
