@@ -1,16 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using ICSharpCode.Decompiler.CSharp.Syntax;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
+using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
+using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
+using ObjectToTest.CodeFormatting.Syntax.Statements.Args;
+using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {
     public class PropertyAssignments : IPropertyAssignments
     {
-        /*
-        * @todo #103 60m/DEV Parse properties.
-        */
-
         private readonly string _source;
+        private readonly Lazy<PossibleAssignments> _possibleAssignments = new(() => new());
 
         public PropertyAssignments(string source)
         {
@@ -24,7 +27,10 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 
         public IEnumerator<IAssignmentPart> GetEnumerator()
         {
-            yield break;
+            foreach (var characterSeparatedSubstring in new CharacterSeparatedSubstrings(_source, ',', notAnalyzeIn: new LiteralsAndClosuresSubstrings(_source)))
+            {
+                yield return _possibleAssignments.Value.BestMatch(characterSeparatedSubstring.ToString());
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

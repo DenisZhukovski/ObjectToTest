@@ -24,6 +24,29 @@ namespace ObjectToTest.UnitTests
             );
         }
 
+        [Fact(Skip = "Fix todo")]
+        public void PropertyAssignmentWithInstantiationOfComplexObject()
+        {
+            /*
+            * @todo #76 60m/DEV Add recursive parsing for assignments.
+            */
+
+            Assert.Equal(
+                new NewLineSeparatedString(
+                    "new WithProperty()",
+                    "{",
+                    "    User = new User(",
+                    "        \"Test\"",
+                    "        new Address()",
+                    "    )",
+                    "}"
+                ).ToString(),
+                new WellFormattedCode(
+                    "new WithProperty(){User = new User(\"Test\",new Address())}"
+                ).ToString(_output)
+            );
+        }
+
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void InnerPropertyShouldBeFromSeparateLine()
         {
@@ -37,6 +60,24 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WellFormattedCode(
                         "new WithProperty(){IntProperty = 42,PropertyName = \"Test\"}"
+                ).ToString(_output)
+            );
+        }
+
+        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
+        public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
+        {
+            /*
+            * @todo #98 60m/DEV This should work but is is not.
+             *
+             * Something is with code formatting. Need to add test to check that new TimeSpan(18, 17, 34, 24, 5) is parsed correctly,
+             * because for some reason last argument is ignored when it is 1 char size.
+            */
+
+            Assert.Equal(
+                "new TimeSpan(18,17,34,24,5)",
+                new WellFormattedCode(
+                    "new TimeSpan(18, 17, 34, 24, 5)"
                 ).ToString(_output)
             );
         }

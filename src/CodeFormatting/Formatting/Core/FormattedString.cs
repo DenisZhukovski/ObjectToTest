@@ -21,7 +21,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
             }
             catch (Exception e)
             {
-                throw new Exception($"'{_format}' is incorrect", e);
+                throw new Exception($"'{_format}' is incorrect. Argument length is {_args.Length}", e);
             }
         }
     }

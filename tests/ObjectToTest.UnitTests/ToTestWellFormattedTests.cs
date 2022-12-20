@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 namespace ObjectToTest.UnitTests
 {
     /*
-     * @todo #125 60m/DEV Add rules into documentation.
+     * @todo #76 60m/DEV Add rules into documentation.
      * The rules are following:
      * 0. API should be compatible with old one.
      * 1. if there is new operator in arguments, all arguments should be from new lines.
@@ -24,23 +24,23 @@ namespace ObjectToTest.UnitTests
     */
 
     /*
-    * @todo #5 60m/DEV Implement rule: if there is an inline instantiation (new operator) in arguments, all arguments should be properly formatted.
+    * @todo #76 60m/DEV Implement rule: if there is an inline instantiation (new operator) in arguments, all arguments should be properly formatted.
     */
 
     /*
-    * @todo #5 60m/DEV Implement rule: Lambdas are always from new string.
+    * @todo #76 60m/DEV Implement rule: Lambdas are always from new string.
     */
 
     /*
-    * @todo #5 60m/DEV Implement rule: Inner properties should be from separate lines.
+    * @todo #76 60m/DEV Implement rule: Inner properties should be from separate lines.
     */
 
     /*
-    * @todo #5 60m/DEV Implement rule: All arrays should be placed with proper formatting.
+    * @todo #76 60m/DEV Implement rule: All arrays should be placed with proper formatting.
     */
 
     /*
-    * @todo #5 60m/DEV Implement rule: Dictionary should be formatted with separate set of rules.
+    * @todo #76 60m/DEV Implement rule: Dictionary should be formatted with separate set of rules.
     */
 
     public class ToTestWellFormattedTests
@@ -53,7 +53,7 @@ namespace ObjectToTest.UnitTests
         }
 
 #pragma warning disable CS8604
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ThrowArgumentNullException_ShouldBehaveAsNotFormatted()
         {
             object? obj = null;
@@ -61,7 +61,7 @@ namespace ObjectToTest.UnitTests
         }
 #pragma warning restore CS8604
         
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void InnerPropertyShouldBeFromSeparateLine_StringPropertyInitializer()
         {
             Assert.Equal(
@@ -78,7 +78,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void InnerPropertyShouldBeFromSeparateLine_IntPropertyInitializer()
         {
             Assert.Equal(
@@ -95,7 +95,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void InnerPropertyShouldBeFromSeparateLine_MultipleValueTypesPropertyInitializer()
         {
             Assert.Equal(
