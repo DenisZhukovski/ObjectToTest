@@ -45,7 +45,7 @@ namespace ObjectToTest.CodeFormatting.Formatting
 
             public bool IsNotFirst => !IsFirst;
 
-            public string String { get; set; }
+            public string? String { get; set; }
         }
     }
 }
