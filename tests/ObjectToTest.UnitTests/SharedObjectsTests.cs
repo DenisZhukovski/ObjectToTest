@@ -96,7 +96,7 @@ namespace ObjectToTest.UnitTests
         public void SeveralTimesCtorArgumentAsShared()
         {
             /*
-            * @todo #134:60m/DEV Make SeveralTimesCtorArgumentAsShared test to be green.
+            * @todo #134 60m/DEV Make SeveralTimesCtorArgumentAsShared test to be green.
             * The problem is that SharedObjects is not implemented properly.
              * The class is not able to detect the object that been used several times as ctor argument
              * The right solution is to rewrite SharedObjects to make it to build a tree
