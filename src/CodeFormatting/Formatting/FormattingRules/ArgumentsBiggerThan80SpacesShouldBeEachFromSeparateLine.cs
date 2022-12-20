@@ -1,5 +1,4 @@
-﻿using ObjectToTest.CodeFormatting.Formatting.Core;
-using ObjectToTest.CodeFormatting.Syntax.Contracts;
+﻿using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Formatting
 {

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using ObjectToTest.CodeFormatting;
-using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Extensions;
-using ObjectToTest.UnitTests.Models;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -53,8 +50,8 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
-        public void ArgumentsShoulBeSeparatedBySpace()
+        [Fact]
+        public void ArgumentsShouldBeSeparatedBySpace()
         {
             Assert.Equal(
                 "new WithTwoParams(42, \"Test\")",
@@ -79,7 +76,7 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact]
-        public void ArgumentWithNewShouldStartFromNewLine()
+        public void ObjectArgumentWithNewShouldStartFromNewLine()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
