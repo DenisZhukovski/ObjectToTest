@@ -277,7 +277,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed as part of the puzzle")]
+        [Fact(Skip = "Need to be fixed as part of the puzzle #134")]
         public void SharedArgumentWhenSeveralTimesAsCtorArgument()
         {
             /*
@@ -287,8 +287,8 @@ namespace ObjectToTest.UnitTests
             */
             var user = new User("user name");
             Assert.Equal(
-                $"var user = new User(\"user Name\");{Environment.NewLine}" +
-                $"new With2FuncArguments(user, user)",
+                $"var user = new User(\"user name\");{Environment.NewLine}" +
+                $"new With2ObjectArguments(user,user)",
                 new With2ObjectArguments(user, user).ToTest(_output)
             );
         }

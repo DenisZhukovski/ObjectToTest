@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ObjectToTest.CodeFormatting.Syntax.Contracts;
+﻿using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Formatting
 {
@@ -7,7 +6,10 @@ namespace ObjectToTest.CodeFormatting.Formatting
     {
         public void ApplyTo(ITransformationDefinition definition)
         {
-            definition.OverrideForArrayOf<IArgument>(x => x.ToString().Length < 80, x => new Parts("(", string.Join(", ", x), ")").ToString());
+            definition.OverrideForArrayOf<IArgument>(
+                x => x.ToString().Length < 80, 
+                x => new Parts("(", string.Join(", ", x), ")").ToString()
+            );
         }
     }
 }

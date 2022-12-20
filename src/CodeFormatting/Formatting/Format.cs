@@ -34,7 +34,7 @@ namespace ObjectToTest.CodeFormatting.Formatting
 
         public void ForArrayOf<T>(Func<string[], string> format)
         {
-            _conditionalFormats.Add(new FormatAndCondition()
+            _conditionalFormats.Add(new FormatAndCondition
             {
                 IsApplicable = x => x is IEnumerable<T>,
                 Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
@@ -104,27 +104,22 @@ namespace ObjectToTest.CodeFormatting.Formatting
             });
         }
 
-        public string ApplyTo(object root)
+        public string ApplyTo(object item)
         {
             var results = new List<DataAndString>();
-
-            return Resolve(root, new Tabs(0));
-
+            return Resolve(item, new Tabs(0));
             string Resolve(object arg, Tabs parentTabs)
             {
                 var potentialResult = results.FirstOrDefault(x => ReferenceEquals(x.Data, arg));
-
                 if (potentialResult != null)
                 {
                     return potentialResult.String;
                 }
 
-                var conditionalFormat = _conditionalFormats.FirstOrDefault(x => x.IsApplicable(arg));
-
+                var conditionalFormat = _conditionalFormats.FirstOrDefault(x => x?.IsApplicable(arg) ?? false);
                 if (conditionalFormat != null)
                 {
-                    var chainOfTransformations = _conditionalTransformations.Where(x => x.IsApplicable(arg));
-
+                    var chainOfTransformations = _conditionalTransformations.Where(x => x?.IsApplicable(arg) ?? false);
                     var (format, tabs) = conditionalFormat.Format.Format(arg, parentTabs);
 
                     foreach (var transformationAndCondition in chainOfTransformations)
@@ -157,27 +152,26 @@ namespace ObjectToTest.CodeFormatting.Formatting
 
                     return result;
                 }
-
             }
         }
 
-        private record FormatAndCondition
+        private sealed record FormatAndCondition
         {
-            public IObjectWithFormat Format { get; set; }
+            public IObjectWithFormat? Format { get; set; }
 
-            public Func<object, bool> IsApplicable { get; set; }
+            public Func<object, bool>? IsApplicable { get; set; }
         }
 
-        private record TransformationAndCondition
+        private sealed record TransformationAndCondition
         {
-            public Func<string, Tabs, (string, Tabs)> Format { get; set; }
+            public Func<string, Tabs, (string, Tabs)>? Format { get; set; }
 
-            public Func<object, bool> IsApplicable { get; set; }
+            public Func<object, bool>? IsApplicable { get; set; }
         }
 
-        private record DataAndString
+        private sealed record DataAndString
         {
-            public object Data { get; set; }
+            public object? Data { get; set; }
 
             public string String { get; set; }
         }

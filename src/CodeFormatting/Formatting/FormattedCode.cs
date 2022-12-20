@@ -18,7 +18,6 @@ namespace ObjectToTest.CodeFormatting.Formatting
                 () =>
                 {
                     var format = new SyntaxTreeFormat();
-
                     foreach (var rule in _rules)
                     {
                         rule.ApplyTo(format);
