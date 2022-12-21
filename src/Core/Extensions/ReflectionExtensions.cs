@@ -74,8 +74,22 @@ namespace ObjectToTest
         
         public static bool ContainsDeep(this object @object, object objectToCheck)
         {
+            if (@object.IsPrimitive()
+                || @object.IsDelegate()
+                || @object.IsCollection()
+                || @object.IsValueType())
+            {
+                return false;
+            }
+            
             foreach (var value in @object.Values())
             {
+                // Singleton recursive check.
+                if (value == @object)
+                {
+                    continue;
+                }
+                
                 if (value == objectToCheck || (value != null && !value.IsCollection() && !value.IsPrimitive() && value.ContainsDeep(objectToCheck)))
                 {
                     return true;
@@ -188,11 +202,20 @@ namespace ObjectToTest
             return result;
         }
 
-        internal static List<object?> Values(this object? @object)
+        internal static List<object?> Values(this object? @object, bool fieldsOnly = false)
         {
             if (@object == null)
             {
                 return new List<object?>();
+            }
+
+            if (fieldsOnly)
+            {
+                return @object
+                    .GetType()
+                    .GetRuntimeFields()
+                    .Select(field => @object.Value(field))
+                    .ToList();
             }
 
             return @object

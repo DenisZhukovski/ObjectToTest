@@ -36,6 +36,19 @@ namespace ObjectToTest.UnitTests
                 new SharedObjects(new WithSingletonArgument(SingletonClass.Instance)).ToList()
             );
         }
+
+        [Fact]
+        public void SimpleObjectWithPropertyNotShared()
+        {
+            Assert.Empty(
+                new SharedObjects(
+                    new WithUserPublicProperty
+                    {
+                        User = new User("user")
+                    }
+                ).ToList()
+            );
+        }
         
         [Fact]
         public void SameEqualSameHashCode()
@@ -92,24 +105,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed as part of the puzzle #134")]
+        [Fact]
         public void SeveralTimesCtorArgumentAsShared()
         {
-            /*
-            * @todo #134 60m/DEV Make SeveralTimesCtorArgumentAsShared test to be green.
-            * The problem is that SharedObjects is not implemented properly.
-             * The class is not able to detect the object that been used several times as ctor argument
-             * The right solution is to rewrite SharedObjects to make it to build a tree
-             * P0
-             * --P1
-             *   --P3
-             *     --P4
-             * --P2
-             *   --P3
-             *     --P4
-             * The class should be able to detect that the same object was used several times from different parents
-             * Or been used multiple times as a part of the same parent.
-            */
             var user = new User("user name");
             Assert.Equal(
                 1,
