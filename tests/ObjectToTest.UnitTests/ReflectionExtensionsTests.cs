@@ -69,6 +69,18 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Throws<InvalidOperationException>(() => Vector3.forward.Value("Item"));
         }
+        
+        [Fact]
+        public void DelegateContainsDeeps()
+        {
+            Assert.False(new Action<int>((pos) => { }).ContainsDeep(new object()));
+        }
+        
+        [Fact]
+        public void SingletonContainsDeeps()
+        {
+            Assert.False(SingletonClass.Instance.ContainsDeep(new object()));
+        }
     }
 }
 

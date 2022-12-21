@@ -277,14 +277,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed as part of the puzzle #134")]
+        [Fact]
         public void SharedArgumentWhenSeveralTimesAsCtorArgument()
         {
-            /*
-            * @todo #:60m/DEV Make SharedArgumentWhenSeveralTimesAsCtorArgument test to be green.
-            * Now when object is used several times as the same ctor argument it's not detected as shared object.
-            * The issue need ot be fixed.
-            */
             var user = new User("user name");
             Assert.Equal(
                 $"var user = new User(\"user name\");{Environment.NewLine}" +

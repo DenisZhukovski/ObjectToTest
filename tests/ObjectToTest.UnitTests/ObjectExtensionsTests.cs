@@ -47,6 +47,18 @@ namespace ObjectToTest.UnitTests
         }
         
         [Fact]
+        public void DoesNotHaveCircularReference2()
+        {
+            Assert.False(new WithActionArgument((pos) => { }).HasCircularReference());
+        }
+        
+        [Fact]
+        public void ObjectValues()
+        {
+            Assert.NotEmpty(new WithActionArgument((pos) => { }).Values());
+        }
+        
+        [Fact]
         public void HasComplexCircularReference()
         {
             var o1 = new CircularRefPublicProperty1();
