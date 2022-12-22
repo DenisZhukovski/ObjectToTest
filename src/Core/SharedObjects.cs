@@ -3,10 +3,8 @@
 namespace ObjectToTest
 {
     /// <summary>
-    /// @todo #122 60m/DEV SharedObjects summary is a little bit difficult for quick understanding. Need to rephrase it
-    /// 
     /// The entity finds the objects that are part of current object internal state
-    /// but also used in more than one object entity.
+    /// and at the same time they used in more than one object entity.
     /// https://github.com/DenisZhukovski/ObjectToTest/wiki/Shared-Objects-Detection
     /// </summary>
     public class SharedObjects
