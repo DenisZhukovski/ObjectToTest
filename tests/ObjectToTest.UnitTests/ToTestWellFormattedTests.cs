@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
@@ -197,10 +196,10 @@ namespace ObjectToTest.UnitTests
         public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
         {
             /*
-            * @todo #98 60m/DEV This should work but is is not.
+            * @todo #98 60m/DEV This should work but it is not.
              *
-             * Something is with code formatting. Need to add test to check that new TimeSpan(18, 17, 34, 24, 5) is parsed correctly,
-             * because for some reason last argument is ignored when it is 1 char size.
+             * Something is wrong with code formatting. The test should pass when
+             * WellFormattedCodeTests.ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor will be green
             */
 
             Assert.Equal(
