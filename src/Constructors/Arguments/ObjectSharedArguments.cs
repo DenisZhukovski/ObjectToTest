@@ -46,7 +46,11 @@ namespace ObjectToTest
             var arguments = new StringBuilder();
             foreach (var argument in ToList())
             {
-                arguments.AppendLine($"{argument};");
+                var argumentAsString = argument.ToString();
+                if (!string.IsNullOrEmpty(argumentAsString))
+                {
+                    arguments.AppendLine($"{argumentAsString};");
+                }
             }
 
             return arguments.ToString();

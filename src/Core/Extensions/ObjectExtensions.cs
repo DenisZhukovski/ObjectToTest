@@ -111,7 +111,7 @@ namespace ObjectToTest
         {
             return @object
                 .Constructors()
-                .Select(ctorInfo => map(ctorInfo));
+                .Select(map);
         }
 
         internal static IArgument AsSharedArgument(this object @object, IArguments sharedArguments)
@@ -122,13 +122,16 @@ namespace ObjectToTest
                     @object.GetType(),
                     @object,
                     @object.Constructor(sharedArguments)
-                )
+                ),
+                sharedArguments
             );
         }
 
         internal static List<object> SharedObjects(this object @object)
         {
-            return new SharedObjects(@object).ToList();
+            var sharedObjects = new SharedObjects(@object).ToList();
+            sharedObjects.Sort(new SortByDelegates());
+            return sharedObjects;
         }
 
         internal static bool HasCircularReference(this object @object)
@@ -170,6 +173,10 @@ namespace ObjectToTest
 
         private static string VariableName(object @object)
         {
+            if (@object is Delegate @delegate)
+            {
+                return $"{VariableName(@delegate.Target)}.{@delegate.Method.Name}";
+            }
             return Char.ToLower(@object.GetType().Name[0]) + @object.GetType().Name.Substring(1);
         }
     }

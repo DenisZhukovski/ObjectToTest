@@ -261,18 +261,13 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed as part of #116 puzzle")]
+        [Fact]
         public void SharedOtherObjectMethodsReferenceAsArgument()
         {        
-            /*
-            * @todo #:60m/DEV Make SharedOtherObjectMethodsReferenceAsArgument test to be green.
-            * Now DelegateConstructor does not support shared objects.
-            * DelegateConstructor should be able to generate code with shared arguments in such cases.
-            */
             var user = new User("user name");
             Assert.Equal(
-                $"var user = new User(\"user Name\");{Environment.NewLine}" +
-                $"new With2FuncArguments(user.Age, user.LoginToAsync)",
+                $"var user = new User(\"user name\");{Environment.NewLine}" +
+                $"new With2FuncArguments(user.Age,user.LoginToAsync)",
                 new With2FuncArguments(user.Age, user.LoginToAsync).ToTest(_output)
             );
         }

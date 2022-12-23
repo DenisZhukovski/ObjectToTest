@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ObjectToTest.Arguments;
 
 namespace ObjectToTest.Constructors
@@ -6,11 +7,13 @@ namespace ObjectToTest.Constructors
     public class SharedArgumentConstructor : IConstructor
     {
         private readonly IArgument _argument;
-        private bool _initVariable;
+        private readonly IArguments _sharedArguments;
+        private bool _initVariable = false;
 
-        public SharedArgumentConstructor(IArgument argument)
+        public SharedArgumentConstructor(IArgument argument, IArguments sharedArguments)
         {
             _argument = argument;
+            _sharedArguments = sharedArguments;
         }
 
         bool IConstructor.IsValid => _argument.Constructor.IsValid;
@@ -34,6 +37,14 @@ namespace ObjectToTest.Constructors
             if (!_initVariable)
             {
                 _initVariable = true;
+                if (_argument.Object is Delegate @delegate)
+                {
+                    var arg = _sharedArguments.Argument(@delegate.Target);
+                    if (arg != null)
+                    {
+                        return string.Empty;
+                    }
+                }
                 return $"var {_argument.Name} = {_argument.Constructor}";
             }
             return _argument.Name;
