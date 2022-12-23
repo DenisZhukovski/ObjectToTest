@@ -32,6 +32,16 @@ namespace ObjectToTest.Constructors
 
         public object? Object => _object;
 
+        public override bool Equals(object? obj)
+        {
+            return _object.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _object.GetHashCode();
+        }
+        
         public override string ToString()
         {
             return _object.AsCode();

@@ -12,15 +12,11 @@ namespace ObjectToTest.UnitTests
             var user = new User("user");
             var argument = new Argument(
                 "user",
-                user.GetType(),
-                user,
-                user.Constructor(new MockArguments())
+                user
             );
             Assert.Equal<object>(
                 argument,
-                new SharedArgument(
-                        argument
-                 )
+                new SharedArgument(argument)
             );
         }
 

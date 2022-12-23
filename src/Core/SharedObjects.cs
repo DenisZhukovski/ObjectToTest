@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ObjectToTest
 {
@@ -28,6 +29,13 @@ namespace ObjectToTest
                     if (objectUsageCount[objectAsKey] > 1 && !objectAsKey.IsSingleton() && !objectAsKey.IsPrimitive())
                     {
                         _sharedObjects.Add(objectAsKey);
+                        if (objectAsKey is Delegate @delegate)
+                        {
+                            if (!_sharedObjects.Contains(@delegate.Target))
+                            {
+                                _sharedObjects.Add(@delegate.Target);
+                            }
+                        }
                     }
                 }
             }

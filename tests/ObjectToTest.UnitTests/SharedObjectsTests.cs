@@ -69,7 +69,7 @@ namespace ObjectToTest.UnitTests
         {
             var user = new User("user name");
             Assert.Equal(
-                2,
+                3,
                 new SharedObjects(
                     new With2FuncArguments(user.Age, user.LoginToAsync)
                 ).ToList().Count

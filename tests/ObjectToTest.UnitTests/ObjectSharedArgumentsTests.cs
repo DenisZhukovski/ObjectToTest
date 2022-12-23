@@ -85,20 +85,38 @@ namespace ObjectToTest.UnitTests
             );
         }
         
-        [Fact(Skip = "Need to be fixed as part of #116 puzzle")]
+        [Fact]
         public void InitSharedAsMethodDelegate()
         {
-            /*
-            * @todo #116 60m/DEV ObjectSharedArguments can not initialize the target of function delegate.
-             * The class should be able to detect that shared argument is delegate and need to initialize its target instead.
-            */
-            
             var user = new User("user name");
             Assert.Equal(
                 $"var user = new User(\"user name\");{Environment.NewLine}",
                 new ObjectSharedArguments(
                     new With2FuncArguments(user.Age, user.LoginToAsync)
-                ).ToString()
+                ).ToString(_output)
+            );
+        }
+        
+        [Fact]
+        public void SharedDelegatesCount()
+        {
+            var user = new User("user name");
+            Assert.Equal(
+                3,
+                new ObjectSharedArguments(
+                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                ).ToList().Count
+            );
+        }
+        
+        [Fact]
+        public void SharedDelegatesFindsTheObject()
+        {
+            var user = new User("user name");
+            Assert.NotNull(
+                new ObjectSharedArguments(
+                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                ).Argument(new Func<int>(user.Age))
             );
         }
         

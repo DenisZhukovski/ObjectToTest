@@ -1,5 +1,4 @@
 using ObjectToTest.Arguments;
-using ObjectToTest.Constructors;
 using ObjectToTest.UnitTests.Data;
 using Xunit;
 
@@ -13,11 +12,9 @@ namespace ObjectToTest.UnitTests
             var user = new User("test user");
             Assert.Equal(
                 user,
-                new SharedArgumentConstructor(
-                    new SharedArgument(
-                        new Argument("user", user)
-                    )
-                ).Object
+                new SharedArgument(
+                    new Argument("user", user)
+                ).Constructor.Object
             );
         }
     }
