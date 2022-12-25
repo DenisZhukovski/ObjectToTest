@@ -1,13 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
     public class SyntaxTreeTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public SyntaxTreeTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+        
         [Fact]
         public void NumberOfCodeParts()
         {

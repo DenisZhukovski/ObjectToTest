@@ -23,5 +23,15 @@ namespace ObjectToTest.UnitTests
             arguments.ElementAt(0).ClaimIs<IInstantiationStatement>();
             arguments.ElementAt(0).ToString().ClaimEqual("new Foo(123, \"new Foo()\")");
         }
+
+        [Fact]
+        public void ArgumentsCount()
+        {
+            Assert.Equal(
+                5,
+                new CodeFormatting.Syntax.Statements.Args.Arguments("18,17,34,24,5")
+                    .Count()
+            );
+        }
     }
 }

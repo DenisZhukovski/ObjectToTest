@@ -192,16 +192,9 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
+        [Fact]
         public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
         {
-            /*
-            * @todo #98 60m/DEV This should work but it is not.
-             *
-             * Something is wrong with code formatting. The test should pass when
-             * WellFormattedCodeTests.ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor will be green
-            */
-
             Assert.Equal(
                 "new TimeSpan(18, 17, 34, 24, 5)",
                 new TimeSpan(18, 17, 34, 24, 5)
