@@ -220,7 +220,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_CtorWithComplexDependencySeveralArguments()
         {
             Assert.Equal(
@@ -304,7 +304,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
+        [Fact]
         public void ShortArgumentsShouldBeSeparatedBySpace_And_ArgumentWithNewShouldBeFormatted_CtorWithStructArgument()
         {
             Assert.Equal(
