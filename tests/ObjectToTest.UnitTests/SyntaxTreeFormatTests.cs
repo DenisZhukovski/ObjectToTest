@@ -9,9 +9,12 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void Clear()
         {
-            var tree = new SyntaxTree("new Foo(1,233)  ; new   Bar(1,  2)");
-
-            new SyntaxTreeFormat().ApplyTo(tree).ClaimEqual("new Foo(1,233);new Bar(1,2)");
+            new SyntaxTreeFormat()
+                .ApplyTo(
+                    new SyntaxTree(
+                        "new Foo(1,233)  ; new   Bar(1,  2)"
+                    )
+                ).ClaimEqual("new Foo(1,233);new Bar(1,2)");
         }
     }
 }

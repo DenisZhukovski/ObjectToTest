@@ -160,21 +160,19 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void CtorWithComplexDependencySeveralArguments()
         {
-            /*
-             * @todo #:60m/DEV Proper declaration format is expected. It would be nice to start each constructor argument on its own line with proper intend
-             * new WithTwoClassParamAndIntParam(
-             *  new WithClassParam(
-             *      new EmptyObject()
-             *  ),
-             *  new WithClassAndIntParams(
-             *      42,
-             *      new EmptyObject()
-             *  ),
-             *  42
-             * )
-             */
             Assert.Equal(
-                "new WithTwoClassParamAndIntParam(new WithClassParam(new EmptyObject()),new WithClassAndIntParams(42,new EmptyObject()),42)",
+                new NewLineSeparatedString(
+                    "new WithTwoClassParamAndIntParam(",
+                    "    new WithClassParam(",
+                    "        new EmptyObject()",
+                    "    ),",
+                    "    new WithClassAndIntParams(",
+                    "        42,",
+                    "        new EmptyObject()",
+                    "    ),",
+                    "    42",
+                    ")"
+                ).ToString(),
                 new WithTwoClassParamAndIntParam(
                     new WithClassParam(new EmptyObject()),
                     new WithClassAndIntParams(
@@ -182,7 +180,7 @@ namespace ObjectToTest.UnitTests
                         new EmptyObject()
                     ),
                     42
-                ).ToTest(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
