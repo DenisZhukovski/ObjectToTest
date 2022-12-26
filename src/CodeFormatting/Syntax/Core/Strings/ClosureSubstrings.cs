@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
 {
@@ -17,6 +18,10 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
             _begin = begin;
             _end = end;
             _notAnalyzeIn = notAnalyzeIn;
+        }
+
+        public ClosureSubstrings(string source, IClosure closure, IEnumerable<ISubstring> notAnalyzeIn) : this(source, closure.Begin, closure.End, notAnalyzeIn)
+        {
         }
 
         public IEnumerator<ISubstring> GetEnumerator()
