@@ -36,6 +36,18 @@ namespace ObjectToTest.UnitTests
         {
             InstantiationStatement.Parse("=new Foo.Foo()").ClaimIs<ParseSuccessful>();
         }
+        
+        [Fact(Skip = "Need to be fixed in scope of puzzle #156")]
+        public void AnonymousArrayType()
+        {
+            /*
+            * @todo #156 60m/DEV InstantiationStatement is no capable to recognize anonymous array
+             * instantiation. Need to be fixed
+            */
+            new InstantiationStatement("new[] { 1, 2, 4, 5 }")
+                .Type.ToString()
+                .ClaimEqual(new[] {1,2, 4}.GetType().Name);
+        }
 
         [Fact]
         public void InstantiationShouldBeParsedCorrectly()
