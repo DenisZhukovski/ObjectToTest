@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 using ObjectToTest.CodeFormatting.Syntax.Statements;
@@ -28,6 +29,16 @@ namespace ObjectToTest.CodeFormatting.Syntax
             {
                 yield return _codeStatements.Value.BestMatch(s);
             }
+        }
+
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+            foreach (var statement in this)
+            {
+                result.AppendLine(statement.ToString());
+            }
+            return result.ToString();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

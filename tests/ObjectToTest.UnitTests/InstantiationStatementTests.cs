@@ -48,15 +48,12 @@ namespace ObjectToTest.UnitTests
             statement.InlinePropertiesAssignment.ElementAt(1).ToString().ClaimEqual("B = \"new Foo()\"");
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
+        [Fact]
         public void InstantiationStatementWithLastShortConstant()
         {
-            /*
-            * @todo #76 60m/DEV Fix this.
-            */
-
-            var statement = new InstantiationStatement("new TimeSpan(18,17,34,24,5)");
-            statement.Arguments.Count().ClaimEqual(5);
+            new InstantiationStatement("new TimeSpan(18,17,34,24,5)")
+                .Arguments
+                .Count().ClaimEqual(5);
         }
     }
 }

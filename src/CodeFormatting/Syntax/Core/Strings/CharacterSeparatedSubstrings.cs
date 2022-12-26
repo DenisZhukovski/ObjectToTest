@@ -38,7 +38,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
                 index++;
             }
 
-            if (start < _source.Length - 1)
+            if (start < _source.Length)
             {
                 yield return new Substring(_source, start, _source.Length - 1);
             }
