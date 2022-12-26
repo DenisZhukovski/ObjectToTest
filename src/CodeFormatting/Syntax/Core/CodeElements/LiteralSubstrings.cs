@@ -17,13 +17,19 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
         public IEnumerator<ISubstring> GetEnumerator()
         {
             var indexes = new IndexesOfCharExcludingBackslashed(_source, '"').ToArray();
-
-            foreach (var literalGroup in new Groups<int>(indexes, 2))
+            if (indexes.Any())
             {
-                if (literalGroup.Count() == 2)
+                foreach (var literalGroup in new Groups<int>(indexes, 2))
                 {
-                    yield return new Substring(_source, literalGroup.ElementAt(0), literalGroup.ElementAt(1));
+                    if (literalGroup.Count() == 2)
+                    {
+                        yield return new Substring(_source, literalGroup.ElementAt(0), literalGroup.ElementAt(1));
+                    }
                 }
+            }
+            else
+            {
+                yield return new Substring(string.Empty);
             }
         }
 
