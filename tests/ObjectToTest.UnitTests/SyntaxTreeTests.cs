@@ -71,7 +71,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new SyntaxTree(
                         "new TimeSpan(18, 17, 34, 24, 5)"
-                ).DumpHierarchy().Log(_output)
+                ).Dump().Log(_output)
             );
         }
 
@@ -81,7 +81,7 @@ namespace ObjectToTest.UnitTests
             Assert.NotEmpty(
                 new SyntaxTree(
                 "new TimeSpan(18, 17, 34, 24, 5)"
-                ).DumpHierarchy().Log(_output)
+                ).Dump().Log(_output)
             );  
         }
     }

@@ -6,12 +6,12 @@ using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.CodeFormatting.Formatting
 {
-    public class HierarchyDumpFormat
+    public class SyntaxTreeDump
     {
         private readonly ISyntaxTree _tree;
         private readonly Lazy<Format> _format;
 
-        public HierarchyDumpFormat(ISyntaxTree tree)
+        public SyntaxTreeDump(ISyntaxTree tree)
         {
             _tree = tree;
             _format = new(

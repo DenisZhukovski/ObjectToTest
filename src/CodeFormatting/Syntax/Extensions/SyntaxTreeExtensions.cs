@@ -5,9 +5,9 @@ namespace ObjectToTest.CodeFormatting.Syntax.Extensions
 {
     public static class SyntaxTreeExtensions
     {
-        public static string DumpHierarchy(this ISyntaxTree syntaxTree)
+        public static string Dump(this ISyntaxTree syntaxTree)
         {
-            return new HierarchyDumpFormat(syntaxTree).ToString();
+            return new SyntaxTreeDump(syntaxTree).ToString();
         }
     }
 }
