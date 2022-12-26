@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
@@ -7,27 +8,29 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
     public class LiteralsAndClosuresSubstrings : IEnumerable<ISubstring>
     {
         private readonly string _source;
+        private readonly IClosure[] _closures;
 
-        public LiteralsAndClosuresSubstrings(string source)
+        public LiteralsAndClosuresSubstrings(string source, params IClosure[] closures)
         {
             _source = source;
+            _closures = closures.Any()
+                ? closures
+                : new IClosure[]
+                {
+                    new RoundBracketsClosure(),
+                    new SquareBracketsClosure(),
+                    new CurlyBracketsClosure()
+                };
         }
 
         public IEnumerator<ISubstring> GetEnumerator()
         {
-            foreach (var closure in new LiteralAwareClosureSubstrings(_source, '[', ']'))
+            foreach (var closure in _closures)
             {
-                yield return closure;
-            }
-
-            foreach (var closure in new LiteralAwareClosureSubstrings(_source, '(', ')'))
-            {
-                yield return closure;
-            }
-
-            foreach (var closure in new LiteralAwareClosureSubstrings(_source, '{', '}'))
-            {
-                yield return closure;
+                foreach (var closureSubstring in new LiteralAwareClosureSubstrings(_source, closure))
+                {
+                    yield return closureSubstring;
+                }
             }
 
             foreach (var literal in new LiteralSubstrings(_source))

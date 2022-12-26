@@ -19,15 +19,6 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
 
         private readonly Lazy<IPropertyAssignments> _propertyAssignments;
 
-        /*
-        * @todo #103 60m/DEV Think about array assignment.
-         * It is not required right now, but to reuse this class when instantiation statement is used
-         * as a constructor argument or as an inline property assignment, it is necessary to support it.
-         *
-         * Like: new [] { some, thing }.
-         * Most likely it is necessary to search for new .. ( and after that in addition for new ].
-        */
-
         public InstantiationStatement(string codeStatement)
         {
             _codeStatement = codeStatement;
@@ -42,7 +33,16 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
             _arguments = new(
                 () =>
                 {
-                    var argumentsClosure = new LiteralAwareClosureSubstrings(_codeStatement, '(', ')');
+                    var argumentsClosure = new ClosureSubstrings(
+                        _codeStatement,
+                        new RoundBracketsClosure(),
+                        notAnalyzeIn: new LiteralsAndClosuresSubstrings(
+                            _codeStatement,
+                            new CurlyBracketsClosure(),
+                            new SquareBracketsClosure()
+                        )
+                    );
+
                     if (argumentsClosure.Any())
                     {
                         return new Args.Arguments(argumentsClosure.First().WithoutBorders().ToString());
@@ -57,7 +57,16 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
             _propertyAssignments = new(
                 () =>
                 {
-                    var propertiesClosure = new LiteralAwareClosureSubstrings(_codeStatement, '{', '}').ToArray();
+                    var propertiesClosure = new ClosureSubstrings(
+                        _codeStatement,
+                        new CurlyBracketsClosure(),
+                        notAnalyzeIn: new LiteralsAndClosuresSubstrings(
+                            _codeStatement,
+                            new SquareBracketsClosure(),
+                            new RoundBracketsClosure()
+                        )
+                    ).ToArray();
+
                     if (propertiesClosure.Any())
                     {
                         return new PropertyAssignments(propertiesClosure.First().WithoutBorders().ToString());
