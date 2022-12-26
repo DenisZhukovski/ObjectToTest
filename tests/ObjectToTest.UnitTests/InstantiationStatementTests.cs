@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
 using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 using Xunit;
@@ -43,18 +44,35 @@ namespace ObjectToTest.UnitTests
             /*
             * @todo #156 60m/DEV InstantiationStatement is no capable to recognize anonymous array
              * instantiation. Need to be fixed
+             *
+             * Note: probably that is expected. Syntax tree currently is an entity that helps formatting.
+             * It is not necessary to understand the type of anonymous object for formatting purposes.
             */
             new InstantiationStatement("new[] { 1, 2, 4, 5 }")
                 .Type.ToString()
-                .ClaimEqual(new[] {1,2, 4}.GetType().Name);
+                .ClaimEqual(new[] {1,2,4,5}.GetType().Name);
+        }
+
+        [Fact]
+        public void Success_AnonymousArrayType()
+        {
+            var arr = InstantiationStatement.Parse("new[] { 1, 2, 4, 5 }");
+            arr.ClaimIs<ParseSuccessful<IInstantiationStatement>>();
+
+            var instantiationStatement = ((ParseSuccessful<IInstantiationStatement>) arr).Value;
+
+            instantiationStatement.Type.ToString().ClaimEqual(string.Empty);
+            instantiationStatement.Arguments.ToString().ClaimEqual(string.Empty);
+            instantiationStatement.InlinePropertiesAssignment.Count().ClaimEqual(4);
         }
 
         [Fact]
         public void InstantiationShouldBeParsedCorrectly()
         {
-            var statement = new InstantiationStatement("new Foo(123, \"new Foo()\") {A = 5, B = \"new Foo()\"};");
+            var statement = new InstantiationStatement("new Foo(123, \"new Foo()\", new[] {1, 2, 3}) {A = 5, B = \"new Foo()\"};");
             statement.Type.ToString().ClaimEqual("Foo");
-            statement.Arguments.ToString().ClaimEqual("123, \"new Foo()\"");
+            statement.Arguments.ToString().ClaimEqual("123, \"new Foo()\", new[] {1, 2, 3}");
+            statement.Arguments.ElementAt(2).ToString().ClaimEqual("new[] {1, 2, 3}");
             statement.InlinePropertiesAssignment.ToString().ClaimEqual("A = 5, B = \"new Foo()\"");
             statement.InlinePropertiesAssignment.ElementAt(0).ToString().ClaimEqual("A = 5");
             statement.InlinePropertiesAssignment.ElementAt(1).ToString().ClaimEqual("B = \"new Foo()\"");

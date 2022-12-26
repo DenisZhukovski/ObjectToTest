@@ -17,6 +17,10 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
             _end = end;
         }
 
+        public LiteralAwareClosureSubstrings(string source, IClosure closure) : this(source, closure.Begin, closure.End)
+        {
+        }
+
         public IEnumerator<ISubstring> GetEnumerator()
         {
             return new ClosureSubstrings(
