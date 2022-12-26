@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ObjectToTest.CodeFormatting.Syntax;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
+using ObjectToTest.CodeFormatting.Syntax.Extensions;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -54,33 +55,23 @@ namespace ObjectToTest.UnitTests
                 .ClaimIsNot<IInstantiationStatement>();
         }
         
-        [Fact(Skip = "Need to be fixed in scope of puzzle")]
+        [Fact]
         public void SyntaxTreeHierarchyReport()
         {
-            /*
-             * @todo #:60m/ARCH SyntaxTree ToString should show the syntax hierarchy.
-             * Something similar to the example 'new TimeSpan(18, 17, 34, 24, 5)':
-             * - InstantiationStatement: TimeSpan
-             *   - Arguments: 5
-             *      - Argument: Int32(18)
-             *      - Argument: Int32(17)
-             *      - Argument: Int32(34)
-             *      - Argument: Int32(24)
-             *      - Argument: Int32(5)
-            */
             Assert.Equal(
                 new NewLineSeparatedString(
                     "- InstantiationStatement: TimeSpan",
-                    "  - Arguments: 5",
-                    "      - Argument: Int32(18)",
-                    "      - Argument: Int32(17)",
-                    "      - Argument: Int32(34)",
-                    "      - Argument: Int32(24)",
-                    "      - Argument: Int32(5)"
+                    "    - Arguments: 5",
+                    "        - Argument: Literal(18)",
+                    "        - Argument: Literal(17)",
+                    "        - Argument: Literal(34)",
+                    "        - Argument: Literal(24)",
+                    "        - Argument: Literal(5)",
+                    ""
                 ).ToString(),
                 new SyntaxTree(
                         "new TimeSpan(18, 17, 34, 24, 5)"
-                ).ToString(_output)
+                ).DumpHierarchy().Log(_output)
             );
         }
 
@@ -90,7 +81,7 @@ namespace ObjectToTest.UnitTests
             Assert.NotEmpty(
                 new SyntaxTree(
                 "new TimeSpan(18, 17, 34, 24, 5)"
-                ).ToString(_output)
+                ).DumpHierarchy().Log(_output)
             );  
         }
     }
