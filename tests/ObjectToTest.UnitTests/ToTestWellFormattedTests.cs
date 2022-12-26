@@ -33,7 +33,7 @@ namespace ObjectToTest.UnitTests
     /*
     * @todo #76 60m/DEV Implement rule: Inner properties should be from separate lines.
     */
-
+    
     /*
     * @todo #76 60m/DEV Implement rule: All arrays should be placed with proper formatting.
     */
@@ -73,7 +73,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicProperty
                 {
                     PropertyName = "Test"
-                }.ToTestWellFormatted().Log(_output)
+                }.ToTestWellFormatted(_output)
             );
         }
 
@@ -90,7 +90,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicIntProperty
                 {
                     PropertyName = 42
-                }.ToTestWellFormatted().Log(_output)
+                }.ToTestWellFormatted(_output)
             );
         }
 
@@ -109,7 +109,7 @@ namespace ObjectToTest.UnitTests
                 {
                     IntProperty = 42,
                     StringProperty = "Test"
-                }.ToTestWellFormatted().Log(_output)
+                }.ToTestWellFormatted(_output)
             );
         }
 
@@ -119,8 +119,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithOneParameterConstructorAndPublicReadProperty(42)",
                 new WithOneParameterConstructorAndPublicReadProperty(42)
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -129,7 +128,8 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithOneParamAndPrivateField(42)",
-                new WithOneParamAndPrivateField(42).ToTestWellFormatted().Log(_output)
+                new WithOneParamAndPrivateField(42)
+                        .ToTestWellFormatted(_output)
             );
         }
 
@@ -141,7 +141,7 @@ namespace ObjectToTest.UnitTests
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test"
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -158,7 +158,7 @@ namespace ObjectToTest.UnitTests
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -171,7 +171,8 @@ namespace ObjectToTest.UnitTests
                 "    new EmptyObject()",
                 ")"
                 ).ToString(),
-                new WithClassParam(new EmptyObject()).ToTestWellFormatted().Log(_output)
+                new WithClassParam(new EmptyObject())
+                        .ToTestWellFormatted(_output)
             );
         }
 
@@ -188,7 +189,7 @@ namespace ObjectToTest.UnitTests
                 new WithClassAndIntParams(
                     42,
                     new EmptyObject()
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -198,8 +199,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new TimeSpan(18, 17, 34, 24, 5)",
                 new TimeSpan(18, 17, 34, 24, 5)
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -216,7 +216,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithClassParamThatDependsOnClass(
                     new WithClassParam(new EmptyObject())
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -243,7 +243,7 @@ namespace ObjectToTest.UnitTests
                         new EmptyObject()
                     ),
                     42
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -263,7 +263,7 @@ namespace ObjectToTest.UnitTests
                 new WithClassParamWithProp(
                     new WithOnePublicProperty { PropertyName = "Test" },
                     42
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -272,7 +272,8 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
-                new WithGenericArgument<IPrice>().ToTestWellFormatted().Log(_output)
+                new WithGenericArgument<IPrice>()
+                        .ToTestWellFormatted(_output)
             );
         }
 
@@ -288,8 +289,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new With2GenericArguments<IPrice, IUser>(new Price(10))
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -299,8 +299,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new With3GenericArguments<int,decimal,string>()",
                 new With3GenericArguments<int, decimal, string>()
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -314,8 +313,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithStructArgument(UnityEngine.Vector3.forward)
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -325,8 +323,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithEnumArgument(FlaggedEnum.Advanced)",
                 new WithEnumArgument(FlaggedEnum.Advanced)
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -340,8 +337,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithFuncArgument(() => 0)
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             ); 
         }
         
@@ -355,14 +351,15 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithActionArgument((pos) => { })
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
         public void ArraysShouldBeFormatted_CtorWithIEnumerableInt()
         {
+            
+            
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithIEnumerableInt(",
@@ -376,8 +373,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithIEnumerableInt(new[] { 1, 2, 4, 5 })
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -397,8 +393,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithListArgument(new List<int> { 1, 2, 4, 5 })
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -412,8 +407,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithListArgument(new List<int>())
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
 
@@ -433,7 +427,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithDictionaryArgument(
                     new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -448,7 +442,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithDictionaryArgument(
                     new Dictionary<int, string>()
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -465,7 +459,7 @@ namespace ObjectToTest.UnitTests
                 new Foo(
                     new Price(10),
                     new User("User Name")
-                ).ToTestWellFormatted().Log(_output)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -491,7 +485,7 @@ namespace ObjectToTest.UnitTests
                 "    }",
                 ")"
                 ).ToString(),
-                withUser.ToTestWellFormatted().Log(_output)
+                withUser.ToTestWellFormatted(_output)
             );
         }
 
@@ -509,10 +503,9 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new SharedSingletons(
-                        new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
-                        new WithSingletonArgument(SingletonClass.Instance)
-                    ).ToTestWellFormatted()
-                    .Log(_output)
+                    new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
+                    new WithSingletonArgument(SingletonClass.Instance)
+                ).ToTestWellFormatted(_output)
             );
         }
 
@@ -527,8 +520,7 @@ namespace ObjectToTest.UnitTests
                     ")"
                 ).ToString(),
                 new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
         
@@ -544,8 +536,7 @@ namespace ObjectToTest.UnitTests
                     string.Empty
                 ).ToString(),
                 new IncorrectArgumentsClass(1, 2)
-                    .ToTestWellFormatted()
-                    .Log(_output)
+                    .ToTestWellFormatted(_output)
             );
         }
     }

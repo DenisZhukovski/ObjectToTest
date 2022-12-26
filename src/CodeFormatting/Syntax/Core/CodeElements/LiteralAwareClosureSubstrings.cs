@@ -19,7 +19,12 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
 
         public IEnumerator<ISubstring> GetEnumerator()
         {
-            return new ClosureSubstrings(_source, _begin, _end, notAnalyzeIn: new LiteralSubstrings(_source)).GetEnumerator();
+            return new ClosureSubstrings(
+                _source,
+                _begin,
+                _end,
+                notAnalyzeIn: new LiteralSubstrings(_source)
+            ).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
