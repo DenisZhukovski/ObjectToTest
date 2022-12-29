@@ -23,13 +23,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
         {
             _codeStatement = codeStatement;
 
-            _type = new(
-                () =>
-                    new RawTypeDefinition(
-                        new SubstringBetween(codeStatement, "new ", "(").ToString()
-                    )
-            );
-
+            _type = new(() => new InstantiationTypeFromCode(codeStatement));
             _arguments = new(
                 () =>
                 {

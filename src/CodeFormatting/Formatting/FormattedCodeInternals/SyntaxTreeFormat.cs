@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 using ObjectToTest.CodeFormatting.Formatting.Core;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
@@ -9,14 +9,30 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
     {
         private readonly Format _format = new();
 
-        public SyntaxTreeFormat()
+        public SyntaxTreeFormat(params IFormattingRule[] rules)
+            : this((IEnumerable<IFormattingRule>)rules)
+        {
+        }
+        
+        public SyntaxTreeFormat(IEnumerable<IFormattingRule> rules)
         {
             _format.ForArrayOf<ICodeStatement>(x => string.Join(";", x));
-            _format.For<IInstantiationStatement>("new {0}{1}{2}", x => new Args(x.Type, x.Arguments, x.InlinePropertiesAssignment));
+            _format.For<IInstantiationStatement>(
+                "new {0}{1}{2}", 
+                x => new Args(x.Type, x.Arguments, x.InlinePropertiesAssignment)
+            );
             _format.For<IUnknownCodeStatement>("{x}", x => new Args(x.ToString()));
-            _format.ForArrayOf<IArgument>(x => new Parts("(", string.Join(",", x), ")").ToString());
+            _format.ForArrayOf<IArgument>(
+                x => new Parts(
+                    "(", string.Join(",", x), ")"
+                ).ToString()
+            );
             _format.For<IArgument>("{0}", x => new Args(x.ToString().Trim()));
             _format.For<ITypeDefinition>("{0}", x => new Args(x.ToString().Trim()));
+            foreach (var rule in rules)
+            {
+                rule.ApplyTo(_format);
+            }
         }
 
         public string ApplyTo(object item)

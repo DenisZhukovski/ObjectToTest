@@ -8,7 +8,9 @@ namespace ObjectToTest.CodeFormatting.Formatting
         {
             definition.OverrideForArrayOf<IArgument>(
                 x => x.ToString().Length < 80, 
-                x => new Parts("(", string.Join(", ", x), ")").ToString()
+                x => new Parts(
+                    "(", string.Join(", ", x), ")"
+                ).ToString()
             );
         }
     }

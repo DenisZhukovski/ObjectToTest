@@ -119,9 +119,8 @@ namespace ObjectToTest.CodeFormatting.Formatting
                 var conditionalFormat = _conditionalFormats.FirstOrDefault(x => x?.IsApplicable(arg) ?? false);
                 if (conditionalFormat != null)
                 {
-                    var chainOfTransformations = _conditionalTransformations.Where(x => x?.IsApplicable(arg) ?? false);
                     var (format, tabs) = conditionalFormat.Format.Format(arg, parentTabs);
-
+                    var chainOfTransformations = _conditionalTransformations.Where(x => x?.IsApplicable(arg) ?? false);
                     foreach (var transformationAndCondition in chainOfTransformations)
                     {
                         (format, tabs) = transformationAndCondition.Format(format, tabs);
@@ -129,10 +128,13 @@ namespace ObjectToTest.CodeFormatting.Formatting
 
                     var result = new FormattedString(
                         format,
-                        conditionalFormat.Format.Args(arg).Select(x => Resolve(x, tabs)).ToArray()
+                        conditionalFormat.Format
+                            .Args(arg)
+                            .Select(x => Resolve(x, tabs))
+                            .ToArray()
                     );
 
-                    results.Add(new DataAndString()
+                    results.Add(new DataAndString
                     {
                         Data = arg,
                         String = result.ToString()
@@ -160,6 +162,11 @@ namespace ObjectToTest.CodeFormatting.Formatting
             public IObjectWithFormat? Format { get; set; }
 
             public Func<object, bool>? IsApplicable { get; set; }
+
+            public override string ToString()
+            {
+                return Format?.ToString() ?? "No Format";
+            }
         }
 
         private sealed record TransformationAndCondition

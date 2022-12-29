@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ObjectToTest.CodeFormatting.Formatting.Core;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
 using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
@@ -11,13 +12,17 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void Success()
         {
-            InstantiationStatement.Parse("new Foo()").ClaimIs<ParseSuccessful>();
+            InstantiationStatement
+                .Parse("new Foo()")
+                .ClaimIs<ParseSuccessful>();
         }
 
         [Fact]
         public void Fail_Literal()
         {
-            InstantiationStatement.Parse("\"new Foo()\"").ClaimIs<ParseFail>();
+            InstantiationStatement
+                .Parse("\"new Foo()\"")
+                .ClaimIs<ParseFail>();
         }
 
         [Fact]
@@ -38,19 +43,20 @@ namespace ObjectToTest.UnitTests
             InstantiationStatement.Parse("=new Foo.Foo()").ClaimIs<ParseSuccessful>();
         }
         
-        [Fact(Skip = "Need to be fixed in scope of puzzle #156")]
+        [Fact]
         public void AnonymousArrayType()
         {
-            /*
-            * @todo #156 60m/DEV InstantiationStatement is no capable to recognize anonymous array
-             * instantiation. Need to be fixed
-             *
-             * Note: probably that is expected. Syntax tree currently is an entity that helps formatting.
-             * It is not necessary to understand the type of anonymous object for formatting purposes.
-            */
             new InstantiationStatement("new[] { 1, 2, 4, 5 }")
                 .Type.ToString()
-                .ClaimEqual(new[] {1,2,4,5}.GetType().Name);
+                .ClaimEqual("[]");
+        }
+        
+        [Fact]
+        public void NoTypeDefined()
+        {
+            new InstantiationStatement("foo.new()")
+                .Type.ToString()
+                .ClaimEqual(string.Empty);
         }
 
         [Fact]
@@ -61,7 +67,7 @@ namespace ObjectToTest.UnitTests
 
             var instantiationStatement = ((ParseSuccessful<IInstantiationStatement>) arr).Value;
 
-            instantiationStatement.Type.ToString().ClaimEqual(string.Empty);
+            instantiationStatement.Type.ToString().ClaimEqual("[]");
             instantiationStatement.Arguments.ToString().ClaimEqual(string.Empty);
             instantiationStatement.InlinePropertiesAssignment.Count().ClaimEqual(4);
         }

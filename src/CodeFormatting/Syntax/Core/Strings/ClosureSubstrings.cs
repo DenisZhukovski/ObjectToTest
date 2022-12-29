@@ -12,16 +12,20 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
         private readonly char _end;
         private readonly IEnumerable<ISubstring> _notAnalyzeIn;
 
+        public ClosureSubstrings(
+            string source, 
+            IClosure closure, 
+            IEnumerable<ISubstring> notAnalyzeIn) 
+            : this(source, closure.Begin, closure.End, notAnalyzeIn)
+        {
+        }
+        
         public ClosureSubstrings(string source, char begin, char end, IEnumerable<ISubstring> notAnalyzeIn)
         {
             _source = source;
             _begin = begin;
             _end = end;
             _notAnalyzeIn = notAnalyzeIn;
-        }
-
-        public ClosureSubstrings(string source, IClosure closure, IEnumerable<ISubstring> notAnalyzeIn) : this(source, closure.Begin, closure.End, notAnalyzeIn)
-        {
         }
 
         public IEnumerator<ISubstring> GetEnumerator()
@@ -40,7 +44,6 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
                 if (_source[index] == _begin)
                 {
                     deep++;
-
                     if (deep == 0)
                     {
                         start = index;
@@ -52,7 +55,6 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
                     if (deep == 0)
                     {
                         yield return new Substring(_source, start, index);
-
                         start = -1;
                     }
 

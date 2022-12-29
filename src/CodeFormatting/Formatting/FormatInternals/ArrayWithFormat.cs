@@ -20,7 +20,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
             {
                 var result = new List<int>();
                 var i = 0;
-                foreach (var expecteItem in expected)
+                foreach (var expectedItem in expected)
                 {
                     result.Add(i);
                     i++;
@@ -36,18 +36,23 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
 
         public object[] Args(object item)
         {
-            if (item is IEnumerable expected)
+            if (item is IEnumerable expectedItems)
             {
                 var result = new List<object>();
-                foreach (var expecteItem in expected)
+                foreach (var expectedItem in expectedItems)
                 {
-                    result.Add(expecteItem);
+                    result.Add(expectedItem);
                 }
 
                 return result.ToArray();
             }
 
-            return new object[0];
+            return Array.Empty<object>();
+        }
+
+        public override string ToString()
+        {
+            return $"ArrayWithFormat<{typeof(T).Name}>";
         }
     }
 }
