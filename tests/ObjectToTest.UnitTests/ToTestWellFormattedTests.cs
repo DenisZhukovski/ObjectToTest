@@ -283,9 +283,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new With2GenericArguments<IPrice,IUser>(",
-                "    new Price(",
-                "        10",
-                "    )",
+                "    new Price(10)",
                 ")"
                 ).ToString(),
                 new With2GenericArguments<IPrice, IUser>(new Price(10))
@@ -356,14 +354,13 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+
         public void ArraysShouldBeFormatted_CtorWithIEnumerableInt()
         {
-            
-            
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithIEnumerableInt(",
-                "    new[] ",
+                "    new []",
                 "    {",
                 "        1,",
                 "        2,",
@@ -372,12 +369,14 @@ namespace ObjectToTest.UnitTests
                 "    }",
                 ")"
                 ).ToString(),
-                new WithIEnumerableInt(new[] { 1, 2, 4, 5 })
-                    .ToTestWellFormatted(_output)
+                new WithIEnumerableInt(
+                    new [] { 1, 2, 4, 5 }
+                ).ToTestWellFormatted(_output)
             );
         }
 
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+
         public void ArraysShouldBeFormatted_CtorWithListInt()
         {
             Assert.Equal(
