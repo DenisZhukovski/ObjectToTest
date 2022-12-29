@@ -7,25 +7,12 @@ namespace ObjectToTest.CodeFormatting.Formatting
     public class FormattedCode
     {
         private readonly ISyntaxTree _tree;
-        private readonly IFormattingRule[] _rules;
         private readonly Lazy<IFormat> _format;
 
         public FormattedCode(ISyntaxTree tree, params IFormattingRule[] rules)
         {
             _tree = tree;
-            _rules = rules;
-            _format = new(
-                () =>
-                {
-                    var format = new SyntaxTreeFormat();
-                    foreach (var rule in _rules)
-                    {
-                        rule.ApplyTo(format);
-                    }
-
-                    return format;
-                }
-            );
+            _format = new(() => new SyntaxTreeFormat(rules));
         }
 
         public override string ToString()
