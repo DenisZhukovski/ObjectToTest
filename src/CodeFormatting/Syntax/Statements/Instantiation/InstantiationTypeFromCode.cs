@@ -3,11 +3,11 @@ using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
 {
-    public class RawTypeDefinition : ITypeDefinition
+    public class InstantiationTypeFromCode : ITypeDefinition
     {
         private readonly ISubstring _typeAsString;
 
-        public RawTypeDefinition(string code)
+        public InstantiationTypeFromCode(string code)
             : this(
                 new FirstOf(
                     new SubstringBetween(code, "new ", "("),
@@ -17,7 +17,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
         {
         }
 
-        public RawTypeDefinition(ISubstring typeAsString)
+        public InstantiationTypeFromCode(ISubstring typeAsString)
         {
             _typeAsString = typeAsString;
         }

@@ -50,6 +50,14 @@ namespace ObjectToTest.UnitTests
                 .Type.ToString()
                 .ClaimEqual("[]");
         }
+        
+        [Fact]
+        public void NoTypeDefined()
+        {
+            new InstantiationStatement("foo.new()")
+                .Type.ToString()
+                .ClaimEqual(string.Empty);
+        }
 
         [Fact]
         public void Success_AnonymousArrayType()
