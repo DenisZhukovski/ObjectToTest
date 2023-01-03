@@ -43,7 +43,7 @@ steps:
     organization: 'deniszhukovski'
     scannerMode: 'MSBuild'
     projectKey: 'DenisZhukovski_ObjectToTest'
-    projectName: 'MediaPrint'
+    projectName: 'ObjectToTest'
     extraProperties: |
         sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)\tests\ObjectToTest.UnitTests\coverage.opencover.xml
         sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)\*.trx
