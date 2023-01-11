@@ -5,7 +5,7 @@ using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
 {
-    public class SyntaxTreeFormat : IFormat, ITransformationDefinition
+    public class SyntaxTreeFormat : IFormat
     {
         private readonly Format _format = new();
 
@@ -40,34 +40,24 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
             return _format.ApplyTo(item);
         }
 
-        public void OverrideForArrayOf<T>(Func<object, bool> condition, Func<string[], string> format)
-        {
-            _format.OverrideForArrayOf<T>(condition, format);
+        public void Add(INodeFormat format)
+        { 
+            _format.Add(format);
         }
 
-        public void OverrideForArrayOf<T>(Func<string[], string> format)
+        public void AddAsFirst(INodeFormat format)
         {
-            _format.OverrideForArrayOf<T>(format);
+            _format.AddAsFirst(format);
         }
 
-        public void OverrideForArrayOf<T>(Func<object, bool> condition, Func<string[], Tabs, (string, Tabs)> format)
+        public void AddAsFirst(INodeTransformation transformation)
         {
-            _format.OverrideForArrayOf<T>(condition, format);
+            _format.AddAsFirst(transformation);
         }
 
-        public void If(Func<object, bool> condition, IObjectWithFormat format)
+        public void Add(INodeTransformation transformation)
         {
-            _format.If(condition, format);
-        }
-
-        public void If(Func<object, bool> isApplicable, Func<string, string> transform)
-        {
-            _format.If(isApplicable, transform);
-        }
-
-        public void If(Func<object, bool> isApplicable, Func<string, Tabs, (string, Tabs)> transform)
-        {
-            _format.If(isApplicable, transform);
+            _format.Add(transformation);
         }
     }
 }

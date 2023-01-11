@@ -6,11 +6,12 @@ namespace ObjectToTest.CodeFormatting.Formatting
 {
     public class ArgumentsThatContainsInstantiationShouldBeEachFromSeparateLine : IFormattingRule
     {
-        public void ApplyTo(ITransformationDefinition definition)
+        public void ApplyTo(IFormat definition)
         {
             definition.OverrideForArrayOf<IArgument>(
                 x => x is IEnumerable<IArgument> arguments && arguments.Any(x => x is IInstantiationStatement),
-                (arguments, tabs) => new FormatWithSameLineOpenBracketAndEachArgFromNewLine(arguments, tabs).Format()
+                (arguments, tabs) => new FormatWithSameLineOpenBracketAndEachArgFromNewLine(arguments, tabs).Format(),
+                name: nameof(ArgumentsThatContainsInstantiationShouldBeEachFromSeparateLine)
             );
         }
     }
