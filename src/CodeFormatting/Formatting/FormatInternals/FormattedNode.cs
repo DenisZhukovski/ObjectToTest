@@ -1,27 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest.CodeFormatting.Formatting.Core
 {
     public class FormattedNode
     {
-        private readonly Item _item;
+        private readonly FormatArgument _argument;
         private readonly Tabs _parentTabs;
-        private readonly IFormatLogger _logger;
+        private readonly ILogger _logger;
         private readonly NodeFormatResults _results;
         private readonly List<INodeFormat> _formats;
         private readonly List<INodeTransformation> _transformations;
 
         public FormattedNode(
-            Item item,
+            FormatArgument argument,
             Tabs parentTabs,
-            IFormatLogger logger,
+            ILogger logger,
             NodeFormatResults results,
             List<INodeFormat> formats,
             List<INodeTransformation> transformations
         )
         {
-            _item = item;
+            _argument = argument;
             _parentTabs = parentTabs;
             _logger = logger;
             _results = results;
@@ -33,7 +34,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
             object item,
             List<INodeFormat> formats,
             List<INodeTransformation> transformations,
-            IFormatLogger logger) : this(new Item(item), new Tabs(0), logger, new NodeFormatResults(), formats, transformations)
+            ILogger logger) : this(new FormatArgument(item), new Tabs(0), logger, new NodeFormatResults(), formats, transformations)
         {
         }
 
@@ -41,40 +42,44 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
         {
             get
             {
-                _logger.WriteLine($"{new Tabs(_item.Depth)}{_item}: Processing...");
+                var logger = new LoggerWithIndentation(_logger, new Tabs(_argument.Depth));
 
-                var result = new NodeFormatResult(_item.Value, _results);
+                logger.WriteLine($"{_argument}: Processing...");
+
+                logger.Tab();
+
+                var result = new NodeFormatResult(_argument.Value, _results);
 
                 if (result.AlreadyCalculated)
                 {
-                    _logger.WriteLine($"{new Tabs(_item.Depth + 1)}Already processed.");
+                    logger.WriteLine($"Already processed.");
 
                     return result.String;
                 }
 
-                var format = new ApplicableFormat(_item.Value, _formats);
+                var format = new ApplicableFormat(_argument.Value, _formats);
 
                 if (format.IsAvailable)
                 {
-                    var transformations = new ApplicableTransformations(_item.Value, _transformations);
+                    var transformations = new ApplicableTransformations(_argument.Value, _transformations);
 
-                    var (formatTemplate, tabs) = format.ToApply.Apply(_item.Value, _parentTabs);
+                    var (formatTemplate, tabs) = format.ToApply.Apply(_argument.Value, _parentTabs);
 
-                    _logger.WriteLine($"{new Tabs(_item.Depth + 1)}Format [{new FormatName(format.ToApply)}]-[" + new NewLineAsN(formatTemplate) + "] applied.");
+                    logger.WriteLine($"Format [{new FormatName(format.ToApply)}]-[" + new NewLineAsN(formatTemplate) + "] applied.");
 
                     foreach (var nodeFormat in format.Ignored)
                     {
-                        _logger.WriteLine($"{new Tabs(_item.Depth + 1)}Format [{new FormatName(nodeFormat)}] skipped - overriden.");
+                        logger.WriteLine($"Format [{new FormatName(nodeFormat)}] SKIPPED - overriden.");
                     }
 
                     foreach (var transformationAndCondition in transformations)
                     {
                         (formatTemplate, tabs) = transformationAndCondition.Apply(formatTemplate, tabs);
 
-                        _logger.WriteLine($"{new Tabs(_item.Depth + 1)}Transformation [{new TransformationName(transformationAndCondition)}]-[" + new NewLineAsN(formatTemplate) + "] applied.");
+                        logger.WriteLine($"Transformation [{new TransformationName(transformationAndCondition)}]-[" + new NewLineAsN(formatTemplate) + "] applied.");
                     }
 
-                    var formattedArguments = format.ToApply.Args(_item.Value).Select((x, index) => ChildNode(x, tabs, index).String).ToArray();
+                    var formattedArguments = format.ToApply.Args(_argument.Value).Select((x, index) => ChildNode(x, tabs, index).String).ToArray();
 
                     return new FormattedString(
                         formatTemplate,
@@ -82,9 +87,9 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
                     ).ToString();
                 }
 
-                result.String = _item.Value.ToString();
+                result.String = _argument.Value.ToString();
 
-                _logger.WriteLine($"{new Tabs(_item.Depth + 1)}{_item.Value.GetType().Name}: format not found, use ToString()");
+                logger.WriteLine($"{_argument.Value.GetType().Name}: format not found, use ToString()");
 
                 return result.String;
             }
@@ -93,7 +98,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
         public FormattedNode ChildNode(object arg, Tabs tabs, int argIndex)
         {
             return new FormattedNode(
-                new Item(arg, _item.Depth + 1, $"{{{argIndex}}}"),
+                new FormatArgument(arg, _argument.Depth + 1, $"{{{argIndex}}}"),
                 tabs,
                 _logger,
                 _results,

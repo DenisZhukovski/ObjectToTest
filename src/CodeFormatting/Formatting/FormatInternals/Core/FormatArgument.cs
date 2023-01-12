@@ -1,14 +1,14 @@
 ﻿namespace ObjectToTest.CodeFormatting.Formatting.Core
 {
-    public class Item
+    public class FormatArgument
     {
         private readonly string _description;
 
-        public Item(object value) : this(value, 1, string.Empty)
+        public FormatArgument(object value) : this(value, 1, string.Empty)
         {
         }
 
-        public Item(object value, int depth, string description)
+        public FormatArgument(object value, int depth, string description)
         {
             Value = value;
             Depth = depth;

@@ -41,7 +41,7 @@ namespace ObjectToTest.UnitTests
                 }
             };
             
-            var f = new Format(new FormatLoggerForTests(_output));
+            var f = new Format(new LoggerForTests(_output));
             f.For<A>("{0} {1}", x => new Args(x.I, x.Inner), "Base A format");
             f.For<B>("({0}) {1}", x => new Args(x.J, x.Arr), "Base B format");
             f.ForArrayOf<C>(x => string.Join(", ", x), "Base C[] format");
@@ -77,7 +77,7 @@ namespace ObjectToTest.UnitTests
                 }
             };
             
-            var f = new Format(new FormatLoggerForTests(_output));
+            var f = new Format(new LoggerForTests(_output));
             f.For<A>("{0}{1}", x => new Args(x.I, x.Inner), "Base A format");
             f.For<B>("{0}{1}", x => new Args(x.J, x.Arr), "Base B format");
             f.ForArrayOf<C>(x => string.Join(Environment.NewLine, x), "Base C[] format");

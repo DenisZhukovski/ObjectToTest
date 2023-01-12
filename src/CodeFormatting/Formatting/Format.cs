@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ObjectToTest.CodeFormatting.Formatting.Core;
+using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest.CodeFormatting.Formatting
 {
@@ -11,9 +12,9 @@ namespace ObjectToTest.CodeFormatting.Formatting
     {
         private readonly List<INodeFormat> _conditionalFormats = new();
         private readonly List<INodeTransformation> _conditionalTransformations = new();
-        private readonly IFormatLogger _logger;
+        private readonly ILogger _logger;
 
-        public Format(IFormatLogger? logger = null)
+        public Format(ILogger? logger = null)
         {
             _logger = logger ?? new SilentLogger();
         }
