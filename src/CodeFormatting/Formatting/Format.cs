@@ -1,186 +1,54 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ObjectToTest.CodeFormatting.Formatting.Core;
+using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest.CodeFormatting.Formatting
 {
-    public class Format : IFormat, IExternalToStringDefinition, ITransformationDefinition
+    public class Format : IFormat
     {
-        /*
-        * @todo #125 60m/DEV Use Insert 0 instead of add.
-         *
-         * Logic should be - latest format is (most likely) less abstract and applicable for shorter range of entities, so it should be analyzed first.
-        */
+        private readonly List<INodeFormat> _conditionalFormats = new();
+        private readonly List<INodeTransformation> _conditionalTransformations = new();
+        private readonly ILogger _logger;
 
-        /*
-        * @todo #125 60m/DEV Rename Override to just ForArrayOf.
-         *
-         * ...because there should be no knowledge about internals. Pure declarative style.
-         *
-        */
-
-        private readonly List<FormatAndCondition> _conditionalFormats = new();
-        private readonly List<TransformationAndCondition> _conditionalTransformations = new();
-
-        public void For<T>(string format, Func<T, Args> args)
+        public Format(ILogger? logger = null)
         {
-            _conditionalFormats.Add(new FormatAndCondition()
-            {
-                IsApplicable = x => x is T,
-                Format = new ObjectWithFormat<T>(format, args)
-            });
+            _logger = logger ?? new SilentLogger();
         }
 
-        public void ForArrayOf<T>(Func<string[], string> format)
+        public void Add(INodeFormat format)
         {
-            _conditionalFormats.Add(new FormatAndCondition
-            {
-                IsApplicable = x => x is IEnumerable<T>,
-                Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
-            });
+            _conditionalFormats.Add(format);
         }
 
-        public void OverrideForArrayOf<T>(Func<object, bool> condition, Func<string[], string> format)
+        public void AddAsFirst(INodeFormat format)
         {
-            _conditionalFormats.Insert(
-                0,
-                new FormatAndCondition()
-                {
-                    IsApplicable = x => x is IEnumerable<T> && condition(x),
-                    Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
-                }
-            );
+            _conditionalFormats.Insert(0, format);
         }
 
-        public void OverrideForArrayOf<T>(Func<object, bool> condition, Func<string[], Tabs, (string, Tabs)> format)
+        public void AddAsFirst(INodeTransformation transformation)
         {
-            _conditionalFormats.Insert(
-                0,
-                new FormatAndCondition()
-                {
-                    IsApplicable = x => x is IEnumerable<T> && condition(x),
-                    Format = new ArrayWithFormat<T[]>(format)
-                }
-            );
+            _conditionalTransformations.Insert(0, transformation);
         }
 
-        public void OverrideForArrayOf<T>(Func<string[], string> format)
+        public void Add(INodeTransformation transformation)
         {
-            _conditionalFormats.Insert(
-                0,
-                new FormatAndCondition()
-                {
-                    IsApplicable = x => x is IEnumerable<T>,
-                    Format = new ArrayWithFormat<T[]>((x, tabs) => (format(x), tabs))
-                }
-            );
-        }
-
-        public void If(Func<object, bool> condition, IObjectWithFormat format)
-        {
-            _conditionalFormats.Add(new FormatAndCondition()
-            {
-                IsApplicable = condition,
-                Format = format
-            });
-        }
-
-        public void If(Func<object, bool> isApplicable, Func<string, string> transform)
-        {
-            _conditionalTransformations.Add(new TransformationAndCondition()
-            {
-                IsApplicable = isApplicable,
-                Format = (x, parentTabs) => (transform(x), parentTabs)
-            });
-        }
-
-        public void If(Func<object, bool> isApplicable, Func<string, Tabs, (string, Tabs)> transform)
-        {
-            _conditionalTransformations.Add(new TransformationAndCondition()
-            {
-                IsApplicable = isApplicable,
-                Format = transform
-            });
+            _conditionalTransformations.Add(transformation);
         }
 
         public string ApplyTo(object item)
         {
-            var results = new List<DataAndString>();
-            return Resolve(item, new Tabs(0));
-            string Resolve(object arg, Tabs parentTabs)
-            {
-                var potentialResult = results.FirstOrDefault(x => ReferenceEquals(x.Data, arg));
-                if (potentialResult != null)
-                {
-                    return potentialResult.String;
-                }
+            _logger.WriteLine($"{item.GetType().Name}: begin formatting");
+            
+            var result = new FormattedNode(item, _conditionalFormats, _conditionalTransformations, _logger).String;
 
-                var conditionalFormat = _conditionalFormats.FirstOrDefault(x => x?.IsApplicable(arg) ?? false);
-                if (conditionalFormat != null)
-                {
-                    var (format, tabs) = conditionalFormat.Format.Format(arg, parentTabs);
-                    var chainOfTransformations = _conditionalTransformations.Where(x => x?.IsApplicable(arg) ?? false);
-                    foreach (var transformationAndCondition in chainOfTransformations)
-                    {
-                        (format, tabs) = transformationAndCondition.Format(format, tabs);
-                    }
+            _logger.WriteLine($"{item.GetType().Name}: end formatting");
 
-                    var result = new FormattedString(
-                        format,
-                        conditionalFormat.Format
-                            .Args(arg)
-                            .Select(x => Resolve(x, tabs))
-                            .ToArray()
-                    );
-
-                    results.Add(new DataAndString
-                    {
-                        Data = arg,
-                        String = result.ToString()
-                    });
-
-                    return result.ToString();
-                }
-
-                {
-                    var result = arg.ToString();
-
-                    results.Add(new DataAndString()
-                    {
-                        Data = arg,
-                        String = result.ToString()
-                    });
-
-                    return result;
-                }
-            }
-        }
-
-        private sealed record FormatAndCondition
-        {
-            public IObjectWithFormat? Format { get; set; }
-
-            public Func<object, bool>? IsApplicable { get; set; }
-
-            public override string ToString()
-            {
-                return Format?.ToString() ?? "No Format";
-            }
-        }
-
-        private sealed record TransformationAndCondition
-        {
-            public Func<string, Tabs, (string, Tabs)>? Format { get; set; }
-
-            public Func<object, bool>? IsApplicable { get; set; }
-        }
-
-        private sealed record DataAndString
-        {
-            public object? Data { get; set; }
-
-            public string String { get; set; }
+            return result;
         }
     }
+
 }

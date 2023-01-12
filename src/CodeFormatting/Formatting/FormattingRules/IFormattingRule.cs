@@ -2,6 +2,6 @@
 {
     public interface IFormattingRule
     {
-        void ApplyTo(ITransformationDefinition definition);
+        void ApplyTo(IFormat definition);
     }
 }

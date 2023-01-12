@@ -5,11 +5,12 @@ namespace ObjectToTest.CodeFormatting.Formatting
 {
     public class InlinePropertiesAssignmentsShouldBeEachFromSeparateLine : IFormattingRule
     {
-        public void ApplyTo(ITransformationDefinition definition)
+        public void ApplyTo(IFormat definition)
         {
             definition.OverrideForArrayOf<IAssignmentPart>(
                 x => x is PropertyAssignments,
-                (arguments, tabs) => new FormatWithNewLineOpenCurlyBracketAndEachArgFromNewLine(arguments, tabs).Format()
+                (arguments, tabs) => new FormatWithNewLineOpenCurlyBracketAndEachArgFromNewLine(arguments, tabs).Format(),
+                nameof(InlinePropertiesAssignmentsShouldBeEachFromSeparateLine)
             );
         }
     }
