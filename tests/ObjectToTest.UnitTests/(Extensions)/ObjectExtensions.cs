@@ -25,5 +25,7 @@ namespace ObjectToTest.UnitTests
         {
             return item.ToString().Log(output);
         }
+
+        public static T CastTo<T>(this object item) => (T) item;
     }
 }

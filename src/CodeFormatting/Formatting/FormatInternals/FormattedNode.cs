@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ObjectToTest.CodeFormatting.Formatting.FormatInternals.Core;
 using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest.CodeFormatting.Formatting.Core

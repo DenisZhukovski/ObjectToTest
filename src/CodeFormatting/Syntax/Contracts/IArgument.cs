@@ -7,4 +7,9 @@
     public interface IArgument
     {
     }
+
+    public interface ILiteral : IArgument
+    {
+
+    }
 }
