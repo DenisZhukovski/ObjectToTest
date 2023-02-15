@@ -2,7 +2,7 @@
 
 namespace ObjectToTest.CodeFormatting.Syntax.Contracts
 {
-    public interface IPropertyAssignments : IEnumerable<IAssignmentPart>
+    public interface IInlineAssignments : IEnumerable<ICodeStatement>
     {
     }
 }

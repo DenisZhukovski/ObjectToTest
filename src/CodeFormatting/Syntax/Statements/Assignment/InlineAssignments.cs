@@ -8,12 +8,12 @@ using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {
-    public class PropertyAssignments : IPropertyAssignments
+    public class InlineAssignments : IInlineAssignments
     {
         private readonly string _source;
         private readonly Lazy<PossibleAssignments> _possibleAssignments = new(() => new());
 
-        public PropertyAssignments(string source)
+        public InlineAssignments(string source)
         {
             _source = source;
         }
@@ -23,7 +23,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
             return _source;
         }
 
-        public IEnumerator<IAssignmentPart> GetEnumerator()
+        public IEnumerator<ICodeStatement> GetEnumerator()
         {
             foreach (var characterSeparatedSubstring in new CharacterSeparatedSubstrings(_source, ',', notAnalyzeIn: new LiteralsAndClosuresSubstrings(_source)))
             {
