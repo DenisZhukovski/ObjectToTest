@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ObjectToTest.CodeFormatting.Formatting.FormatInternals.Core;
 using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest.CodeFormatting.Formatting.Core
@@ -44,7 +45,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
             {
                 var logger = new LoggerWithIndentation(_logger, new Tabs(_argument.Depth));
 
-                logger.WriteLine($"{_argument}: Processing...");
+                logger.WriteLine($"{new NewLineAsN(_argument.ToString())}: Processing...");
 
                 logger.Tab();
 

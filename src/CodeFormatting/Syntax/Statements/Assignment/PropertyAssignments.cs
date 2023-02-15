@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
+using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {

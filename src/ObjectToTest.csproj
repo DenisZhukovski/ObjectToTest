@@ -35,5 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CodeFormatting\Formatting\FormattedCodeInternals\" />
+    <Folder Include="CodeFormatting\Syntax\Dump\" />
   </ItemGroup>
 </Project>
