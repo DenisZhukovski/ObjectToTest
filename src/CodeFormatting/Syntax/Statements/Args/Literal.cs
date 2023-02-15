@@ -5,7 +5,7 @@ using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Args
 {
-    public class Literal : IArgument
+    public class Literal : ILiteral
     {
         private readonly string _codeStatement;
 
@@ -20,7 +20,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Args
 
             if (isInstantiation)
             {
-                return new ParseSuccessful<IArgument>(new Literal(codeStatement));
+                return new ParseSuccessful<ILiteral>(new Literal(codeStatement));
             }
 
             return new ParseFail();

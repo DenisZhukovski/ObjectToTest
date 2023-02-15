@@ -17,7 +17,7 @@ namespace ObjectToTest.CodeFormatting.Formatting
         public (string, Tabs) Format()
         {
             var format = new Parts(
-                Environment.NewLine + "{{" + Environment.NewLine,
+                Environment.NewLine + _tabs + "{{" + Environment.NewLine,
                 _args.FormatEach(argument => $"{_tabs.Tab()}{argument.String}{",".If(argument.IsNotLast)}{Environment.NewLine}").ToString(),
                 _tabs + "}}"
             );

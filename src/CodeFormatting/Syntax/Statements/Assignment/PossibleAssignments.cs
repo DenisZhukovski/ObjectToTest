@@ -17,6 +17,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
         private readonly Lazy<PossibleItems<IAssignmentPart>> _possibleStatements = new(
             () =>
                 new PossibleItems<IAssignmentPart>(
+                    PropertyAssignment.Parse,
                     codeStatement => new ParseSuccessful<IAssignmentPart>(new RawAssignment(codeStatement))
                 )
         );

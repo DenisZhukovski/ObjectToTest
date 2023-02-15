@@ -1,4 +1,5 @@
 using System;
+using ObjectToTest.UnitTests.Extensions;
 using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
@@ -18,12 +19,14 @@ namespace ObjectToTest.UnitTests
         
         public static string ToTestWellFormatted(this object item, ITestOutputHelper output)
         {
-            return item.ToTestWellFormatted().Log(output);
+            return item.ToTestWellFormatted(new LoggerForTests(output)).Log(output);
         }
         
         public static string ToString(this object item, ITestOutputHelper output)
         {
             return item.ToString().Log(output);
         }
+
+        public static T CastTo<T>(this object item) => (T) item;
     }
 }

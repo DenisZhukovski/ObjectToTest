@@ -1,6 +1,7 @@
 ﻿using System;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Core.Parse;
+using ObjectToTest.CodeFormatting.Syntax.Statements.Args;
 using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 using ObjectToTest.CodeFormatting.Syntax.Statements.Unknown;
 
@@ -19,6 +20,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements
             () =>
                 new PossibleItems<ICodeStatement>(
                     InstantiationStatement.Parse,
+                    Literal.Parse,
                     codeStatement => new ParseSuccessful<ICodeStatement>(new UnknownCodeStatement(codeStatement))
                 )
         );
