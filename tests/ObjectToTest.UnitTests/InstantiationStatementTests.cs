@@ -69,7 +69,7 @@ namespace ObjectToTest.UnitTests
 
             instantiationStatement.Type.ToString().ClaimEqual("[]");
             instantiationStatement.Arguments.ToString().ClaimEqual(string.Empty);
-            instantiationStatement.InlinePropertiesAssignment.Count().ClaimEqual(4);
+            instantiationStatement.InlineInlinesAssignment.Count().ClaimEqual(4);
         }
 
         [Fact]
@@ -79,9 +79,9 @@ namespace ObjectToTest.UnitTests
             statement.Type.ToString().ClaimEqual("Foo");
             statement.Arguments.ToString().ClaimEqual("123, \"new Foo()\", new[] {1, 2, 3}");
             statement.Arguments.ElementAt(2).ToString().ClaimEqual("new[] {1, 2, 3}");
-            statement.InlinePropertiesAssignment.ToString().ClaimEqual("A = 5, B = \"new Foo()\"");
-            statement.InlinePropertiesAssignment.ElementAt(0).ToString().ClaimEqual("A = 5");
-            statement.InlinePropertiesAssignment.ElementAt(1).ToString().ClaimEqual("B = \"new Foo()\"");
+            statement.InlineInlinesAssignment.ToString().ClaimEqual("A = 5, B = \"new Foo()\"");
+            statement.InlineInlinesAssignment.ElementAt(0).ToString().ClaimEqual("A = 5");
+            statement.InlineInlinesAssignment.ElementAt(1).ToString().ClaimEqual("B = \"new Foo()\"");
         }
 
         [Fact]

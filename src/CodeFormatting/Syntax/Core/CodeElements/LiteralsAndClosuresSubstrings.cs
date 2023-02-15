@@ -19,7 +19,8 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
                 {
                     new RoundBracketsClosure(),
                     new SquareBracketsClosure(),
-                    new CurlyBracketsClosure()
+                    new CurlyBracketsClosure(),
+                    new AngleBracketsClosure()
                 };
         }
 

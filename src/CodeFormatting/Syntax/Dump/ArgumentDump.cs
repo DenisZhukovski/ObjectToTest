@@ -24,6 +24,8 @@ namespace ObjectToTest.CodeFormatting.Syntax.Dump
                     return $"{_tabs}Cannot parse (look into ArgumentDump for more details): {unknownArgument}";
                 case ILiteral literal:
                     return $"{_tabs}Literal: {literal}";
+                case ILambda lambda:
+                    return $"{_tabs}Lambda: {lambda}";
                 default:
                     return $"{_tabs}Cannot dump (look into ArgumentDump for more details): {_statement.GetType().Name}-{_statement}";
             }

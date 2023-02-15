@@ -21,7 +21,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Dump
                 $"{_tabs}{_statement.GetType().Name}",
                 $"{_tabs.Tab()}Type: {_statement.Type.ToString()}",
                 $"{new ArgumentsDump(_statement.Arguments, _tabs.Tab())}",
-                $"{new PropertiesDump(_statement.InlinePropertiesAssignment, _tabs.Tab())}"
+                $"{new InlineAssignmentsDump(_statement.InlineInlinesAssignment, _tabs.Tab())}"
             ).ToString();
         }
     }

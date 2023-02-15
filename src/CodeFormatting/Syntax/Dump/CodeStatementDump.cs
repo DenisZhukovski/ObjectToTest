@@ -18,8 +18,14 @@ namespace ObjectToTest.CodeFormatting.Syntax.Dump
         {
             switch (_statement)
             {
+                case IAssignment assignment:
+                    return new AssignmentDump(assignment, _tabs).ToString();
                 case IInstantiationStatement instantiationStatement:
                     return new InstantiationStatementDump(instantiationStatement, _tabs).ToString();
+                case ILiteral literal:
+                    return $"{_tabs}Literal: {literal}";
+                case ILambda lambda:
+                    return $"{_tabs}Lambda: {lambda}";
                 case IUnknownCodeStatement unknownCodeStatement:
                     return $"{_tabs}Cannot parse (look into CodeStatementDump for more details): {unknownCodeStatement}";
                 default:

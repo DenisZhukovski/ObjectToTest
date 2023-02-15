@@ -6,21 +6,19 @@ using ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {
-    public class PossibleAssignments : IPossibleItems<ICodeStatement>
+    public class PossibleRightAssignmentParts : IPossibleItems<IRightAssignmentPart>
     {
-        private readonly Lazy<PossibleItems<ICodeStatement>> _possibleStatements = new(
+        private readonly Lazy<PossibleItems<IRightAssignmentPart>> _possibleStatements = new(
             () =>
-                new PossibleItems<ICodeStatement>(
-                    DictionaryInlineAssignment.Parse,
-                    Assignment.Parse,
+                new PossibleItems<IRightAssignmentPart>(
                     LambdaExpression.Parse,
                     InstantiationStatement.Parse,
                     Literal.Parse,
-                    codeStatement => new ParseSuccessful<ICodeStatement>(new RawAssignment(codeStatement))
+                    codeStatement => new ParseSuccessful<IRightAssignmentPart>(new RawAssignmentPart(codeStatement))
                 )
         );
 
-        public ICodeStatement BestMatch(string value)
+        public IRightAssignmentPart BestMatch(string value)
         {
             return _possibleStatements.Value.BestMatch(value);
         }

@@ -24,19 +24,15 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Fix todo")]
+        [Fact]
         public void PropertyAssignmentWithInstantiationOfComplexObject()
         {
-            /*
-            * @todo #76 60m/DEV Add recursive parsing for assignments.
-            */
-
             Assert.Equal(
                 new NewLineSeparatedString(
                     "new WithProperty()",
                     "{",
                     "    User = new User(",
-                    "        \"Test\"",
+                    "        \"Test\",",
                     "        new Address()",
                     "    )",
                     "}"
@@ -47,7 +43,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void InnerPropertyShouldBeFromSeparateLine()
         {
             Assert.Equal(
@@ -64,18 +60,11 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5, rule 2")]
+        [Fact]
         public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
         {
-            /*
-            * @todo #98 60m/DEV This should work but is is not.
-             *
-             * Something is with code formatting. Need to add test to check that new TimeSpan(18, 17, 34, 24, 5) is parsed correctly,
-             * because for some reason last argument is ignored when it is 1 char size.
-            */
-
             Assert.Equal(
-                "new TimeSpan(18,17,34,24,5)",
+                "new TimeSpan(18, 17, 34, 24, 5)",
                 new WellFormattedCode(
                     "new TimeSpan(18, 17, 34, 24, 5)"
                 ).ToString(_output)
@@ -166,7 +155,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void LambdasShouldBePlacedOnNewLine()
         {
             Assert.Equal(
@@ -175,11 +164,11 @@ namespace ObjectToTest.UnitTests
                 "    () => 0",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithFuncArgument(() => 0)").ToString(_output)
+                new WellFormattedCode("new WithFuncArgument(() => 0)", new LoggerForTests(_output)).ToString(_output)
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void LambdasWithArgumentShouldBePlacedOnNewLine()
         {
             Assert.Equal(
@@ -188,34 +177,34 @@ namespace ObjectToTest.UnitTests
                 "    pos => {}",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithActionArgument(pos => {})").ToString(_output)
+                new WellFormattedCode("new WithActionArgument(pos => {})", new LoggerForTests(_output)).ToString(_output)
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArraysShouldBeFormatted_CtorWithIEnumerableInt()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithIEnumerableInt(",
-                "    new[] ",
+                "    new[]",
                 "    {",
                 "        1,",
                 "        2",
                 "    }",
                 ")"
                 ).ToString(),
-                new WellFormattedCode("new WithIEnumerableInt(new[]{1,2})").ToString(_output)
+                new WellFormattedCode("new WithIEnumerableInt(new[]{1,2})", new LoggerForTests(_output)).ToString(_output)
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void DictionaryShouldBeFormatted_CtorWithDictionaryIntString()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithDictionaryArgument(",
-                "    new Dictionary<int,string>",
+                "    new Dictionary<int,string>()",
                 "    {",
                 "        { 1, \"1\" },",
                 "        { 2, \"2\" },",
@@ -224,17 +213,18 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WellFormattedCode(
-                    "new WithDictionaryArgument(new Dictionary<int,string>{{ 1, \"1\" },{ 2, \"2\" },{ 3, \"3\" }})"
+                    "new WithDictionaryArgument(new Dictionary<int,string>{{ 1, \"1\" },{ 2, \"2\" },{ 3, \"3\" }})",
+                    new LoggerForTests(_output)
                 ).ToString(_output)
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_And_InnerPropertyShouldBeFromSeparateLine_TheSameObjectDetection()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
-                "var user = new User(\"user name\");", Environment.NewLine +
+                "var user = new User(\"user name\");",
                 "new WithUserArgument(",
                 "    user,",
                 "    new WithUserPublicProperty()",
@@ -244,7 +234,8 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WellFormattedCode(
-                    "var user = new User(\"user name\");new WithUserArgument(user,new WithUserPublicProperty(){User = user})"
+                    "var user = new User(\"user name\");new WithUserArgument(user,new WithUserPublicProperty(){User = user})",
+                    new LoggerForTests(_output)
                 ).ToString(_output)
             );
         }

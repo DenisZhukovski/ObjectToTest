@@ -30,9 +30,11 @@ namespace ObjectToTest.CodeFormatting
             return new FormattedCode(
                 _logger,
                 syntaxTree,
+                new EachNewStatementShouldBeFromSeparateLine(),
                 new SpacesBetweenArgumentsAreRequired(),
                 new ArgumentsBiggerThan80SpacesShouldBeEachFromSeparateLine(),
                 new ArgumentsThatContainsInstantiationShouldBeEachFromSeparateLine(),
+                new ArgumentsThatContainsLambdasShouldBeEachFromSeparateLine(),
                 new InlinePropertiesAssignmentsShouldBeEachFromSeparateLine()
             ).ToString();
         }

@@ -22,26 +22,6 @@ namespace ObjectToTest.UnitTests
      * 8. Dictionary should be formatted with separate set of rules. Each pair on separate line.
     */
 
-    /*
-    * @todo #76 60m/DEV Implement rule: if there is an inline instantiation (new operator) in arguments, all arguments should be properly formatted.
-    */
-
-    /*
-    * @todo #76 60m/DEV Implement rule: Lambdas are always from new string.
-    */
-
-    /*
-    * @todo #76 60m/DEV Implement rule: Inner properties should be from separate lines.
-    */
-    
-    /*
-    * @todo #76 60m/DEV Implement rule: All arrays should be placed with proper formatting.
-    */
-
-    /*
-    * @todo #76 60m/DEV Implement rule: Dictionary should be formatted with separate set of rules.
-    */
-
     public class ToTestWellFormattedTests
     {
         private readonly ITestOutputHelper _output;
@@ -325,7 +305,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void LambdasShouldBePlacedOnNewLine_CtorWithFuncArgument()
         {
             Assert.Equal(
@@ -339,7 +319,7 @@ namespace ObjectToTest.UnitTests
             ); 
         }
         
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void LambdasShouldBePlacedOnNewLine_CtorWithActionArgument()
         {
             Assert.Equal(
@@ -353,14 +333,13 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
-
+        [Fact]
         public void ArraysShouldBeFormatted_CtorWithIEnumerableInt()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithIEnumerableInt(",
-                "    new []",
+                "    new[]",
                 "    {",
                 "        1,",
                 "        2,",
@@ -375,13 +354,13 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArraysShouldBeFormatted_CtorWithListInt()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithListArgument(",
-                "    new List<int>",
+                "    new List<int>()",
                 "    {",
                 "        1,",
                 "        2,",
@@ -409,13 +388,13 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void DictionaryShouldBeFormatted_CtorWithDictionaryIntString()
         {
             Assert.Equal(
                 new NewLineSeparatedString(
                 "new WithDictionaryArgument(",
-                "    new Dictionary<int,string>",
+                "    new Dictionary<int,string>()",
                 "    {",
                 "        { 1, \"1\" },",
                 "        { 2, \"2\" },",
@@ -429,7 +408,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_CtorWithEmptyDictionaryIntString()
         {
             Assert.Equal(
@@ -461,7 +440,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void ArgumentWithNewShouldBeFormatted_And_InnerPropertyShouldBeFromSeparateLine_TheSameObjectDetection()
         {
             var user = new User("user name");

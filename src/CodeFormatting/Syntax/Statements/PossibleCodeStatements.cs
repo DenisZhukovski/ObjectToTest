@@ -13,12 +13,11 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements
          * @todo #125 60m/DEV Implement invocation statement.
          */
 
-        /*
-        * @todo #125 60m/DEV Implement assignment statement.
-        */
         private readonly Lazy<PossibleItems<ICodeStatement>> _possibleStatements = new(
             () =>
                 new PossibleItems<ICodeStatement>(
+                    LambdaExpression.Parse,
+                    Assignment.Assignment.Parse,
                     InstantiationStatement.Parse,
                     Literal.Parse,
                     codeStatement => new ParseSuccessful<ICodeStatement>(new UnknownCodeStatement(codeStatement))

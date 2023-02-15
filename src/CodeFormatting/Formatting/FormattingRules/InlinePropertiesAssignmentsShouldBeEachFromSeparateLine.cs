@@ -8,13 +8,13 @@ namespace ObjectToTest.CodeFormatting.Formatting
     {
         public void ApplyTo(IFormat definition)
         {
-            definition.OverrideForArrayOf<IAssignmentPart>(
-                x => x is PropertyAssignments,
+            definition.OverrideForArrayOf<ICodeStatement>(
+                x => x is InlineAssignments,
                 (arguments, tabs) => new FormatWithNewLineOpenCurlyBracketAndEachArgFromNewLine(arguments, tabs).Format(),
                 nameof(InlinePropertiesAssignmentsShouldBeEachFromSeparateLine)
             );
 
-            definition.For<IAssignmentPart>("{0} = {1}", x => new Args(x.Left, x.Right), "Assignment base format");
+            definition.For<IAssignment>("{0} = {1}", x => new Args(x.Left, x.Right), "Assignment base format");
         }
     }
 }

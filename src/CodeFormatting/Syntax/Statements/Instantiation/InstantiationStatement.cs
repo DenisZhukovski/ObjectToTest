@@ -17,7 +17,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
 
         private readonly Lazy<IArguments> _arguments;
 
-        private readonly Lazy<IPropertyAssignments> _propertyAssignments;
+        private readonly Lazy<IInlineAssignments> _propertyAssignments;
 
         public InstantiationStatement(string codeStatement)
         {
@@ -33,7 +33,8 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
                         notAnalyzeIn: new LiteralsAndClosuresSubstrings(
                             _codeStatement,
                             new CurlyBracketsClosure(),
-                            new SquareBracketsClosure()
+                            new SquareBracketsClosure(),
+                            new AngleBracketsClosure()
                         )
                     );
 
@@ -57,17 +58,18 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
                         notAnalyzeIn: new LiteralsAndClosuresSubstrings(
                             _codeStatement,
                             new SquareBracketsClosure(),
-                            new RoundBracketsClosure()
+                            new RoundBracketsClosure(),
+                            new AngleBracketsClosure()
                         )
                     ).ToArray();
 
                     if (propertiesClosure.Any())
                     {
-                        return new PropertyAssignments(propertiesClosure.First().WithoutBorders().ToString());
+                        return new InlineAssignments(propertiesClosure.First().WithoutBorders().ToString());
                     }
                     else
                     {
-                        return new EmptyPropertyAssignment();
+                        return new EmptyInlineAssignment();
                     }
                 }
             );
@@ -77,7 +79,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Instantiation
 
         public IArguments Arguments => _arguments.Value;
 
-        public IPropertyAssignments InlinePropertiesAssignment => _propertyAssignments.Value;
+        public IInlineAssignments InlineInlinesAssignment => _propertyAssignments.Value;
 
         public static ParseResult Parse(string codeStatement)
         {
