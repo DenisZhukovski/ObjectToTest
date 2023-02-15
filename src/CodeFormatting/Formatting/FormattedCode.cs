@@ -1,6 +1,7 @@
 ﻿using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using System;
 using ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals;
+using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest.CodeFormatting.Formatting
 {
@@ -9,10 +10,10 @@ namespace ObjectToTest.CodeFormatting.Formatting
         private readonly ISyntaxTree _tree;
         private readonly Lazy<IFormat> _format;
 
-        public FormattedCode(ISyntaxTree tree, params IFormattingRule[] rules)
+        public FormattedCode(ILogger logger, ISyntaxTree tree, params IFormattingRule[] rules)
         {
             _tree = tree;
-            _format = new(() => new SyntaxTreeFormat(rules));
+            _format = new(() => new SyntaxTreeFormat(logger, rules));
         }
 
         public override string ToString()

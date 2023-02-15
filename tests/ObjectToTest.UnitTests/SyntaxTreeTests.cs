@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using ObjectToTest.CodeFormatting.Formatting;
 using ObjectToTest.CodeFormatting.Syntax;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Extensions;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit;
 using Xunit.Abstractions;
+using SyntaxTreeDump = ObjectToTest.CodeFormatting.Syntax.Dump.SyntaxTreeDump;
 
 namespace ObjectToTest.UnitTests
 {
@@ -60,14 +62,15 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Equal(
                 new NewLineSeparatedString(
-                    "- InstantiationStatement: TimeSpan",
-                    "    - Arguments: 5",
-                    "        - Argument: Literal(18)",
-                    "        - Argument: Literal(17)",
-                    "        - Argument: Literal(34)",
-                    "        - Argument: Literal(24)",
-                    "        - Argument: Literal(5)",
-                    ""
+                    "InstantiationStatement",
+                    "    Type: TimeSpan",
+                    "    Arguments: 5",
+                    "        Literal: 18",
+                    "        Literal: 17",
+                    "        Literal: 34",
+                    "        Literal: 24",
+                    "        Literal: 5",
+                    "    EmptyPropertyAssignment: 0"
                 ).ToString(),
                 new SyntaxTree(
                         "new TimeSpan(18, 17, 34, 24, 5)"
@@ -83,6 +86,38 @@ namespace ObjectToTest.UnitTests
                 "new TimeSpan(18, 17, 34, 24, 5)"
                 ).Dump().Log(_output)
             );  
+        }
+
+        [Fact]
+        public void CtorWithComplexArgumentsAndProperties()
+        {
+            new SyntaxTree(
+                    new NewLineSeparatedString(
+                        "new WithClassParamWithProp(",
+                        "    new WithOnePublicProperty()",
+                        "    {",
+                        "        PropertyName = \"Test\"",
+                        "    },",
+                        "    42",
+                        ")"
+                    ).ToString()
+                ).Dump().Log(_output)
+                .ClaimEqual(
+                    new NewLineSeparatedString(
+                        "InstantiationStatement",
+                        "    Type: WithClassParamWithProp",
+                        "    Arguments: 2",
+                        "        InstantiationStatement",
+                        "            Type: WithOnePublicProperty",
+                        "            Arguments: 0",
+                        "            PropertyAssignments: 1",
+                        "                PropertyAssignment",
+                        "                    Name: PropertyName",
+                        "                    Value: Literal: \"Test\"",
+                        "        Literal: 42",
+                        "    EmptyPropertyAssignment: 0"
+                    ).ToString()
+                );
         }
     }
 }

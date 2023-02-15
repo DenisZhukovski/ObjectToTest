@@ -5,6 +5,7 @@ using System.Reflection;
 using ObjectToTest.Arguments;
 using ObjectToTest.CodeFormatting;
 using ObjectToTest.Constructors;
+using ObjectToTest.Infrastructure;
 
 namespace ObjectToTest
 {
@@ -17,14 +18,14 @@ namespace ObjectToTest
             ).ToString();
         }
 
-        public static string ToTestWellFormatted(this object @object)
+        public static string ToTestWellFormatted(this object @object, ILogger logger = null)
         {
             var objectAsConstructor = new ObjectAsConstructor(
                 @object ?? throw new ArgumentNullException(nameof(@object))
             );
             if (objectAsConstructor.Constructor.IsValid)
             {
-                return new WellFormattedCode(objectAsConstructor.ToString()).ToString();
+                return new WellFormattedCode(objectAsConstructor.ToString(), logger ?? new SilentLogger()).ToString();
             }
 
             return objectAsConstructor.ToString();

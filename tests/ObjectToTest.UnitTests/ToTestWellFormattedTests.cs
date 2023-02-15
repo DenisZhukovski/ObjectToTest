@@ -247,7 +247,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void InnerPropertyShouldBeFromSeparateLine__And_ArgumentWithNewShouldBeFormatted__CtorWithComplexArgumentsAndProperties()
         {
             Assert.Equal(
@@ -277,7 +277,7 @@ namespace ObjectToTest.UnitTests
             );
         }
 
-        [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
+        [Fact]
         public void GenericArgumentsAreNotFormatted_With2GenericArguments()
         {
             Assert.Equal(
@@ -376,7 +376,6 @@ namespace ObjectToTest.UnitTests
         }
 
         [Fact(Skip = "Need to be fixed in scope of puzzle #5")]
-
         public void ArraysShouldBeFormatted_CtorWithListInt()
         {
             Assert.Equal(

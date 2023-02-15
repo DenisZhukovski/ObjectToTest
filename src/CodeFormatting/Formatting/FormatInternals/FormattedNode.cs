@@ -45,7 +45,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
             {
                 var logger = new LoggerWithIndentation(_logger, new Tabs(_argument.Depth));
 
-                logger.WriteLine($"{_argument}: Processing...");
+                logger.WriteLine($"{new NewLineAsN(_argument.ToString())}: Processing...");
 
                 logger.Tab();
 
