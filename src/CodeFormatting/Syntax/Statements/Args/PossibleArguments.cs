@@ -7,12 +7,10 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements.Args
 {
     public class PossibleArguments : IPossibleItems<IArgument>
     {
-        /*
-        * @todo #106 60m/DEV Add lambdas support.
-        */
         private readonly Lazy<PossibleItems<IArgument>> _possibleStatements = new(
             () =>
                 new PossibleItems<IArgument>(
+                    LambdaExpression.Parse,
                     InstantiationStatement.Parse,
                     Literal.Parse,
                     codeStatement => new ParseSuccessful<IArgument>(new RawArgument(codeStatement))

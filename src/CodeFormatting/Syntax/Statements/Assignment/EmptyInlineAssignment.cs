@@ -4,14 +4,14 @@ using ObjectToTest.CodeFormatting.Syntax.Contracts;
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {
-    public class EmptyPropertyAssignment : IPropertyAssignments
+    public class EmptyInlineAssignment : IInlineAssignments
     {
         public override string ToString()
         {
             return "";
         }
 
-        public IEnumerator<IAssignmentPart> GetEnumerator()
+        public IEnumerator<ICodeStatement> GetEnumerator()
         {
             yield break;
         }

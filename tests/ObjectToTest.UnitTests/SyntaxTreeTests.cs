@@ -70,7 +70,7 @@ namespace ObjectToTest.UnitTests
                     "        Literal: 34",
                     "        Literal: 24",
                     "        Literal: 5",
-                    "    EmptyPropertyAssignment: 0"
+                    "    EmptyInlineAssignment: 0"
                 ).ToString(),
                 new SyntaxTree(
                         "new TimeSpan(18, 17, 34, 24, 5)"
@@ -110,12 +110,13 @@ namespace ObjectToTest.UnitTests
                         "        InstantiationStatement",
                         "            Type: WithOnePublicProperty",
                         "            Arguments: 0",
-                        "            PropertyAssignments: 1",
-                        "                PropertyAssignment",
-                        "                    Name: PropertyName",
-                        "                    Value: Literal: \"Test\"",
+                        "            InlineAssignments: 1",
+                        "                Assignment",
+                        "                    Left Part: PropertyName",
+                        "                    Value:",
+                        "                        Literal: \"Test\"",
                         "        Literal: 42",
-                        "    EmptyPropertyAssignment: 0"
+                        "    EmptyInlineAssignment: 0"
                     ).ToString()
                 );
         }

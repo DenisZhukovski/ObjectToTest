@@ -2,7 +2,7 @@
 
 namespace ObjectToTest.CodeFormatting.Syntax.Statements.Assignment
 {
-    public class RawAssignment : IAssignmentPart
+    public class RawAssignment : IAssignment
     {
         private readonly string _source;
 

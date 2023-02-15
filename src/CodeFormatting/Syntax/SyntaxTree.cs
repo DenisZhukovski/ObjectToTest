@@ -3,15 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
+using ObjectToTest.CodeFormatting.Syntax.Core.CodeElements;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 using ObjectToTest.CodeFormatting.Syntax.Statements;
 
 namespace ObjectToTest.CodeFormatting.Syntax
 {
-    /*
-    * @todo #106 60m/DEV Change split implementation to consider closures, lambdas and inline initializations.
-     *
-    */
     public class SyntaxTree : ISyntaxTree
     {
         private readonly string _code;
@@ -25,9 +22,9 @@ namespace ObjectToTest.CodeFormatting.Syntax
 
         public IEnumerator<ICodeStatement> GetEnumerator()
         {
-            foreach (var s in new StringsWithSemicolonIfMultiline(_code))
+            foreach (var s in new CharacterSeparatedSubstrings(_code, ';', notAnalyzeIn: new LiteralsAndClosuresSubstrings(_code)))
             {
-                yield return _codeStatements.Value.BestMatch(s);
+                yield return _codeStatements.Value.BestMatch(s.ToString());
             }
         }
 

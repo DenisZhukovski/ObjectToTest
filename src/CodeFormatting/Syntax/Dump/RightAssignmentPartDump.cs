@@ -22,7 +22,9 @@ namespace ObjectToTest.CodeFormatting.Syntax.Dump
                 case IInstantiationStatement instantiationStatement:
                     return new InstantiationStatementDump(instantiationStatement, _tabs).ToString();
                 case ILiteral literal:
-                    return $"Literal: {literal}";
+                    return $"{_tabs}Literal: {literal}";
+                case ILambda lambda:
+                    return $"{_tabs}Lambda: {lambda}";
                 case RawAssignmentPart rawAssignmentPart:
                     return rawAssignmentPart.ToString();
                 default:
