@@ -16,8 +16,8 @@ namespace ObjectToTest.CodeFormatting.Syntax.Statements
         private readonly Lazy<PossibleItems<ICodeStatement>> _possibleStatements = new(
             () =>
                 new PossibleItems<ICodeStatement>(
-                    LambdaExpression.Parse,
                     Assignment.Assignment.Parse,
+                    LambdaExpression.Parse,
                     InstantiationStatement.Parse,
                     Literal.Parse,
                     codeStatement => new ParseSuccessful<ICodeStatement>(new UnknownCodeStatement(codeStatement))
