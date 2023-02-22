@@ -12,9 +12,9 @@ namespace ObjectToTest.UnitTests
             return item;
         }
         
-        public static string ToTest(this object item, ITestOutputHelper output)
+        public static string ToTest(this object item, ITestOutputHelper output, bool wellFormatted = true)
         {
-            return item.ToTest().Log(output);
+            return item.ToTest(wellFormatted).Log(output);
         }
         
         public static string ToTestWellFormatted(this object item, ITestOutputHelper output)
