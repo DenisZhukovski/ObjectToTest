@@ -43,16 +43,15 @@ namespace ObjectToTest.UnitTests
         public void SharedNullArgument()
         {
             User? user = null;
-            var withUser = new WithUserArgument(
-                user,
-                new WithUserPublicProperty
-                {
-                    User = user
-                }
-            );
             Assert.Equal(
                 "new WithUserArgument(null,new WithUserPublicProperty())",
-                withUser.ToTest()
+                new WithUserArgument(
+                    user,
+                    new WithUserPublicProperty
+                    {
+                        User = user
+                    }
+                ).ToTest(_output, false)
             );
         }
 

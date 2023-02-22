@@ -13,7 +13,7 @@ namespace ObjectToTest.UnitTests
         public void StructCtor()
         {
             Assert.Equal(
-                "new Vector3(0,0,1)",
+                "new Vector3(0, 0, 1)",
                 new ValueTypeConstructor(Vector3.forward).ToString()
             );
         }
@@ -31,7 +31,7 @@ namespace ObjectToTest.UnitTests
         public void TimeSpanCtor()
         {
             Assert.Equal(
-               "new TimeSpan(18,17,34,24,5)",
+               "new TimeSpan(18, 17, 34, 24, 5)",
                new ValueTypeConstructor(new TimeSpan(18, 17, 34, 24, 5)).ToString()
             );
         }
