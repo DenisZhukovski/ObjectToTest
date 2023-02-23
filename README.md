@@ -56,7 +56,7 @@ More details about project architecture can be found on [wiki page](https://gith
 
 [IL Spy](https://github.com/icsharpcode/ILSpy/) nuget package is used to support c# code decompilation
 
-## Build status
+## Quality status
 
 <div align="center">
   
