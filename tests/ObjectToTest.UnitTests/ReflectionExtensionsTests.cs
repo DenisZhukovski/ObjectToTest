@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using ObjectToTest.UnitTests.Models;
 using UnityEngine;
 using Xunit;
@@ -76,6 +77,12 @@ namespace ObjectToTest.UnitTests
             Assert.False(new Action<int>((pos) => { }).ContainsDeep(new object()));
         }
         
+        [Fact]
+        public void HttpClientContainsDeep()
+        {
+            Assert.False(new HttpClient().ContainsDeep(new object()));
+        }
+
         [Fact]
         public void SingletonContainsDeeps()
         {

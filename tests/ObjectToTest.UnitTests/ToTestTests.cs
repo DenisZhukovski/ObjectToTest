@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 using ObjectToTest.UnitTests.Models;
 using ObjectToTest.UnitTests.Data;
 using System.Collections.Generic;
+using System.Net.Http;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.UnitTests
@@ -506,6 +507,18 @@ namespace ObjectToTest.UnitTests
                         SingletonClass.Instance,
                         new Price(10)
                 ).ToTest(_output, false)
+            );
+        }
+        
+        [Fact(Skip = "Should be fixed as a part of #180 bug")]
+        public void HttpClientToTest()
+        {
+            /*
+             * @todo #180 60m/DEV HttpClient should be recreated properly, The test should be green.
+             */
+            Assert.Equal(
+                "new HttpClient()",
+                new HttpClient().ToTest(_output, false)
             );
         }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using UnityEngine;
@@ -109,11 +110,21 @@ namespace ObjectToTest.UnitTests
         public void SeveralTimesCtorArgumentAsShared()
         {
             var user = new User("user name");
-            Assert.Equal(
-                1,
+            Assert.Single(
                 new SharedObjects(
                     new With2ObjectArguments(user, user)
-                ).ToList().Count
+                ).ToList()
+            );
+        }
+
+        [Fact(Skip = "Should be fixed as a part of #180 bug")]
+        public void HttpClient()
+        {
+            /*
+             * @todo #180 60m/DEV SharedObjects should be empty for HttpClient. The test should be green.
+             */
+            Assert.Empty(
+                new SharedObjects(new HttpClient()).ToList()
             );
         }
     }
