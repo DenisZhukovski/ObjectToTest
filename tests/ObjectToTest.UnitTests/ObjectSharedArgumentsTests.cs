@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using ObjectToTest.Arguments;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Extensions;
@@ -191,6 +192,17 @@ namespace ObjectToTest.UnitTests
                             customHashCode
                         )
                 ).Argument(new WithCustomHashCode("11", 2))
+            );
+        }
+
+        [Fact(Skip = "Should be fixed as a part of #180 bug")]
+        public void HttpClient()
+        {
+            /*
+             * @todo #180 60m/DEV ObjectSharedArguments should be empty for HttpClient. The test should be green.
+             */
+            Assert.Empty(
+                new ObjectSharedArguments(new HttpClient()).ToList()
             );
         }
     }

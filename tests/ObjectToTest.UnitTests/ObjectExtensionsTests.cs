@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.UnitTests.Data;
@@ -24,6 +25,12 @@ namespace ObjectToTest.UnitTests
         public void SingletonIsNotCircularReference()
         {
             Assert.False(SingletonClass.Instance.HasCircularReference());
+        }
+        
+        [Fact]
+        public void HttpClientIsNotCircularReference()
+        {
+            Assert.False(new HttpClient().HasCircularReference());
         }
         
         [Fact]

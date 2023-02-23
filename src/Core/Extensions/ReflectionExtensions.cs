@@ -81,16 +81,30 @@ namespace ObjectToTest
             {
                 return false;
             }
+
+            return @object.ContainsDeep(objectToCheck, new List<object>());
+        }
+        
+        private static bool ContainsDeep(this object @object, object objectToCheck, List<object> callStackObjects)
+        {
+            if (@object.IsPrimitive()
+                || @object.IsDelegate()
+                || @object.IsCollection()
+                || @object.IsValueType())
+            {
+                return false;
+            }
             
+            // Recursive check.
+            if (callStackObjects.Contains(@object))
+            {
+                return false;
+            }
+            
+            callStackObjects.Add(@object);
             foreach (var value in @object.Values())
             {
-                // Singleton recursive check.
-                if (value == @object)
-                {
-                    continue;
-                }
-                
-                if (value == objectToCheck || (value != null && !value.IsCollection() && !value.IsPrimitive() && value.ContainsDeep(objectToCheck)))
+                if (value == objectToCheck || (value != null && !value.IsCollection() && !value.IsPrimitive() && value.ContainsDeep(objectToCheck, callStackObjects)))
                 {
                     return true;
                 }

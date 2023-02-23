@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using ObjectToTest.Arguments;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
@@ -47,5 +48,17 @@ namespace ObjectToTest.UnitTests
             );
         }
         
+        [Fact(Skip = "Should be fixed as a part of #180 bug")]
+        public void HttpClient()
+        {
+            /*
+             * @todo #180 60m/DEV SharedCircularProperties should be empty for HttpClient. The test should be green.
+             */
+            Assert.Empty(
+                new SharedCircularProperties(
+                    new ObjectSharedArguments(new HttpClient())
+                ).ToList()
+            );
+        }
     }
 }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace ObjectToTest
 {
+    /// <summary>
+    /// The main goal is to calculate how much times the objects been used in object tree.
+    /// The code assumes that there are circular references of some objects been used several times in the graph.
+    /// </summary>
     public class ObjectsUsageGraph
     {
         private readonly object _root;
