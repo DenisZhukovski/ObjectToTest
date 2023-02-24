@@ -7,6 +7,7 @@ using ObjectToTest.Arguments;
 using ObjectToTest.CodeFormatting;
 using ObjectToTest.Constructors;
 using ObjectToTest.Infrastructure;
+// ReSharper disable CheckNamespace
 
 public static class ObjectExtensions
 {
@@ -22,7 +23,7 @@ public static class ObjectExtensions
         ).ToString();
     }
 
-    public static string ToTestWellFormatted(this object @object, ILogger logger = null)
+    public static string ToTestWellFormatted(this object @object, ILogger? logger = null)
     {
         var objectAsConstructor = new ObjectAsConstructor(
             @object ?? throw new ArgumentNullException(nameof(@object))

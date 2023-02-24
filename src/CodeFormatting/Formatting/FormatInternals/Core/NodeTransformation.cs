@@ -8,11 +8,11 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
 
         public Func<object, bool>? IsApplicable { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public bool IsApplicableFor(object item)
         {
-            return IsApplicable(item);
+            return IsApplicable?.Invoke(item) ?? false;
         }
 
         (string, Tabs) INodeTransformation.Apply(string item, Tabs tabs)
