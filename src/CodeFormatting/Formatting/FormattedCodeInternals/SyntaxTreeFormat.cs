@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ObjectToTest.CodeFormatting.Formatting.Core;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.Infrastructure;
@@ -24,7 +23,6 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
         {
             _format = new Format(logger);
             _format.ForArrayOf<ICodeStatement>(x => string.Join(";", x), name: "Code block default formatting");
-
             _format.For<IDictionaryInlineAssignment>(
                 "{{ {0}, {1} }}",
                 x => new Args(x.Key, x.Value),
@@ -44,7 +42,6 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
             );
 
             _format.For<IUnknownCodeStatement>("{x}", x => new Args(x.ToString()), name: "Fallback for unknown code statement");
-
             _format.ForArrayOf<IArgument>(
                 x => new Parts(
                     "(", string.Join(",", x), ")"
@@ -52,11 +49,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
                 name: "Basic argument list formatting"
             );
             _format.For<IArgument>("{0}", x => new Args(x.ToString().Trim()));
-
             _format.For<ITypeDefinition>("{0}", x => new Args(x.ToString().Trim()));
-
-            
-
             foreach (var rule in rules)
             {
                 rule.ApplyTo(_format);
@@ -72,6 +65,11 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
         { 
             _format.Add(format);
         }
+        
+        public void Add(INodeTransformation transformation)
+        {
+            _format.Add(transformation);
+        }
 
         public void AddAsFirst(INodeFormat format)
         {
@@ -81,11 +79,6 @@ namespace ObjectToTest.CodeFormatting.Formatting.FormattedCodeInternals
         public void AddAsFirst(INodeTransformation transformation)
         {
             _format.AddAsFirst(transformation);
-        }
-
-        public void Add(INodeTransformation transformation)
-        {
-            _format.Add(transformation);
         }
     }
 }

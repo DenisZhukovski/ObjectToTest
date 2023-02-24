@@ -13,7 +13,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
 
         public int End => FirstOrDefault()?.End ?? -1;
 
-        public string ToString()
+        public override string ToString()
         {
             return FirstOrDefault()?.ToString() ?? string.Empty;
         }

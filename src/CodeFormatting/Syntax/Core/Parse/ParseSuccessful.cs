@@ -2,7 +2,8 @@
 {
     public class ParseSuccessful<T> : ParseSuccessful
     {
-        public ParseSuccessful(T value) : base(value)
+        public ParseSuccessful(T value) 
+            : base(value)
         {
             Value = value;
         }

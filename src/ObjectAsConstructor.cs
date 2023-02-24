@@ -19,7 +19,7 @@ namespace ObjectToTest
     public class ObjectAsConstructor
     {
         private readonly object _object;
-        private readonly IArguments? _sharedArguments;
+        private readonly IArguments _sharedArguments;
         
         public ObjectAsConstructor(object @object)
             : this(
@@ -42,11 +42,9 @@ namespace ObjectToTest
             get
             {
                 var argument = _sharedArguments.Argument(_object);
-                if (argument != null)
-                {
-                    return new CommentLine($"Target object stored in: '{argument.Name}'");
-                }
-                return _object.Constructor(_sharedArguments);
+                return argument != null 
+                    ? new CommentLine($"Target object stored in: '{argument.Name}'")
+                    : _object.Constructor(_sharedArguments);
             }
         }
         

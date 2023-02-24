@@ -24,6 +24,11 @@ namespace ObjectToTest.CodeFormatting.Formatting
             _conditionalFormats.Add(format);
         }
 
+        public void Add(INodeTransformation transformation)
+        {
+            _conditionalTransformations.Add(transformation);
+        }
+        
         public void AddAsFirst(INodeFormat format)
         {
             _conditionalFormats.Insert(0, format);
@@ -32,11 +37,6 @@ namespace ObjectToTest.CodeFormatting.Formatting
         public void AddAsFirst(INodeTransformation transformation)
         {
             _conditionalTransformations.Insert(0, transformation);
-        }
-
-        public void Add(INodeTransformation transformation)
-        {
-            _conditionalTransformations.Add(transformation);
         }
 
         public string ApplyTo(object item)

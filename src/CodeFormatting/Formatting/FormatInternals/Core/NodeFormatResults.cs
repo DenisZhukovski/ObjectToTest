@@ -14,12 +14,12 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
 
         public string GetFor(object item)
         {
-            return _results.First(x => ReferenceEquals(x.Data, item)).String;
+            return _results.First(x => ReferenceEquals(x.Data, item)).String ?? string.Empty;
         }
 
         public void Add(object item, string result)
         {
-            _results.Add(new DataAndString()
+            _results.Add(new DataAndString
             {
                 Data = item,
                 String = result
@@ -30,7 +30,7 @@ namespace ObjectToTest.CodeFormatting.Formatting.Core
         {
             public object? Data { get; set; }
 
-            public string String { get; set; }
+            public string? String { get; set; }
         }
     }
 }

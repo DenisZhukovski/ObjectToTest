@@ -8,10 +8,10 @@ namespace ObjectToTest.CodeFormatting.Formatting
 
         void Add(INodeFormat format);
 
+        void Add(INodeTransformation transformation);
+        
         void AddAsFirst(INodeFormat format);
 
         void AddAsFirst(INodeTransformation transformation);
-
-        void Add(INodeTransformation transformation);
     }
 }

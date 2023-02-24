@@ -17,22 +17,16 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.CodeElements
         {
             get
             {
-                for (int i = 0; i < _source.Length; i++)
+                for (var i = 0; i < _source.Length; i++)
                 {
-                    if (i < _closure.Start)
+                    if (i < _closure.Start && _source[i] != ' ')
                     {
-                        if (_source[i] != ' ')
-                        {
-                            return false;
-                        }
+                        return false;
                     }
 
-                    if (i > _closure.End)
+                    if (i > _closure.End && _source[i] != ' ')
                     {
-                        if (_source[i] != ' ')
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
 

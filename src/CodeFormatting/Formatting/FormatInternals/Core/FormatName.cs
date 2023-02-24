@@ -11,12 +11,9 @@
 
         public override string ToString()
         {
-            if (_format is NodeFormat formatAndCondition)
+            if (_format is NodeFormat formatAndCondition && formatAndCondition.Name != null)
             {
-                if (formatAndCondition.Name != null)
-                {
-                    return formatAndCondition.Name;
-                }
+                return formatAndCondition.Name;
             }
 
             return _format.GetType().Name;

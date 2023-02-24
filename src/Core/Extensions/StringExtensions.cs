@@ -18,17 +18,12 @@ namespace ObjectToTest.Extensions
 
         public static JointString ToJointString<T>(this IEnumerable<T> self)
         {
-            return new JointString(self.Select(x => x.ToString()).ToArray());
+            return new JointString(self.Select(x => x?.ToString() ?? string.Empty).ToArray());
         }
 
         public static string If(this string value, bool condition)
         {
-            if (condition)
-            {
-                return value;
-            }
-
-            return string.Empty;
+            return condition ? value : string.Empty;
         }
 
         public static Join FormatEach(this string[] items, Func<ItemInfo, string> formatEach) => new(items, formatEach);

@@ -37,12 +37,9 @@ namespace ObjectToTest.Constructors
             if (!_initVariable)
             {
                 _initVariable = true;
-                if (_argument.Object is Delegate @delegate)
+                if (_argument.Object is Delegate @delegate && _sharedArguments.Contains(@delegate.Target))
                 {
-                    if (_sharedArguments.Contains(@delegate.Target))
-                    {
-                        return string.Empty;
-                    }
+                    return string.Empty;
                 }
                 return $"var {_argument.Name} = {_argument.Constructor}";
             }

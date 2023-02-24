@@ -19,7 +19,7 @@ namespace ObjectToTest.CodeFormatting.Syntax.Core.Strings
         {
             foreach (var substring in _from)
             {
-                if (_excludeRanges.Any(x => new SubstringsIntersection(source: substring, target: x).SourceFullyInTarget) == false)
+                if (!_excludeRanges.Any(x => new SubstringsIntersection(source: substring, target: x).SourceFullyInTarget))
                 {
                     yield return substring;
                 }

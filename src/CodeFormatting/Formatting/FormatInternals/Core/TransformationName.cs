@@ -11,12 +11,9 @@
 
         public override string ToString()
         {
-            if (_format is NodeTransformation transformationAndCondition)
+            if (_format is NodeTransformation transformationAndCondition && transformationAndCondition.Name != null)
             {
-                if (transformationAndCondition.Name != null)
-                {
-                    return transformationAndCondition.Name;
-                }
+                return transformationAndCondition.Name;
             }
 
             return _format.GetType().Name;
