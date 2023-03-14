@@ -25,7 +25,7 @@ namespace ObjectToTest
             : this(
                 @object,
                 new SharedCircularProperties(
-                    new ObjectSharedArguments(@object)
+                    new ObjectSharedArguments(@object, NeedRecursiveScan(@object))
                 )
             )
         {
@@ -63,6 +63,16 @@ namespace ObjectToTest
                         _sharedArguments
                     );
             }
+        }
+
+        private static bool NeedRecursiveScan(object @object)
+        {
+            if (@object != null && !@object.GetType().Namespace.StartsWith("System"))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

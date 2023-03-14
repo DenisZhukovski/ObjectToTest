@@ -11,22 +11,35 @@ namespace ObjectToTest
     public class SharedObjects
     {
         private readonly object? _object;
+        private readonly IUsageGraph _usageGraph;
         private readonly List<object> _sharedObjects = new();
 
-        public SharedObjects(object? @object)
+        public SharedObjects(object? @object, bool recursive)
+            : this(
+                @object,
+                !recursive 
+                    ? new ObjectsUsageGraph(@object).ObjectArgumentsOnly()
+                    : new ObjectsUsageGraph(@object)
+            )
         {
             _object = @object;
         }
-
+        
+        public SharedObjects(object? @object, IUsageGraph usageGraph)
+        {
+            _object = @object;
+            _usageGraph = usageGraph;
+        }
+        
         public List<object> ToList()
         {
             _sharedObjects.Clear();
             if (_object != null)
             {
-                var objectUsageCount = new ObjectsUsageGraph(_object).ToDictionary();
-                foreach (var objectAsKey in objectUsageCount.Keys)
+                var multiUsedObjects = _usageGraph.MultiUsedOnly();
+                foreach (var objectAsKey in multiUsedObjects.Keys)
                 {
-                    if (objectUsageCount[objectAsKey] > 1 && !objectAsKey.IsSingleton() && !objectAsKey.IsPrimitive())
+                    if (!objectAsKey.IsSingleton())
                     {
                         _sharedObjects.Add(objectAsKey);
                         if (objectAsKey is Delegate @delegate && !_sharedObjects.Contains(@delegate.Target))

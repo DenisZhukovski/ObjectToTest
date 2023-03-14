@@ -24,7 +24,7 @@ namespace ObjectToTest.UnitTests
             var o2 = new CircularRefPublicProperty2();
             o1.PropertyName = o2;
             o2.PropertyName1 = o1;
-            Assert.NotEmpty(new SharedCircularProperties(new ObjectSharedArguments(o1)).ToList());
+            Assert.NotEmpty(new SharedCircularProperties(new ObjectSharedArguments(o1, true)).ToList());
         }
         
         [Fact]
@@ -43,20 +43,17 @@ namespace ObjectToTest.UnitTests
                     string.Empty
                 ).ToString(),
                 new SharedCircularProperties(
-                    new ObjectSharedArguments(o1)
+                    new ObjectSharedArguments(o1, true)
                 ).ToString().Log(_output)
             );
         }
         
-        [Fact(Skip = "Should be fixed as a part of #180 bug")]
+        [Fact]
         public void HttpClient()
         {
-            /*
-             * @todo #180 60m/DEV SharedCircularProperties should be empty for HttpClient. The test should be green.
-             */
             Assert.Empty(
                 new SharedCircularProperties(
-                    new ObjectSharedArguments(new HttpClient())
+                    new ObjectSharedArguments(new HttpClient(), false)
                 ).ToList()
             );
         }

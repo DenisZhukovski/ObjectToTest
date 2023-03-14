@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using ObjectToTest.Arguments;
 using ObjectToTest.Constructors;
 using ObjectToTest.UnitTests.Data;
@@ -31,6 +32,12 @@ namespace ObjectToTest.UnitTests
         public void HttpClientIsNotCircularReference()
         {
             Assert.False(new HttpClient().HasCircularReference());
+        }
+        
+        [Fact]
+        public void CancellationTokenSourceIsNotCircularReference()
+        {
+            Assert.False(new CancellationTokenSource().HasCircularReference());
         }
         
         [Fact]
@@ -126,7 +133,7 @@ namespace ObjectToTest.UnitTests
         public void SingletonNotSharedArgument()
         {
             Assert.Empty(
-                new WithSingletonArgument(SingletonClass.Instance).SharedObjects()
+                new WithSingletonArgument(SingletonClass.Instance).SharedObjects(true)
             );
         }
     }

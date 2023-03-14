@@ -7,20 +7,20 @@ namespace ObjectToTest
     /// The main goal is to calculate how much times the objects been used in object tree.
     /// The code assumes that there are circular references of some objects been used several times in the graph.
     /// </summary>
-    public class ObjectsUsageGraph
+    public class ObjectsUsageGraph : IUsageGraph
     {
-        private readonly object _root;
-
         public ObjectsUsageGraph(object root)
         {
-            _root = root;
+            Target = root;
         }
+
+        public object Target { get; }
 
         public Dictionary<object, int> ToDictionary()
         {
-            var objectUsageCount = new Dictionary<object, int>();
-            CollectObjectsUsageRecursive(_root, objectUsageCount);
-            return objectUsageCount;
+            var recursiveObjectUsageCount = new Dictionary<object, int>();
+            CollectObjectsUsageRecursive(Target, recursiveObjectUsageCount);
+            return recursiveObjectUsageCount;
         }
         
         private void CollectObjectsUsageRecursive(object @object, Dictionary<object, int> objectUsageCount)
@@ -28,7 +28,7 @@ namespace ObjectToTest
             if (!objectUsageCount.ContainsKey(@object))
             {
                 var usageCount = 1;
-                if (IncrementCounterparts(@object, objectUsageCount))
+                if (IncrementDelegateCounterparts(@object, objectUsageCount))
                 {
                     usageCount++;
                 }
@@ -41,7 +41,7 @@ namespace ObjectToTest
                     }
                     foreach (var value in @object.Values(true))
                     {
-                        if (value != null)
+                        if (value != null && !value.IsPrimitive())
                         {
                             CollectObjectsUsageRecursive(value, objectUsageCount);
                         }
@@ -54,7 +54,7 @@ namespace ObjectToTest
             }
         }
         
-        private bool IncrementCounterparts(object @object, Dictionary<object, int> objectUsageCount)
+        private bool IncrementDelegateCounterparts(object @object, Dictionary<object, int> objectUsageCount)
         {
             var wasIncremented = false;
             if (@object is Delegate @delegate)

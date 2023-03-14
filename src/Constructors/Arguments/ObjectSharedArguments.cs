@@ -12,11 +12,13 @@ namespace ObjectToTest
     public class ObjectSharedArguments : IArguments
     {
         private readonly object _object;
+        private readonly bool _recursive;
         private List<IArgument>? _sharedArguments;
 
-        public ObjectSharedArguments(object @object)
+        public ObjectSharedArguments(object @object, bool recursive)
         {
             _object = @object;
+            _recursive = recursive;
         }
 
         public IArgument? Argument(object? argument)
@@ -34,7 +36,7 @@ namespace ObjectToTest
                 _sharedArguments = new List<IArgument>();
                 _sharedArguments.AddRange(
                     _object
-                        .SharedObjects()
+                        .SharedObjects(_recursive)
                         .Select(o => o.AsSharedArgument(this))
                 );
             }

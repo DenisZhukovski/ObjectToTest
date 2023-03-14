@@ -14,7 +14,7 @@ namespace ObjectToTest
             : this(
                 @object,
                 new SharedCircularProperties(
-                    new ObjectSharedArguments(@object)
+                    new ObjectSharedArguments(@object, true)
                 )
               )
         {
