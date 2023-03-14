@@ -1,24 +1,33 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using UnityEngine;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
     public class SharedObjectsTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public SharedObjectsTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+        
         [Fact]
         public void CircularReferenceDetection()
         {
             var o1 = new CircularRefPublicProperty1();
-            var o2 = new CircularRefPublicProperty2();
+            var o2 = new CircularRefPublicProperty2 { PropertyName1 = o1 };
             o1.PropertyName = o2;
-            o2.PropertyName1 = o1;
             Assert.Equal(
                 new List<object>{ o1, o2 },
-                new SharedObjects(o1).ToList()
+                new SharedObjects(o1, true).ToList()
             );
         }
 
@@ -26,7 +35,7 @@ namespace ObjectToTest.UnitTests
         public void VectorSharedObjects()
         {
             Assert.Empty(
-                new SharedObjects(Vector3.forward).ToList()
+                new SharedObjects(Vector3.forward, true).ToList()
             );
         }
         
@@ -34,7 +43,10 @@ namespace ObjectToTest.UnitTests
         public void SingletonNotSharedArgument()
         {
             Assert.Empty(
-                new SharedObjects(new WithSingletonArgument(SingletonClass.Instance)).ToList()
+                new SharedObjects(
+                    new WithSingletonArgument(SingletonClass.Instance),
+                    true
+                ).ToList()
             );
         }
 
@@ -46,12 +58,14 @@ namespace ObjectToTest.UnitTests
                     new WithUserPublicProperty
                     {
                         User = new User("user")
-                    }
+                    }, 
+                    true
                 ).ToList()
             );
         }
         
         [Fact]
+        // Not Clear what this test is about????
         public void SameEqualSameHashCode()
         {
             var customHashCode = new WithCustomHashCode("11", 1);
@@ -60,7 +74,8 @@ namespace ObjectToTest.UnitTests
                     new WithCustomDataExtended(
                         new WithCustomData(customHashCode),
                         customHashCode
-                    )
+                    ),
+                    true
                 ).ToList()
             );
         }
@@ -72,7 +87,8 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 3,
                 new SharedObjects(
-                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                    new With2FuncArguments(user.Age, user.LoginToAsync),
+                    true
                 ).ToList().Count
             );
         }
@@ -82,7 +98,8 @@ namespace ObjectToTest.UnitTests
         {
             Assert.Empty(
                 new SharedObjects(
-                    new WithActionArgument((pos) => { })
+                    new WithActionArgument((pos) => { }),
+                    true
                 ).ToList()
             );
         }
@@ -91,17 +108,16 @@ namespace ObjectToTest.UnitTests
         public void ChildrenOfSharedConsideredAsNotShared()
         {
             var customUser = new CustomUserWithDependency(new User("user name"));
-            var withUser = new WithUserArgument(
-                customUser,
-                new WithUserPublicProperty
-                {
-                    User = customUser
-                }
-            );
-
             Assert.Single(
                 new SharedObjects(
-                    withUser
+                    new WithUserArgument(
+                        customUser,
+                        new WithUserPublicProperty
+                        {
+                            User = customUser
+                        }
+                    ),
+                    true
                 ).ToList()
             );
         }
@@ -112,20 +128,36 @@ namespace ObjectToTest.UnitTests
             var user = new User("user name");
             Assert.Single(
                 new SharedObjects(
-                    new With2ObjectArguments(user, user)
+                    new With2ObjectArguments(user, user),
+                    true
                 ).ToList()
             );
         }
 
-        [Fact(Skip = "Should be fixed as a part of #180 bug")]
-        public void HttpClient()
+        [Fact]
+        public void HttpClientHasNoSharedArguments()
         {
-            /*
-             * @todo #180 60m/DEV SharedObjects should be empty for HttpClient. The test should be green.
-             */
             Assert.Empty(
-                new SharedObjects(new HttpClient()).ToList()
+                new SharedObjects(new HttpClient(), false).ToList()
             );
         }
+
+        [Fact]
+        public void InitSharedAsMethodDelegate()
+        {
+            var user = new User("user name");
+            Assert.Equal(
+                new List<object>
+                {
+                    user,
+                    new Func<int>(user.Age),
+                    new Func<Task>(user.LoginToAsync)
+                },
+                new With2FuncArguments(user.Age, user.LoginToAsync)
+                    .SharedObjects(true)
+                    .Log(_output)
+            );
+        }
+        
     }
 }

@@ -13,7 +13,7 @@ namespace ObjectToTest.Constructors
         private readonly IArguments _sharedArguments;
 
         public InvalidConstructor(object @object)
-            : this(@object, new ObjectSharedArguments(@object))
+            : this(@object, new ObjectSharedArguments(@object, false))
         {
         }
         

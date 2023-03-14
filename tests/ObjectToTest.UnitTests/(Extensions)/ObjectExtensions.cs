@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit.Abstractions;
 
@@ -8,7 +9,19 @@ namespace ObjectToTest.UnitTests
     {
         public static T Log<T>(this T item, ITestOutputHelper output)
         {
-            output.WriteLine(Convert.ToString(item));
+            if (item is IEnumerable enumerable and not string)
+            {
+                output.WriteLine("Collection:");
+                foreach (var child in enumerable)
+                {
+                    output.WriteLine(Convert.ToString(child));
+                }
+            }
+            else
+            {
+                output.WriteLine(Convert.ToString(item));
+            }
+            
             return item;
         }
         

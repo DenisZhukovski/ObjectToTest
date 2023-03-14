@@ -71,6 +71,19 @@ namespace ObjectToTest
         {
             return @object.Field(name) != null || @object.Property(name) != null;
         }
+
+        public static bool ContainsValue(this object @object, object objectToCheck)
+        {
+            foreach (var value in @object.Values())
+            {
+                if (value == objectToCheck)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         
         public static bool ContainsDeep(this object @object, object objectToCheck)
         {

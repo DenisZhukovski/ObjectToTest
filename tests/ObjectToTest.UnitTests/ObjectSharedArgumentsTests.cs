@@ -36,7 +36,7 @@ namespace ObjectToTest.UnitTests
                     user, 
                     user.Constructor(new MockArguments())
                 ),
-                new ObjectSharedArguments(withUser).Argument(user)
+                new ObjectSharedArguments(withUser, true).Argument(user)
             );
         }
 
@@ -64,7 +64,7 @@ namespace ObjectToTest.UnitTests
                 User = new User("user")
             };
             Assert.Empty(
-                new ObjectSharedArguments(withUser).ToString()
+                new ObjectSharedArguments(withUser, true).ToString()
             );
         }
 
@@ -81,7 +81,7 @@ namespace ObjectToTest.UnitTests
             );
             Assert.Equal(
                 $"var user = new User(\"user name\");{Environment.NewLine}",
-                new ObjectSharedArguments(withUser).ToString()
+                new ObjectSharedArguments(withUser, true).ToString()
             );
         }
         
@@ -92,7 +92,8 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 $"var user = new User(\"user name\");{Environment.NewLine}",
                 new ObjectSharedArguments(
-                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                    new With2FuncArguments(user.Age, user.LoginToAsync),
+                    true
                 ).ToString(_output)
             );
         }
@@ -104,7 +105,8 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 3,
                 new ObjectSharedArguments(
-                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                    new With2FuncArguments(user.Age, user.LoginToAsync),
+                    true
                 ).ToList().Count
             );
         }
@@ -115,7 +117,8 @@ namespace ObjectToTest.UnitTests
             var user = new User("user name");
             Assert.NotNull(
                 new ObjectSharedArguments(
-                    new With2FuncArguments(user.Age, user.LoginToAsync)
+                    new With2FuncArguments(user.Age, user.LoginToAsync),
+                    true
                 ).Argument(new Func<int>(user.Age))
             );
         }
@@ -136,7 +139,7 @@ namespace ObjectToTest.UnitTests
                     string.Empty
                 ).ToString(),
                 new SharedCircularProperties(
-                    new ObjectSharedArguments(o1)
+                    new ObjectSharedArguments(o1, true)
                 ).ToString().Log(_output)
             );
         }
@@ -155,7 +158,7 @@ namespace ObjectToTest.UnitTests
             };
             Assert.Equal(
                 $"var user = new User(\"user name\");{Environment.NewLine}",
-                new ObjectSharedArguments(with2PublicProperties).ToString()
+                new ObjectSharedArguments(with2PublicProperties, true).ToString()
             );
         }
 
@@ -163,7 +166,10 @@ namespace ObjectToTest.UnitTests
         public void SingletonNotSharedArgument()
         {
             Assert.Empty(
-                new ObjectSharedArguments(new WithSingletonArgument(SingletonClass.Instance)).ToList()
+                new ObjectSharedArguments(
+                    new WithSingletonArgument(SingletonClass.Instance),
+                    true
+                ).ToList()
             );
         }
 
@@ -176,7 +182,8 @@ namespace ObjectToTest.UnitTests
                     new WithCustomDataExtended(
                         new WithCustomData(customHashCode),
                         customHashCode
-                    )
+                    ),
+                    true
                 ).Argument(customHashCode)
             );
         }
@@ -190,19 +197,20 @@ namespace ObjectToTest.UnitTests
                         new WithCustomDataExtended(
                             new WithCustomData(customHashCode),
                             customHashCode
-                        )
+                        ),
+                        true
                 ).Argument(new WithCustomHashCode("11", 2))
             );
         }
 
-        [Fact(Skip = "Should be fixed as a part of #180 bug")]
-        public void HttpClient()
+        [Fact]
+        public void HttpClientNoSharedArguments()
         {
-            /*
-             * @todo #180 60m/DEV ObjectSharedArguments should be empty for HttpClient. The test should be green.
-             */
             Assert.Empty(
-                new ObjectSharedArguments(new HttpClient()).ToList()
+                new ObjectSharedArguments(
+                    new HttpClient(),
+                    false
+                ).ToList()
             );
         }
     }

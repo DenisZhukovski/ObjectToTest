@@ -133,9 +133,12 @@ public static class ObjectExtensions
         );
     }
 
-    internal static List<object> SharedObjects(this object @object)
+    internal static List<object> SharedObjects(this object @object, bool recursive)
     {
-        var sharedObjects = new SharedObjects(@object).ToList();
+        var sharedObjects = new SharedObjects(
+            @object,
+            recursive
+        ).ToList();
         sharedObjects.Sort(new SortByDelegates());
         return sharedObjects;
     }
