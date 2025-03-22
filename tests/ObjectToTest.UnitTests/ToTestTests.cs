@@ -539,14 +539,16 @@ namespace ObjectToTest.UnitTests
      */
     new ChangedStateObject(new Price(10),new WithUserPublicProperty(){User = new User(""Test Name"")})",
                 new ChangedStateObject(
-                    new Price(10),
-                    new WithUserPublicProperty
-                    {
-                        User = new User("Test Name")
-                    }
-                ).ChangeState()
-                 .ToTest(_output)
-        
+                        new Price(10),
+                        new WithUserPublicProperty
+                        {
+                            User = new User("Test Name")
+                        }
+                    ).ChangeState()
+                    .ToTest(_output)
+            );
+        }
+
         [Fact(Skip = "Should be fixed as a part of task")]
         public void ObjectWithNotImplementedProperty()
         {
@@ -555,7 +557,7 @@ namespace ObjectToTest.UnitTests
              */
             Assert.Equal(
                 "new ObjectWithNotImplemented()",
-                new ObjectWithNotImplemented().ToTest(output, false)
+                new ObjectWithNotImplemented().ToTest(_output, false)
             );
         }
         
@@ -567,7 +569,7 @@ namespace ObjectToTest.UnitTests
              */
             Assert.Equal(
                 "new ObjectWithTypeProperty()",
-                new ObjectWithTypeProperty().ToTest(output, false)
+                new ObjectWithTypeProperty().ToTest(_output, false)
             );
         }
     }

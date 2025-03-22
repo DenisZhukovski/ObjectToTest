@@ -1,8 +1,10 @@
 using System;
 
-namespace ObjectToTest.UnitTests.Models;
-
-public class ObjectWithTypeProperty
+namespace ObjectToTest.UnitTests.Models
 {
-    public Type PrefabType => this.GetType();
+    public class ObjectWithTypeProperty
+    {
+        public Type PrefabType => this.GetType();
+    }
 }
+
