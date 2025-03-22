@@ -4,7 +4,6 @@ using ObjectToTest.UnitTests.Models;
 using ObjectToTest.UnitTests.Data;
 using System.Collections.Generic;
 using System.Net.Http;
-using GrandKitchen.Manufactures.Bosch;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
 
 namespace ObjectToTest.UnitTests
