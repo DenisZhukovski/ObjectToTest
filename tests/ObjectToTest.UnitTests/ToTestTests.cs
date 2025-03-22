@@ -558,5 +558,15 @@ namespace ObjectToTest.UnitTests
                 new ObjectWithTypeProperty().ToTest(output, false)
             );
         }
+
+        [Fact]
+        public void DecoratorWithOverridenHashCode()
+        {
+            Assert.Equal(
+                "new DecoratorWithOverridenHashCode(new Price(200))",
+                new DecoratorWithOverridenHashCode(new Price(200)).ToTest(output, false)
+            );
+            
+        }
     }
 }

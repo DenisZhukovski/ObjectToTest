@@ -41,7 +41,7 @@ namespace ObjectToTest
                     }
                     foreach (var value in @object.Values(true))
                     {
-                        if (value != null && !value.IsPrimitive())
+                        if (value != null && !value.IsPrimitive() && !@object.Equals(value))
                         {
                             CollectObjectsUsageRecursive(value, objectUsageCount);
                         }
