@@ -539,13 +539,37 @@ namespace ObjectToTest.UnitTests
      */
     new ChangedStateObject(new Price(10),new WithUserPublicProperty(){User = new User(""Test Name"")})",
                 new ChangedStateObject(
-                    new Price(10),
-                    new WithUserPublicProperty
-                    {
-                        User = new User("Test Name")
-                    }
-                ).ChangeState()
-                 .ToTest(_output)
+                        new Price(10),
+                        new WithUserPublicProperty
+                        {
+                            User = new User("Test Name")
+                        }
+                    ).ChangeState()
+                    .ToTest(_output)
+            );
+        }
+
+        [Fact(Skip = "Should be fixed as a part of task")]
+        public void ObjectWithNotImplementedProperty()
+        {
+            /*
+             * @todo #:60m/DEV Object With NotImplemented properties should be able to instantiate.
+             */
+            Assert.Equal(
+                "new ObjectWithNotImplemented()",
+                new ObjectWithNotImplemented().ToTest(_output, false)
+            );
+        }
+        
+        [Fact(Skip = "Should be fixed as a part of task")]
+        public void ObjectWithTypeProperty()
+        {
+            /*
+             * @todo #:60m/DEV Object With Type properties should be able to instantiate.
+             */
+            Assert.Equal(
+                "new ObjectWithTypeProperty()",
+                new ObjectWithTypeProperty().ToTest(_output, false)
             );
         }
     }
