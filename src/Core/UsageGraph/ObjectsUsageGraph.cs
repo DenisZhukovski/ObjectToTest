@@ -57,7 +57,7 @@ namespace ObjectToTest
         private bool IncrementDelegateCounterparts(object @object, Dictionary<object, int> objectUsageCount)
         {
             var wasIncremented = false;
-            if (@object is Delegate @delegate)
+            if (@object is Delegate { Target: not null } @delegate)
             {
                 var objectsToIncrement = new List<object>();
                 var delegateTarget = @delegate.Target;
