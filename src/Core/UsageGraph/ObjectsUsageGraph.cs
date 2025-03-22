@@ -64,7 +64,7 @@ namespace ObjectToTest
                 foreach (var itemToCheck in objectUsageCount.Keys)
                 {
                     var item = itemToCheck;
-                    if (item is Delegate itemToCheckDelegate)
+                    if (item is Delegate { Target: not null } itemToCheckDelegate)
                     {
                         item = itemToCheckDelegate.Target;
                     }
