@@ -37,11 +37,13 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-- task: SonarCloudPrepare@1
+    targetType: 'inline'
+    script: dotnet restore ObjectToTest.sln
+- task: SonarCloudPrepare@3
   inputs:
-    SonarCloud: 'SonarCloud'
+    SonarQube: 'SonarCloud'
     organization: 'deniszhukovski'
-    scannerMode: 'MSBuild'
+    scannerMode: 'dotnet'
     projectKey: 'DenisZhukovski_ObjectToTest'
     projectName: 'ObjectToTest'
     extraProperties: |
@@ -67,7 +69,9 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: '**/*.cobertura.xml'
 
-- task: SonarCloudAnalyze@1
-- task: SonarCloudPublish@1
+- task: SonarCloudAnalyze@3
+  inputs:
+    jdkversion: 'JAVA_HOME_21_X64'
+- task: SonarCloudPublish@3
   inputs:
     pollingTimeoutSec: '300'
