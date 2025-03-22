@@ -1,20 +1,13 @@
 ﻿using ObjectToTest.Infrastructure;
-using Xunit.Abstractions;
+using Xunit;
 
 namespace ObjectToTest.UnitTests.Extensions
 {
-    public class LoggerForTests : ILogger
+    public class LoggerForTests(ITestOutputHelper output) : ILogger
     {
-        private readonly ITestOutputHelper _output;
-
-        public LoggerForTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-        
         public void WriteLine(string log)
         {
-            _output.WriteLine(log);
+            output.WriteLine(log);
         }
     }
 }

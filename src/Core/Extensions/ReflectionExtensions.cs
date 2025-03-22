@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ObjectToTest.Extensions;
+using ObjectToTest.Core.Extensions;
 
 namespace ObjectToTest
 {
@@ -90,7 +91,8 @@ namespace ObjectToTest
             if (@object.IsPrimitive()
                 || @object.IsDelegate()
                 || @object.IsCollection()
-                || @object.IsValueType())
+                || @object.IsValueType()
+                || @object.IsMetaType())
             {
                 return false;
             }
@@ -103,7 +105,8 @@ namespace ObjectToTest
             if (@object.IsPrimitive()
                 || @object.IsDelegate()
                 || @object.IsCollection()
-                || @object.IsValueType())
+                || @object.IsValueType()
+                || @object.IsMetaType())
             {
                 return false;
             }
@@ -171,17 +174,20 @@ namespace ObjectToTest
                 {
                     return field.GetValue(@object);
                 }
-                else
+
+                var property = @object.Property(name);
+                if (property != null)
                 {
-                    var property = @object.Property(name);
-                    if (property != null)
-                    {
-                        return property.GetValue(@object);
-                    }
+                    return property.GetValue(@object);
                 }
             }
             catch (Exception ex)
             {
+                if (ex.Contains<NotImplementedException>())
+                {
+                    return null;
+                }
+
                 throw new InvalidOperationException(
                     $"Can not get value '{name}' from object '{@object}' ('{@object.GetType().Name}')",
                     ex
@@ -202,6 +208,11 @@ namespace ObjectToTest
         internal static bool IsValueType(this object? @object)
         {
             return @object != null && @object.GetType().IsValueType;
+        }
+        
+        internal static bool IsMetaType(this object? @object)
+        {
+            return @object != null && @object.GetType() == typeof(Type).GetType();
         }
 
         internal static bool IsCollection(this object @object)
@@ -241,13 +252,13 @@ namespace ObjectToTest
                 return @object
                     .GetType()
                     .GetRuntimeFields()
-                    .Select(field => @object.Value(field))
+                    .Select(@object.Value)
                     .ToList();
             }
 
             return @object
                 .FieldsAndProperties()
-                .Select(field => @object.Value(field))
+                .Select(@object.Value)
                 .ToList();
         }
         

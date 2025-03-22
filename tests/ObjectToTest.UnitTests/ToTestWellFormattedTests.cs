@@ -4,7 +4,6 @@ using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
@@ -22,15 +21,8 @@ namespace ObjectToTest.UnitTests
      * 8. Dictionary should be formatted with separate set of rules. Each pair on separate line.
     */
 
-    public class ToTestWellFormattedTests
+    public class ToTestWellFormattedTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public ToTestWellFormattedTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
 #pragma warning disable CS8604
         [Fact]
         public void ThrowArgumentNullException_ShouldBehaveAsNotFormatted()
@@ -53,7 +45,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicProperty
                 {
                     PropertyName = "Test"
-                }.ToTestWellFormatted(_output)
+                }.ToTestWellFormatted(output)
             );
         }
 
@@ -70,7 +62,7 @@ namespace ObjectToTest.UnitTests
                 new WithOnePublicIntProperty
                 {
                     PropertyName = 42
-                }.ToTestWellFormatted(_output)
+                }.ToTestWellFormatted(output)
             );
         }
 
@@ -89,7 +81,7 @@ namespace ObjectToTest.UnitTests
                 {
                     IntProperty = 42,
                     StringProperty = "Test"
-                }.ToTestWellFormatted(_output)
+                }.ToTestWellFormatted(output)
             );
         }
 
@@ -99,7 +91,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithOneParameterConstructorAndPublicReadProperty(42)",
                 new WithOneParameterConstructorAndPublicReadProperty(42)
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -109,7 +101,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithOneParamAndPrivateField(42)",
                 new WithOneParamAndPrivateField(42)
-                        .ToTestWellFormatted(_output)
+                        .ToTestWellFormatted(output)
             );
         }
 
@@ -121,7 +113,7 @@ namespace ObjectToTest.UnitTests
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test"
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -138,7 +130,7 @@ namespace ObjectToTest.UnitTests
                 new WithTwoParamOneFieldAndOneProperty(
                     42,
                     "Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -152,7 +144,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithClassParam(new EmptyObject())
-                        .ToTestWellFormatted(_output)
+                        .ToTestWellFormatted(output)
             );
         }
 
@@ -169,7 +161,7 @@ namespace ObjectToTest.UnitTests
                 new WithClassAndIntParams(
                     42,
                     new EmptyObject()
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -177,9 +169,9 @@ namespace ObjectToTest.UnitTests
         public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
         {
             Assert.Equal(
-                "new TimeSpan(18, 17, 34, 24, 5)",
+                "new TimeSpan(18, 17, 34, 24, 5, 0)",
                 new TimeSpan(18, 17, 34, 24, 5)
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -196,7 +188,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithClassParamThatDependsOnClass(
                     new WithClassParam(new EmptyObject())
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -223,7 +215,7 @@ namespace ObjectToTest.UnitTests
                         new EmptyObject()
                     ),
                     42
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -243,7 +235,7 @@ namespace ObjectToTest.UnitTests
                 new WithClassParamWithProp(
                     new WithOnePublicProperty { PropertyName = "Test" },
                     42
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -253,7 +245,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithGenericArgument<IPrice>()",
                 new WithGenericArgument<IPrice>()
-                        .ToTestWellFormatted(_output)
+                        .ToTestWellFormatted(output)
             );
         }
 
@@ -267,7 +259,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new With2GenericArguments<IPrice, IUser>(new Price(10))
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -277,7 +269,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new With3GenericArguments<int,decimal,string>()",
                 new With3GenericArguments<int, decimal, string>()
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -291,7 +283,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithStructArgument(UnityEngine.Vector3.forward)
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -301,7 +293,7 @@ namespace ObjectToTest.UnitTests
             Assert.Equal(
                 "new WithEnumArgument(FlaggedEnum.Advanced)",
                 new WithEnumArgument(FlaggedEnum.Advanced)
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -315,7 +307,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithFuncArgument(() => 0)
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             ); 
         }
         
@@ -329,7 +321,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithActionArgument((pos) => { })
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -350,7 +342,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithIEnumerableInt(
                     new [] { 1, 2, 4, 5 }
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -370,7 +362,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithListArgument(new List<int> { 1, 2, 4, 5 })
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -384,7 +376,7 @@ namespace ObjectToTest.UnitTests
                 ")"
                 ).ToString(),
                 new WithListArgument(new List<int>())
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
 
@@ -404,7 +396,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithDictionaryArgument(
                     new Dictionary<int,string> { { 1, "1" }, { 2, "2" }, { 3, "3" } }
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -419,7 +411,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new WithDictionaryArgument(
                     new Dictionary<int, string>()
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -436,7 +428,7 @@ namespace ObjectToTest.UnitTests
                 new Foo(
                     new Price(10),
                     new User("User Name")
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -462,7 +454,7 @@ namespace ObjectToTest.UnitTests
                 "    }",
                 ")"
                 ).ToString(),
-                withUser.ToTestWellFormatted(_output)
+                withUser.ToTestWellFormatted(output)
             );
         }
 
@@ -482,7 +474,7 @@ namespace ObjectToTest.UnitTests
                 new SharedSingletons(
                     new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10)),
                     new WithSingletonArgument(SingletonClass.Instance)
-                ).ToTestWellFormatted(_output)
+                ).ToTestWellFormatted(output)
             );
         }
 
@@ -497,7 +489,7 @@ namespace ObjectToTest.UnitTests
                     ")"
                 ).ToString(),
                 new WithSingletonAndOtherArgument(SingletonClass.Instance, new Price(10))
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
         
@@ -513,7 +505,7 @@ namespace ObjectToTest.UnitTests
                     string.Empty
                 ).ToString(),
                 new IncorrectArgumentsClass(1, 2)
-                    .ToTestWellFormatted(_output)
+                    .ToTestWellFormatted(output)
             );
         }
     }

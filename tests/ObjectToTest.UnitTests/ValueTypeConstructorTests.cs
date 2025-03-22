@@ -31,7 +31,7 @@ namespace ObjectToTest.UnitTests
         public void TimeSpanCtor()
         {
             Assert.Equal(
-               "new TimeSpan(18, 17, 34, 24, 5)",
+               "new TimeSpan(18, 17, 34, 24, 5, 0)",
                new ValueTypeConstructor(new TimeSpan(18, 17, 34, 24, 5)).ToString()
             );
         }

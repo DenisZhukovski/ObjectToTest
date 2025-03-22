@@ -21,22 +21,14 @@ name: $(releaseBuildNumber).$(Build.BuildId)
 
 steps:
 - task: UseDotNet@2
-  displayName: Use .NET 6.0
+  displayName: Use .NET 9.0
   inputs:
     packageType: 'sdk'
-    version: '6.0.x'
+    version: '9.0.x'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core sdk'
+- task: Bash@3  
+  displayName: Restore nuget
   inputs:
-    packageType: sdk
-    version: 3.1.402
-    installationPath: $(Agent.ToolsDirectory)/dotnet
-
-- task: NuGetToolInstaller@1
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
     targetType: 'inline'
     script: dotnet restore ObjectToTest.sln
 - task: SonarCloudPrepare@3
@@ -49,11 +41,11 @@ steps:
     extraProperties: |
         sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)\tests\ObjectToTest.UnitTests\coverage.opencover.xml
         sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)\*.trx
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+
+- task: Bash@3   
+  displayName: Build Solution
+  inputs:     targetType: 'inline'
+  script: dotnet build ObjectToTest.sln --configuration $(buildConfiguration)
 
 - task: DotNetCoreCLI@2
   displayName: 'Run tests'
@@ -63,7 +55,7 @@ steps:
     publishTestResults: true
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true "/p:CoverletOutputFormat=\"opencover,Cobertura\""'
 
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   displayName: 'Publish code coverage result'
   inputs:
     codeCoverageTool: Cobertura
