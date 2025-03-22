@@ -546,6 +546,28 @@ namespace ObjectToTest.UnitTests
                     }
                 ).ChangeState()
                  .ToTest(_output)
+        
+        [Fact(Skip = "Should be fixed as a part of task")]
+        public void ObjectWithNotImplementedProperty()
+        {
+            /*
+             * @todo #:60m/DEV Object With NotImplemented properties should be able to instantiate.
+             */
+            Assert.Equal(
+                "new ObjectWithNotImplemented()",
+                new ObjectWithNotImplemented().ToTest(output, false)
+            );
+        }
+        
+        [Fact(Skip = "Should be fixed as a part of task")]
+        public void ObjectWithTypeProperty()
+        {
+            /*
+             * @todo #:60m/DEV Object With Type properties should be able to instantiate.
+             */
+            Assert.Equal(
+                "new ObjectWithTypeProperty()",
+                new ObjectWithTypeProperty().ToTest(output, false)
             );
         }
     }
