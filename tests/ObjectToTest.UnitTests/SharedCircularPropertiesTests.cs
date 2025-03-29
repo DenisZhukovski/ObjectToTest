@@ -1,22 +1,13 @@
-using System;
 using System.Net.Http;
 using ObjectToTest.Arguments;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
-    public class SharedCircularPropertiesTests
+    public class SharedCircularPropertiesTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public SharedCircularPropertiesTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-        
         [Fact]
         public void NotEmptyForSharedObject()
         {
@@ -44,7 +35,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new SharedCircularProperties(
                     new ObjectSharedArguments(o1, true)
-                ).ToString().Log(_output)
+                ).ToString().Log(output)
             );
         }
         

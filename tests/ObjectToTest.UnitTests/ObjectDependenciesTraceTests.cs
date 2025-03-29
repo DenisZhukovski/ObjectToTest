@@ -1,20 +1,11 @@
-﻿using System;
-using ObjectToTest.UnitTests.Extensions;
+﻿using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
-    public class ObjectDependenciesTraceTests
+    public class ObjectDependenciesTraceTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public ObjectDependenciesTraceTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Fact]
         public void IncorrectArgumentsClass()
         {
@@ -27,7 +18,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new  ObjectDependenciesTrace(new IncorrectArgumentsClass(1, 2))
                     .ToString()
-                    .Log(_output)
+                    .Log(output)
             );
         }
 
@@ -50,7 +41,7 @@ namespace ObjectToTest.UnitTests
                             new IncorrectArgumentsClass(1, 2)
                         )
                 ).ToString()
-                 .Log(_output)
+                 .Log(output)
             );
         }
 
@@ -76,7 +67,7 @@ namespace ObjectToTest.UnitTests
                             new Price(30)
                         )
                 ).ToString()
-                 .Log(_output)
+                 .Log(output)
             );
         }
     }

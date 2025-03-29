@@ -56,16 +56,11 @@ namespace ObjectToTest
             }
             catch(NoConstructorException ex)
             {
-                return ex.Message + 
-                    Environment.NewLine +
-                    new ObjectDependenciesTrace(
-                        _object,
-                        _sharedArguments
-                    );
+                return $"{ex.Message}{Environment.NewLine}{new ObjectDependenciesTrace(_object, _sharedArguments)}";
             }
         }
 
-        private static bool NeedRecursiveScan(object @object)
+        private static bool NeedRecursiveScan(object? @object)
         {
             if (@object != null && !@object.GetType().Namespace.StartsWith("System"))
             {

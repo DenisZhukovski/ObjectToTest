@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using ObjectToTest.UnitTests.Extensions;
-using Xunit.Abstractions;
+using Xunit;
 
 namespace ObjectToTest.UnitTests
 {

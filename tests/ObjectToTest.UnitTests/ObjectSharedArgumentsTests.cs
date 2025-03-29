@@ -5,19 +5,11 @@ using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
-    public class ObjectSharedArgumentsTests
+    public class ObjectSharedArgumentsTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public ObjectSharedArgumentsTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-        
         [Fact]
         public void SharedNotNullArgument()
         {
@@ -52,7 +44,7 @@ namespace ObjectToTest.UnitTests
                     {
                         User = user
                     }
-                ).ToTest(_output, false)
+                ).ToTest(output, false)
             );
         }
 
@@ -94,7 +86,7 @@ namespace ObjectToTest.UnitTests
                 new ObjectSharedArguments(
                     new With2FuncArguments(user.Age, user.LoginToAsync),
                     true
-                ).ToString(_output)
+                ).ToString(output)
             );
         }
         
@@ -140,7 +132,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new SharedCircularProperties(
                     new ObjectSharedArguments(o1, true)
-                ).ToString().Log(_output)
+                ).ToString().Log(output)
             );
         }
 

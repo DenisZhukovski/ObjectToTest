@@ -62,7 +62,7 @@ namespace ObjectToTest.Arguments
                 ParameterConstructor(parameter)
             );
         }
-
+        
         private IConstructor ParameterConstructor(ParameterInfo parameter)
         {
             if (_object.Contains(parameter))

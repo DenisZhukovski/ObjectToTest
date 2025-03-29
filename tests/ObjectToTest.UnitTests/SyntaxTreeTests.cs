@@ -1,24 +1,14 @@
 ﻿using System.Linq;
-using ObjectToTest.CodeFormatting.Formatting;
 using ObjectToTest.CodeFormatting.Syntax;
 using ObjectToTest.CodeFormatting.Syntax.Contracts;
 using ObjectToTest.CodeFormatting.Syntax.Extensions;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit;
-using Xunit.Abstractions;
-using SyntaxTreeDump = ObjectToTest.CodeFormatting.Syntax.Dump.SyntaxTreeDump;
 
 namespace ObjectToTest.UnitTests
 {
-    public class SyntaxTreeTests
+    public class SyntaxTreeTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public SyntaxTreeTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-        
         [Fact]
         public void NumberOfCodeParts()
         {
@@ -74,7 +64,7 @@ namespace ObjectToTest.UnitTests
                 ).ToString(),
                 new SyntaxTree(
                         "new TimeSpan(18, 17, 34, 24, 5)"
-                ).Dump().Log(_output)
+                ).Dump().Log(output)
             );
         }
 
@@ -84,7 +74,7 @@ namespace ObjectToTest.UnitTests
             Assert.NotEmpty(
                 new SyntaxTree(
                 "new TimeSpan(18, 17, 34, 24, 5)"
-                ).Dump().Log(_output)
+                ).Dump().Log(output)
             );  
         }
 
@@ -101,7 +91,7 @@ namespace ObjectToTest.UnitTests
                         "    42",
                         ")"
                     ).ToString()
-                ).Dump().Log(_output)
+                ).Dump().Log(output)
                 .ClaimEqual(
                     new NewLineSeparatedString(
                         "InstantiationStatement",

@@ -6,19 +6,11 @@ using ObjectToTest.UnitTests.Data;
 using ObjectToTest.UnitTests.Models;
 using UnityEngine;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
-    public class SharedObjectsTests
+    public class SharedObjectsTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public SharedObjectsTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-        
         [Fact]
         public void CircularReferenceDetection()
         {
@@ -155,7 +147,7 @@ namespace ObjectToTest.UnitTests
                 },
                 new With2FuncArguments(user.Age, user.LoginToAsync)
                     .SharedObjects(true)
-                    .Log(_output)
+                    .Log(output)
             );
         }
         

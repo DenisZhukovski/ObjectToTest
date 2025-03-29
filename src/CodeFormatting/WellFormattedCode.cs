@@ -10,7 +10,8 @@ namespace ObjectToTest.CodeFormatting
         private readonly string _notFormattedCode;
         private readonly ILogger _logger;
 
-        public WellFormattedCode(string notFormattedCode) : this(notFormattedCode, new SilentLogger())
+        public WellFormattedCode(string notFormattedCode) 
+            : this(notFormattedCode, new SilentLogger())
         {
         }
 

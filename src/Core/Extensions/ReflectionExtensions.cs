@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ObjectToTest.Extensions;
+using ObjectToTest.Core.Extensions;
 
 namespace ObjectToTest
 {
@@ -90,7 +91,8 @@ namespace ObjectToTest
             if (@object.IsPrimitive()
                 || @object.IsDelegate()
                 || @object.IsCollection()
-                || @object.IsValueType())
+                || @object.IsValueType()
+                || @object.IsMetaType())
             {
                 return false;
             }
@@ -103,7 +105,8 @@ namespace ObjectToTest
             if (@object.IsPrimitive()
                 || @object.IsDelegate()
                 || @object.IsCollection()
-                || @object.IsValueType())
+                || @object.IsValueType()
+                || @object.IsMetaType())
             {
                 return false;
             }
@@ -133,10 +136,20 @@ namespace ObjectToTest
                 return null;
             }
 
-            return @object
-                .GetType()
-                .GetRuntimeFields()
-                .FirstOrDefault(f => f.Name.SameVariable(name));
+            var type = @object.GetType();
+            while (type != null)
+            {
+                var field = type
+                    .GetRuntimeFields()
+                    .FirstOrDefault(f => f.Name.SameVariable(name));
+                if (field != null)
+                {
+                    return field;
+                }
+                type = type.BaseType;
+            }
+
+            return null;
         }
 
         public static PropertyInfo? Property(this object @object, string name)
@@ -146,10 +159,20 @@ namespace ObjectToTest
                 return null;
             }
 
-            return @object
-                .GetType()
-                .GetProperties()
-                .FirstOrDefault(p => p.Name.SameVariable(name));
+            var type = @object.GetType();
+            while (type != null)
+            {
+                var property = type
+                    .GetProperties()
+                    .FirstOrDefault(p => p.Name.SameVariable(name));
+                if (property != null)
+                {
+                    return property;
+                }
+                type = type.BaseType;
+            }
+
+            return null;
         }
 
         public static object? Value(this object @object, MemberInfo parameter)
@@ -171,17 +194,20 @@ namespace ObjectToTest
                 {
                     return field.GetValue(@object);
                 }
-                else
+
+                var property = @object.Property(name);
+                if (property != null)
                 {
-                    var property = @object.Property(name);
-                    if (property != null)
-                    {
-                        return property.GetValue(@object);
-                    }
+                    return property.GetValue(@object);
                 }
             }
             catch (Exception ex)
             {
+                if (ex.Contains<NotImplementedException>())
+                {
+                    return null;
+                }
+
                 throw new InvalidOperationException(
                     $"Can not get value '{name}' from object '{@object}' ('{@object.GetType().Name}')",
                     ex
@@ -203,13 +229,18 @@ namespace ObjectToTest
         {
             return @object != null && @object.GetType().IsValueType;
         }
+        
+        internal static bool IsMetaType(this object? @object)
+        {
+            return @object != null && @object.GetType() == typeof(Type).GetType();
+        }
 
         internal static bool IsCollection(this object @object)
         {
             return @object
-                    .GetType()
-                    .GetInterfaces()
-                    .Contains(typeof(IEnumerable));
+                .GetType()
+                .GetInterfaces()
+                .Contains(typeof(IEnumerable));
         }
 
         internal static List<MemberInfo> FieldsAndProperties(this object? @object)
@@ -241,13 +272,13 @@ namespace ObjectToTest
                 return @object
                     .GetType()
                     .GetRuntimeFields()
-                    .Select(field => @object.Value(field))
+                    .Select(@object.Value)
                     .ToList();
             }
 
             return @object
                 .FieldsAndProperties()
-                .Select(field => @object.Value(field))
+                .Select(@object.Value)
                 .ToList();
         }
         

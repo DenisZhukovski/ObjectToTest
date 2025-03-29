@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ObjectToTest.UnitTests.Extensions;
-using Xunit.Abstractions;
+using Xunit;
 
 namespace ObjectToTest.UnitTests
 {

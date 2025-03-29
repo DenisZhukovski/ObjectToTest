@@ -5,43 +5,25 @@ using ObjectToTest.UnitTests.Extensions;
 using ObjectToTest.UnitTests.Models.ForFormatting;
 using System;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
-    public class FormatTests
+    public class FormatTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
-
-        public FormatTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Fact]
         public void ToStringDefinition_Arrays_Transformations()
         {
-            var a = new A()
+            var a = new A
             {
                 I = 42,
-                Inner = new B()
+                Inner = new B
                 {
                     J = 22,
-                    Arr = new C[]
-                    {
-                        new C()
-                        {
-                            K = 1
-                        },
-                        new C()
-                        {
-                            K = 2
-                        }
-                    }
+                    Arr = [new C { K = 1 }, new C { K = 2 }]
                 }
             };
             
-            var f = new Format(new LoggerForTests(_output));
+            var f = new Format(new LoggerForTests(output));
             f.For<A>("{0} {1}", x => new Args(x.I, x.Inner), "Base A format");
             f.For<B>("({0}) {1}", x => new Args(x.J, x.Arr), "Base B format");
             f.ForArrayOf<C>(x => string.Join(", ", x), "Base C[] format");
@@ -77,7 +59,7 @@ namespace ObjectToTest.UnitTests
                 }
             };
             
-            var f = new Format(new LoggerForTests(_output));
+            var f = new Format(new LoggerForTests(output));
             f.For<A>("{0}{1}", x => new Args(x.I, x.Inner), "Base A format");
             f.For<B>("{0}{1}", x => new Args(x.J, x.Arr), "Base B format");
             f.ForArrayOf<C>(x => string.Join(Environment.NewLine, x), "Base C[] format");

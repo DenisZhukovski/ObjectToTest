@@ -41,7 +41,7 @@ namespace ObjectToTest
                     }
                     foreach (var value in @object.Values(true))
                     {
-                        if (value != null && !value.IsPrimitive())
+                        if (value != null && !value.IsPrimitive() && !@object.Equals(value))
                         {
                             CollectObjectsUsageRecursive(value, objectUsageCount);
                         }
@@ -57,14 +57,14 @@ namespace ObjectToTest
         private bool IncrementDelegateCounterparts(object @object, Dictionary<object, int> objectUsageCount)
         {
             var wasIncremented = false;
-            if (@object is Delegate @delegate)
+            if (@object is Delegate { Target: not null } @delegate)
             {
                 var objectsToIncrement = new List<object>();
                 var delegateTarget = @delegate.Target;
                 foreach (var itemToCheck in objectUsageCount.Keys)
                 {
                     var item = itemToCheck;
-                    if (item is Delegate itemToCheckDelegate)
+                    if (item is Delegate { Target: not null } itemToCheckDelegate)
                     {
                         item = itemToCheckDelegate.Target;
                     }
