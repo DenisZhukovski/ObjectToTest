@@ -11,13 +11,14 @@ using ObjectToTest.Infrastructure;
 
 public static class ObjectExtensions
 {
-    public static string ToTest(this object @object, bool wellFormatted = true)
+    public static string ToTest(this object @object, ILogger? logger = null, bool wellFormatted = true)
     {
         if (wellFormatted)
         {
-            return @object.ToTestWellFormatted();
+            return @object.ToTestWellFormatted(logger);
         }
-        
+
+        LoggerInstance.Instance = logger ?? new InMemoryLogger();
         return new ObjectAsConstructor(
             @object ?? throw new ArgumentNullException(nameof(@object))
         ).ToString();

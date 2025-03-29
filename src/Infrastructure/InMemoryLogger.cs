@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ObjectToTest.Infrastructure
 {
@@ -12,5 +13,10 @@ namespace ObjectToTest.Infrastructure
         }
 
         public List<string> Records => _records;
+
+        public override string ToString()
+        {
+            return string.Join(Environment.NewLine, _records);
+        }
     }
 }

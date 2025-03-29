@@ -566,6 +566,25 @@ namespace ObjectToTest.UnitTests
                 "new DecoratorWithOverridenHashCode(new Price(200))",
                 new DecoratorWithOverridenHashCode(new Price(200)).ToTest(output, false)
             );
+        }
+        
+        [Fact]
+        public void SecondaryConstructor()
+        {
+            Assert.Equal(
+                "new SecondaryConstructor(new Price(200))",
+                new SecondaryConstructor(200).ToTest(output, false)
+            );
+            
+        }
+        
+        [Fact]
+        public void InheritedClassBaseField()
+        {
+            Assert.Equal(
+                "new InheritedClass(new Price(200))",
+                new InheritedClass(200).ToTest(output, false)
+            );
             
         }
     }
