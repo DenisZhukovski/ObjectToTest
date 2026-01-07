@@ -5,6 +5,7 @@ using ObjectToTest.UnitTests.Data;
 using System.Collections.Generic;
 using System.Net.Http;
 using ObjectToTest.CodeFormatting.Syntax.Core.Strings;
+using Xunit.Abstractions;
 
 namespace ObjectToTest.UnitTests
 {
@@ -505,9 +506,6 @@ namespace ObjectToTest.UnitTests
         [Fact]
         public void HttpClientToTest()
         {
-            /*
-             * @todo #180 60m/DEV HttpClient should be recreated properly, The test should be green.
-             */
             Assert.Equal(
                 "new HttpClient()",
                 new HttpClient().ToTest(output, false)

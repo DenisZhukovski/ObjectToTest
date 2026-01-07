@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net9.0;net10.0</TargetFrameworks>
     <Authors>Denis Zhukovski, Maksym Shustov, Stanislau Kanaplianik</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>0.0.10</Version>

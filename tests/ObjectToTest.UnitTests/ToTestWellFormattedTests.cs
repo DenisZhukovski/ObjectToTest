@@ -177,7 +177,7 @@ namespace ObjectToTest.UnitTests
         public void ShortArgumentsShouldBeSeparatedBySpace_TimeSpanConstructor()
         {
             Assert.Equal(
-                "new TimeSpan(18, 17, 34, 24, 5)",
+                "new TimeSpan(18, 17, 34, 24, 5, 0)",
                 new TimeSpan(18, 17, 34, 24, 5)
                     .ToTestWellFormatted(_output)
             );
