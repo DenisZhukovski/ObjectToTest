@@ -6,6 +6,7 @@ using ObjectToTest;
 using ObjectToTest.Arguments;
 using ObjectToTest.CodeFormatting;
 using ObjectToTest.Constructors;
+using ObjectToTest.Core.DefaultState;
 using ObjectToTest.Infrastructure;
 // ReSharper disable CheckNamespace
 
@@ -91,6 +92,11 @@ public static class ObjectExtensions
         if (@object.IsSingleton())
         {
             return new SingletonConstructor(@object);
+        }
+
+        if (DefaultStateEvaluator.TryGetDefaultConstructorCall(@object, out var defaultCtor, out var defaultCtorArguments))
+        {
+            return new DefaultStateConstructor(@object, defaultCtor!, defaultCtorArguments, sharedArguments);
         }
 
         return @object

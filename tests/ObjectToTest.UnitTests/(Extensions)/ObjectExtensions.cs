@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net.Http;
 using ObjectToTest.UnitTests.Extensions;
 using Xunit.Abstractions;
 
@@ -27,7 +28,7 @@ namespace ObjectToTest.UnitTests
         
         public static string ToTest(this object item, ITestOutputHelper output, bool wellFormatted = true)
         {
-            return item.ToTest(wellFormatted).Log(output);
+            return item.ToTest(wellFormatted: wellFormatted).Log(output);
         }
         
         public static string ToTestWellFormatted(this object item, ITestOutputHelper output)

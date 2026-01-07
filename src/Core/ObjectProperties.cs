@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ObjectToTest.Arguments;
+using ObjectToTest.Core.DefaultState;
 
 namespace ObjectToTest
 {
@@ -29,6 +30,11 @@ namespace ObjectToTest
 
         public IList<PropertyInfo> ToList()
         {
+            if (DefaultStateEvaluator.IsDefaultState(_object))
+            {
+                return new List<PropertyInfo>();
+            }
+
             return _object
                 .GetType()
                 .GetProperties()
