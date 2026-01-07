@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ObjectToTest.Extensions;
+using ObjectToTest.Core.Extensions;
 
 namespace ObjectToTest
 {
@@ -182,6 +183,11 @@ namespace ObjectToTest
             }
             catch (Exception ex)
             {
+                if (ex.Contains<NotImplementedException>() || ex.Contains<InvalidOperationException>())
+                {
+                    return null;
+                }
+
                 throw new InvalidOperationException(
                     $"Can not get value '{name}' from object '{@object}' ('{@object.GetType().Name}')",
                     ex
@@ -202,6 +208,11 @@ namespace ObjectToTest
         internal static bool IsValueType(this object? @object)
         {
             return @object != null && @object.GetType().IsValueType;
+        }
+
+        internal static bool IsMetaType(this object? @object)
+        {
+            return @object != null && @object.GetType() == typeof(Type);
         }
 
         internal static bool IsCollection(this object @object)
@@ -232,6 +243,11 @@ namespace ObjectToTest
         internal static List<object?> Values(this object? @object, bool fieldsOnly = false)
         {
             if (@object == null)
+            {
+                return new List<object?>();
+            }
+
+            if (@object.IsMetaType())
             {
                 return new List<object?>();
             }

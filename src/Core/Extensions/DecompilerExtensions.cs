@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
@@ -62,10 +61,8 @@ namespace ObjectToTest.Extensions
                 }
                 return $"{@delegate.ClosuresParamsAsString()}({method.ParametersAsString()}) => {method.BodyAsString()}";
             }
-            else
-            {
-                return $"{@delegate.Target.ToTest()}.{method.Name}";
-            }
+
+            return $"{@delegate.Target.ToTest()}.{method.Name}";
         }
 
         private static string ClosuresParamsAsString(this Delegate @delegate)

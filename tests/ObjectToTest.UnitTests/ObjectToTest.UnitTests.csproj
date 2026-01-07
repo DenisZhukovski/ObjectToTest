@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
     <Configurations>Mock;Debug;Release</Configurations>
     <Nullable>enable</Nullable>
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
  
   <ItemGroup>
