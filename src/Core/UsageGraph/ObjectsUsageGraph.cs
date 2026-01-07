@@ -69,7 +69,7 @@ namespace ObjectToTest
                         item = itemToCheckDelegate.Target;
                     }
 
-                    if (item.Equals(delegateTarget))
+                    if (item?.Equals(delegateTarget) ?? false)
                     {
                         objectsToIncrement.Add(itemToCheck);
                     }
