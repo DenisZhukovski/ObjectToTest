@@ -21,17 +21,18 @@ name: $(releaseBuildNumber).$(Build.BuildId)
 
 steps:
 - task: UseDotNet@2
-  displayName: Use .NET 6.0
+  displayName: 'Use .NET 9.x'
   inputs:
     packageType: 'sdk'
-    version: '6.0.x'
+    version: 9.x
+  continueOnError: true
 
 - task: UseDotNet@2
-  displayName: 'Use .NET Core sdk'
+  displayName: 'Use .NET 10.x'
   inputs:
-    packageType: sdk
-    version: 3.1.402
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+    packageType: 'sdk'
+    version: 10.x
+  continueOnError: true
 
 - task: NuGetToolInstaller@1
 - task: NuGetCommand@2
