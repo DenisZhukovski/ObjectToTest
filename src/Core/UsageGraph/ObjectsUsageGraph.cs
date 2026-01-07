@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ObjectToTest.Core.DefaultState;
 
 namespace ObjectToTest
 {
@@ -69,7 +70,7 @@ namespace ObjectToTest
                         item = itemToCheckDelegate.Target;
                     }
 
-                    if (item?.Equals(delegateTarget) ?? false)
+                    if (item.Equals(delegateTarget))
                     {
                         objectsToIncrement.Add(itemToCheck);
                     }
@@ -92,7 +93,8 @@ namespace ObjectToTest
                    || @object.IsSingleton()
                    || @object.IsDelegate()
                    || @object.IsCollection()
-                   || @object.IsValueType();
+                   || @object.IsValueType()
+                   || DefaultStateEvaluator.IsDefaultState(@object);
         }
     }
 }
